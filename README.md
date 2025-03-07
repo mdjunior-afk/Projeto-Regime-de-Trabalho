@@ -1,17 +1,18 @@
-# Nome do projeto
+# Satisfação de funcionários
 
-Escreva um ou dois parágrafos resumindo o objetivo do seu projeto. Lembrando que o objeto é desenvolver um sistema inteligente. Você deve mencionar o produto que está sendo desenvolvido, e não o que se espera obter com este produto.
+Este estudo busca compreender como o nível de satisfação no trabalho de profissionais de Ciência de Dados se compara ao de outras áreas, considerando fatores como salário, carga horária e oportunidades de crescimento, e sua relação intrínseca com a produtividade. A análise será realizada por meio de um sistema que utiliza esses fatores para prever a satisfação dos funcionários em uma empresa.
 
 ## Integrantes
 
-* Nome completo do aluno 1
-* Nome completo do aluno 2
-* Nome completo do aluno 3
-* Nome completo do aluno 4
+* Luiz Felipe Assis Cavalcante
+* Arthur Viana Silva
+* João Vitor de Lima
+* Márcio Douglas Cassemiro Junior
+* Gustavo Horta
 
 ## Professor
 
-* Nome completo do professor (Prof. Hugo Bastos de Paula)
+* Prof. Hugo Bastos de Paula
 
 ## Instruções de utilização
 
