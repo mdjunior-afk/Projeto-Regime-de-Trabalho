@@ -1,11 +1,15 @@
 # TITULO DO PROJETO
 
 
-**Nome completo do Aluno 1, email do aluno 1**
+**Luiz Felipe Assis Cavalcante, email do aluno 1**
 
-**Nome completo do Aluno 2, email do aluno 2**
+**Arthur Viana Silva, email do aluno 2**
 
-**Nome completo do Aluno 3, email do aluno 3**
+**João Vitor de Lima, email do aluno 3**
+
+**Márcio Douglas Cassemiro Junior, email do aluno 4**
+
+**Gustavo Horta, email do aluno 5**
 
 ---
 
