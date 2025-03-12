@@ -34,7 +34,9 @@ mostrar algum resultado relevante do trabalho (até 10 linhas)._
 
 ## Introdução
 
-A introdução deve apresentar de dois a quatro parágrafos de contextualização do trabalho. 
+Uma das soluções adotadas para mitigar os impactos econômicos da pandemia de Covid-19 foi a transição do trabalho presencial para o modelo 100% remoto. Diversos estudos indicaram um aumento na produtividade durante esse período, especialmente no setor de tecnologia, transformando profundamente a dinâmica da produção.
+
+Após a fase mais crítica da pandemia, muitas empresas passaram a retomar gradualmente o trabalho presencial em algumas áreas. No entanto, muitos profissionais ainda preferem o regime remoto ou híbrido, valorizando a flexibilidade que esse modelo proporciona para conciliar vida pessoal e profissional.
 
 ###    Contextualização
 
