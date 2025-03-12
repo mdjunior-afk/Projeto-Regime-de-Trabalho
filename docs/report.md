@@ -34,15 +34,20 @@ mostrar algum resultado relevante do trabalho (até 10 linhas)._
 
 ## Introdução
 
+A escolha do regime de trabalho — remoto, híbrido ou presencial — tem se tornado um tema central nas discussões sobre a dinâmica do mercado de trabalho, especialmente após a pandemia de Covid-19. Com a aceleração da adoção do trabalho remoto, muitos profissionais passaram a reconsiderar suas preferências quanto à flexibilidade e à forma como suas atividades são realizadas. No setor de dados, onde a tecnologia e a produtividade estão fortemente interligadas, a adaptação a novos modelos de trabalho gerou tanto benefícios quanto desafios.
+
+Esse cenário levanta a questão sobre quais fatores determinam as escolhas dos profissionais de dados em relação ao regime de trabalho. A análise de aspectos como produtividade, tempo de deslocamento, saúde mental, flexibilidade e o impacto da interação social se torna essencial para entender as dinâmicas desse grupo específico. Compreender essas preferências pode não apenas ajudar a identificar as melhores práticas para aumentar a satisfação e a produtividade dos profissionais, mas também fornecer insights valiosos para empresas que buscam se adaptar às novas realidades do trabalho no pós-pandemia.
+
+Este trabalho, portanto, tem como objetivo explorar os principais fatores que influenciam a escolha dos profissionais de dados quanto ao regime de trabalho, oferecendo uma análise detalhada de como esses elementos afetam a decisão de adotar um modelo remoto, híbrido ou presencial.
+
+
+###    Contextualização
+
 A pandemia de Covid-19, iniciada no final de 2019, desencadeou uma crise global sem precedentes, afetando diretamente a economia, a mobilidade e a organização do trabalho. Com a necessidade de medidas de isolamento social para conter a propagação do vírus, diversas empresas foram forçadas a adotar o regime remoto como alternativa para manter suas atividades. Esse movimento acelerou transformações que já vinham ocorrendo em algumas áreas, especialmente no setor de tecnologia, onde a digitalização e a conectividade permitiram uma rápida adaptação ao novo cenário.
 
 Durante esse período, diversos estudos indicaram um aumento na produtividade em setores que puderam operar de forma remota, além de melhorias na qualidade de vida dos trabalhadores, que passaram a evitar longos deslocamentos e a ter maior autonomia sobre sua rotina. No entanto, o trabalho remoto também trouxe desafios, como a dificuldade de separar a vida profissional da pessoal, o isolamento social e a necessidade de novas formas de comunicação e gestão dentro das empresas.
 
-Com o avanço da vacinação e a flexibilização das restrições sanitárias, muitas organizações começaram a retornar gradualmente ao modelo presencial, enquanto outras adotaram o regime híbrido, combinando trabalho remoto e presencial. No entanto, muitos profissionais, principalmente da área de tecnologia e dados, passaram a preferir a continuidade do home office, considerando fatores como flexibilidade, redução do tempo de deslocamento e impactos na produtividade.
-
-###    Contextualização
-
-Este estudo tem como objetivo analisar os fatores que influenciam a escolha dos profissionais de dados pelo regime de trabalho que melhor atende às suas necessidades, levando em conta aspectos como produtividade, tempo de deslocamento, saúde mental, flexibilidade e interação social.
+Com o avanço da vacinação e a flexibilização das restrições sanitárias, muitas organizações começaram a retornar gradualmente ao modelo presencial, enquanto outras adotaram o regime híbrido, combinando trabalho remoto e presencial. No entanto, muitos profissionais, principalmente da área de tecnologia e dados, passaram a preferir a continuidade do home office, considerando fatores como flexibilidade, redução do tempo de deslocamento e impactos na produtividade. Nesse sentido, este estudo tem como objetivo analisar os fatores que influenciam a escolha dos profissionais de dados pelo regime de trabalho que melhor atende às suas necessidades, levando em conta aspectos como produtividade, tempo de deslocamento, saúde mental, flexibilidade e interação social.
 
 ###    Problema
 
