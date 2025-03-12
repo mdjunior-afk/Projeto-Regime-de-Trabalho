@@ -34,15 +34,15 @@ mostrar algum resultado relevante do trabalho (até 10 linhas)._
 
 ## Introdução
 
-Uma das soluções adotadas para mitigar os impactos econômicos da pandemia de Covid-19 foi a transição do trabalho presencial para o modelo 100% remoto. Diversos estudos indicaram um aumento na produtividade durante esse período, especialmente no setor de tecnologia, transformando profundamente a dinâmica da produção.
+A pandemia de Covid-19, iniciada no final de 2019, desencadeou uma crise global sem precedentes, afetando diretamente a economia, a mobilidade e a organização do trabalho. Com a necessidade de medidas de isolamento social para conter a propagação do vírus, diversas empresas foram forçadas a adotar o regime remoto como alternativa para manter suas atividades. Esse movimento acelerou transformações que já vinham ocorrendo em algumas áreas, especialmente no setor de tecnologia, onde a digitalização e a conectividade permitiram uma rápida adaptação ao novo cenário.
 
-Após a fase mais crítica da pandemia, muitas empresas passaram a retomar gradualmente o trabalho presencial em algumas áreas. No entanto, muitos profissionais ainda preferem o regime remoto ou híbrido, valorizando a flexibilidade que esse modelo proporciona para conciliar vida pessoal e profissional.
+Durante esse período, diversos estudos indicaram um aumento na produtividade em setores que puderam operar de forma remota, além de melhorias na qualidade de vida dos trabalhadores, que passaram a evitar longos deslocamentos e a ter maior autonomia sobre sua rotina. No entanto, o trabalho remoto também trouxe desafios, como a dificuldade de separar a vida profissional da pessoal, o isolamento social e a necessidade de novas formas de comunicação e gestão dentro das empresas.
+
+Com o avanço da vacinação e a flexibilização das restrições sanitárias, muitas organizações começaram a retornar gradualmente ao modelo presencial, enquanto outras adotaram o regime híbrido, combinando trabalho remoto e presencial. No entanto, muitos profissionais, principalmente da área de tecnologia e dados, passaram a preferir a continuidade do home office, considerando fatores como flexibilidade, redução do tempo de deslocamento e impactos na produtividade.
 
 ###    Contextualização
 
-Na **contextualização**, o aluno deve dizer do que se trata o trabalho, em que área ou contexto se insere. 
-A **contextualização** deve ser desenvolvida de algo mais genérico para algo mais específico. 
-A citação de pesquisas quantitativas é bem aceita aqui (corretamente referenciadas).
+Este estudo tem como objetivo analisar os fatores que influenciam a escolha dos profissionais de dados pelo regime de trabalho que melhor atende às suas necessidades, levando em conta aspectos como produtividade, tempo de deslocamento, saúde mental, flexibilidade e interação social.
 
 ###    Problema
 
