@@ -1,11 +1,11 @@
 # TITULO DO PROJETO
 
 
-**Luiz Felipe Assis Cavalcante, email do aluno 1**
+**Luiz Felipe Assis Cavalcante, luizf.a.cavalcante@gmail.com**
 
-**Arthur Viana Silva, email do aluno 2**
+**Arthur Viana Silva, marcio.cassemiro@sga.pucminas.br**
 
-**João Vitor de Lima, email do aluno 3**
+**João Vitor de Lima, jvlpaulino18@gmail.com**
 
 **Márcio Douglas Cassemiro Junior, email do aluno 4**
 
