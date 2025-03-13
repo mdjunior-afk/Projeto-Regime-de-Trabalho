@@ -63,9 +63,11 @@ Analisar, por meio de dados coletados sobre profissionais da área de dados, qua
 
 ####    Objetivos específicos
 
-Identificar os principais fatores que influenciam a escolha dos profissionais de dados pelo regime de trabalho remoto, híbrido ou presencial.
-Analisar a variação das preferências por regime de trabalho de acordo com características como nível de experiência, setor de atuação e localização.
-Comparar os impactos da interação social e do tempo de deslocamento na decisão pelo modelo de trabalho adotado.
+- Identificar os principais fatores que influenciam a escolha dos profissionais de dados pelo regime de trabalho remoto, híbrido ou presencial.  
+- Analisar a variação das preferências por regime de trabalho de acordo com características como nível de experiência, setor de atuação e localização.  
+- Comparar os impactos da interação social e do tempo de deslocamento na decisão pelo modelo de trabalho adotado.  
+
+
 
 > **Links Úteis**:
 > - [Objetivo geral e objetivo específico: como fazer e quais verbos utilizar](https://blog.mettzer.com/diferenca-entre-objetivo-geral-e-objetivo-especifico/)
