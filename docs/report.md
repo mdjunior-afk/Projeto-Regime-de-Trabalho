@@ -15,8 +15,8 @@
 
 Professores:
 
-** Prof. Nome do Prof 1 **
-** Prof. Nome do Prof 2 **
+** Prof. Hugo de Paula **
+** Prof. Sandro Jerônimo **
 
 ---
 
