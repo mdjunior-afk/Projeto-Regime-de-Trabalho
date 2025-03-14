@@ -3,11 +3,11 @@
 
 **Luiz Felipe Assis Cavalcante, luizf.a.cavalcante@gmail.com**
 
-**Arthur Viana Silva, marcio.cassemiro@sga.pucminas.br**
+**Arthur Viana Silva, email do aluno 2**
 
 **João Vitor de Lima, jvlpaulino18@gmail.com**
 
-**Márcio Douglas Cassemiro Junior, email do aluno 4**
+**Márcio Douglas Cassemiro Junior, marcio.cassemiro@sga.pucminas.br**
 
 **Gustavo Horta, email do aluno 5**
 
@@ -59,15 +59,13 @@ O presente estudo busca ajudar empresas a compreender as prioridades de seus fun
 
 ###    Objetivo geral
 
-Analisar, por meio de dados coletados sobre profissionais da área de dados, quais fatores influenciam a escolha pelo regime de trabalho remoto, híbrido ou presencial, a fim de identificar padrões e tendências que possam auxiliar empresas na formulação de políticas mais alinhadas às preferências e necessidades desses profissionais.
+Desenvolver um sistema inteligente capaz de identificar padrões na escolha do regime de trabalho (remoto, híbrido ou presencial) e analisar os principais fatores que influenciam essa decisão. O sistema levará em consideração aspectos como mobilidade urbana, cargo, preferências dos profissionais e outras variáveis relevantes, gerando insights para empresas e formuladores de políticas trabalhistas.
 
 ####    Objetivos específicos
 
 - Identificar os principais fatores que influenciam a escolha dos profissionais de dados pelo regime de trabalho remoto, híbrido ou presencial.  
-- Analisar a variação das preferências por regime de trabalho de acordo com características como nível de experiência, setor de atuação e localização.  
+- Analisar a variação das preferências por regime de trabalho de acordo com cargo, setor de atuação e localização.  
 - Comparar os impactos da interação social e do tempo de deslocamento na decisão pelo modelo de trabalho adotado.  
-
-
 
 > **Links Úteis**:
 > - [Objetivo geral e objetivo específico: como fazer e quais verbos utilizar](https://blog.mettzer.com/diferenca-entre-objetivo-geral-e-objetivo-especifico/)
@@ -79,7 +77,7 @@ A transformação do mercado de trabalho nos últimos anos, impulsionada princip
 
 Este estudo se justifica pela necessidade de fornecer uma base analítica que auxilie empresas na formulação de cargos e na escolha do regime de trabalho mais adequado, considerando o perfil dos profissionais que possuem ou desejam atrair. Ao identificar os fatores que influenciam essa decisão, a pesquisa permite que organizações alinhem suas estratégias às expectativas do mercado, reduzindo a rotatividade e aumentando o engajamento dos colaboradores.
 
-Além disso, compreender a relação entre fatores como nível de experiência, setor de atuação, tempo de deslocamento e interação social pode ajudar empresas a ajustar suas políticas de trabalho para atender melhor às necessidades dos profissionais. Dessa forma, a pesquisa contribui para a construção de ambientes mais flexíveis e alinhados às novas dinâmicas do mercado pós-pandemia, beneficiando tanto as empresas quanto os trabalhadores.
+Além disso, compreender a relação entre fatores como cargo, setor de atuação, tempo de deslocamento e interação social pode ajudar empresas a ajustar suas políticas de trabalho para atender melhor às necessidades dos profissionais. Dessa forma, a pesquisa contribui para a construção de ambientes mais flexíveis e alinhados às novas dinâmicas do mercado pós-pandemia, beneficiando tanto as empresas quanto os trabalhadores.
 
 > **Links Úteis**:
 > - [Como montar a justificativa](https://guiadamonografia.com.br/como-montar-justificativa-do-tcc/)
@@ -88,14 +86,7 @@ Além disso, compreender a relação entre fatores como nível de experiência, 
 
 ##    Público alvo
 
-Descreva quem serão as pessoas que usarão a sua aplicação indicando os diferentes perfis. 
-O objetivo aqui não é definir quem serão os clientes ou quais serão os papéis dos usuários 
-na aplicação. A ideia é, dentro do possível, conhecer um pouco mais sobre o perfil dos 
-usuários: conhecimentos prévios, relação com a tecnologia, relações
-hierárquicas, etc.
-
-Adicione informações sobre o público-alvo por meio de uma descrição textual, 
-diagramas de personas e mapa de stakeholders.
+O público-alvo desse sistema inclui empresas de diversos setores que desejam entender melhor as preferências de seus funcionários em relação ao regime de trabalho, auxiliando na formulação de políticas mais eficientes e atrativas. Além disso, gestores de Recursos Humanos podem utilizá-lo para otimizar modelos de trabalho e retenção de talentos. Pesquisadores e formuladores de políticas públicas também podem se beneficiar dos dados gerados para analisar impactos na mobilidade urbana, produtividade e qualidade de vida dos trabalhadores. Startups e consultorias especializadas em transformação digital e cultura organizacional podem usar os insights do sistema para oferecer soluções personalizadas a seus clientes.
 
 > **Links Úteis**:
 > - [Público-alvo](https://blog.hotmart.com/pt-br/publico-alvo/)
@@ -108,13 +99,35 @@ diagramas de personas e mapa de stakeholders.
 
 ###    Dicionário de dados
 
-Apresente uma descrição das bases de dados a serem utilizadas. 
-Dicionários de dados devem conter as bases de dados, os nomes dos atributos 
-com seu significado, seu tipo (inteiro, real, textual, categórico, etc).
+#### `The Impacts of Working Remotely and in an Office Survey`
+Essa base de dados contém atributos derivados de entrevistas com profissionais, nos quais eles compartilham percepções sobre produtividade, flexibilidade e outras experiências relacionadas ao trabalho remoto, híbrido e presencial. Esses dados servirão como referência para identificar padrões de comportamento, permitindo uma análise mais aprofundada das preferências e necessidades dos profissionais da área de dados.
 
-Este projeto deve utilizar pelo menos duas fontes de dados. Uma fonte principal e 
-uma fonte para enriquecimentos dos dados principais.
+Os atributos que serão utilizados para o estudo:
 
+- Have you ever experienced working from home? (Categórico)
+- Do you think that working from home increases your work productivity? (Categórico)
+- Do you think that working from home prevents you from going out? (Categórico)
+- Do you think that working from home gives you more flexibility? (Categórico)
+- Do you think that working from home saves you more time? (Categórico)
+- Which work type has the potential to cause you physical problems, such as the neck, back, and leg pain? (Categórico)
+- Which work type has the potential to cause mental disorders, such as stress, anxiety, and depression? (Categórico)
+- Do you think that working from home prevents you from getting in contact with people? (Categórico)
+- Which work type keeps you focused while working? (Categórico)
+- Which work type do you prefer the most? (Categórico)
+
+#### `State_of_data_BR_2023_Kaggle - df_survey_2023`
+Essa base de dados contém os dados relacionados aos profissionais de dados que serão utilizados como base para o atual estudo
+
+Os atributos utilizados no estudo serão:
+- ('P1_b ', 'Genero') (Categórico)
+- ('P1_d ', 'PCD') (Categórico)
+- ('P1_i ', 'Estado onde mora') (Categórico)
+- ('P2_f ', 'Cargo Atual') (Categórico)
+- ('P2_g ', 'Nivel') (Categórico)
+- ('P2_h ', 'Faixa salarial') (Categórico)
+- ('P2_o_4 ', 'Flexibilidade de trabalho remoto') (Categórico)
+- ('P2_r ', 'Atualmente qual a sua forma de trabalho?') (Categórico)
+- ('P2_s ', 'Qual a forma de trabalho ideal para você?') (Categórico)
 
 ###    Descrição de dados
 
