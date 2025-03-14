@@ -7,7 +7,7 @@ Os principais documentos a serem produzidos são:
 * `State_of_data_BR_2023_Kaggle - df_survey_2023.csv`
 	* Base de dados original
 
-* `Employee Attrition.csv`
+* `The Impacts of Working Remotely and in an Office Survey.csv`
 	* Bases auxiliares
 
 * `final_processed_data.csv`
