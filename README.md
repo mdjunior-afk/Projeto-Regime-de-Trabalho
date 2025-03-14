@@ -1,6 +1,6 @@
-# Satisfação de funcionários
+# Regime de Trabalho na Área de Dados: Preferências Entre Remoto, Híbrido e Presencial
 
-Este estudo busca compreender como o nível de satisfação no trabalho de profissionais de Ciência de Dados se compara ao de outras áreas, considerando fatores como salário, carga horária e oportunidades de crescimento, e sua relação intrínseca com a produtividade. A análise será realizada por meio de um sistema que utiliza esses fatores para prever a satisfação dos funcionários em uma empresa.
+O sistema inteligente será capaz de identificar padrões de comportamento na escolha do regime de trabalho (remoto, híbrido ou presencial) em diferentes áreas profissionais. Para isso, analisará fatores como produtividade, flexibilidade, tempo de deslocamento e cargo, gerando insights valiosos sobre as preferências dos trabalhadores e os impactos dessas escolhas no ambiente corporativo.
 
 ## Integrantes
 
