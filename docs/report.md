@@ -1,4 +1,4 @@
-# TITULO DO PROJETO
+# Regime de Trabalho na Área de Dados: Preferências Entre Remoto, Híbrido e Presencial
 
 
 **Luiz Felipe Assis Cavalcante, luizf.a.cavalcante@gmail.com**
