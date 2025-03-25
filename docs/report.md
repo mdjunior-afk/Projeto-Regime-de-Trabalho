@@ -113,9 +113,115 @@ Os atributos que serão utilizados para o estudo:
 - Which work type has the potential to cause mental disorders, such as stress, anxiety, and depression? (Categórico)
 - Do you think that working from home prevents you from getting in contact with people? (Categórico)
 - Which work type keeps you focused while working? (Categórico)
-- Which work type do you prefer the most? (Categórico)
+- Which work type do you prefer the most? (Categórico)  
+ 
+ 
+#### `State_of_data_BR_2023_Kaggle - df_survey_2023`
+Essa base de dados contém os dados relacionados aos profissionais de dados que serão utilizados como base para o atual estudo
+
+Os atributos utilizados no estudo serão:
+- ('P1_b ', 'Genero') (Categórico)
+- ('P1_d ', 'PCD') (Categórico)
+- ('P1_i ', 'Estado onde mora') (Categórico)
+- ('P2_f ', 'Cargo Atual') (Categórico)
+- ('P2_g ', 'Nivel') (Categórico)
+- ('P2_h ', 'Faixa salarial') (Categórico)
+- ('P2_o_4 ', 'Flexibilidade de trabalho remoto') (Categórico)
+- ('P2_r ', 'Atualmente qual a sua forma de trabalho?') (Categórico)
+- ('P2_s ', 'Qual a forma de trabalho ideal para você?') (Categórico)
 
 ###    Descrição de dados
+
+### Análise Exploratória dos Dados - `State_of_data_BR_2023_Kaggle - df_survey_2023`
+
+#### 1. Distribuição por Gênero
+
+- **Moda:** Masculino (3975 respostas)
+- **Distribuição:**
+  - Feminino: **24,46%**
+  - Masculino: **75,23%**
+  - Outro: **0,17%**
+  - Prefiro não informar: **0,30%**
+    
+![genero](https://github.com/user-attachments/assets/3df947d6-bf29-48f3-a2ff-c1cdfeaa71be)
+
+
+
+#### 2. Pessoas com Deficiência (PCD)
+
+- **Moda:** Não (5156 respostas)
+- **Distribuição:**
+  - Não: **97,22%**
+  - Prefiro não informar: **0,49%**
+  - Sim: **2,09%**
+    
+![pcd](https://github.com/user-attachments/assets/dc9d3912-e8c3-436f-a168-727c6a638f13)
+
+
+
+#### 3. Estado de Residência
+
+- **Moda:** São Paulo (2073 respostas)
+- **Estados com maior representação:**
+  - São Paulo (SP): **39,42%**
+  - Minas Gerais (MG): **10,59%**
+  - Rio de Janeiro (RJ): **8,31%**
+  - Paraná (PR): **7,99%**
+  - Rio Grande do Sul (RS): **5,54%**
+ 
+![Estado](https://github.com/user-attachments/assets/69bdc86a-2929-417c-838f-3f1a2e3c4a64)
+
+
+
+#### 4. Nível Profissional
+
+- **Moda:** Sênior (1419 respostas)
+- **Distribuição:**
+  - Júnior: **27,46%**
+  - Pleno: **36,56%**
+  - Sênior: **36,98%**
+ 
+![Nivel](https://github.com/user-attachments/assets/d760284c-8ba4-484a-813a-3e1ed06a9e58)
+
+
+
+#### 5. Faixa Salarial
+
+- **Moda:** de R$ 8.001/mês a R$ 12.000/mês (1026 respostas)
+- **Faixas com maior representação:**
+  - R$ 8.001 a R$ 12.000: **18,85%**
+  - R$ 12.001 a R$ 16.000: **11,95%**
+  - R$ 4.001 a R$ 6.000: **13,68%**
+  - R$ 6.001 a R$ 8.000: **11,71%**
+
+![salario](https://github.com/user-attachments/assets/fd0ad9d4-b767-4fb6-a390-d8245c6c268d)
+
+
+
+#### 6. Forma de Trabalho Atual
+
+- **Moda:** Modelo 100% remoto (2201 respostas)
+- **Distribuição:**
+  - Modelo 100% presencial: **14,91%**
+  - Modelo 100% remoto: **41,58%**
+  - Modelo híbrido com dias fixos: **14,91%**
+  - Modelo híbrido flexível: **18,38%**
+
+![FormaTrabalho](https://github.com/user-attachments/assets/786e5481-844d-4005-bb91-a9e45279475b)
+
+
+
+#### 7. Forma de Trabalho Ideal
+
+- **Moda:** Modelo híbrido flexível (2144 respostas)
+- **Distribuição:**
+  - Modelo 100% presencial: **1,81%**
+  - Modelo 100% remoto: **40,27%**
+  - Modelo híbrido com dias fixos: **7,37%**
+  - Modelo híbrido flexível: **40,69%**
+
+![formaIdeal](https://github.com/user-attachments/assets/6621eb7f-6d8c-4c6c-b494-f6fb14dffb8d)
+
 
 ### Análise Exploratória dos Dados - `The Impacts of Working Remotely and in an Office Survey`
 
@@ -242,120 +348,6 @@ Os atributos que serão utilizados para o estudo:
   - Trabalhar no escritório: **25,00%**
               
   ![Qual tipo de trabalho você prefere?](https://github.com/user-attachments/assets/ff4e80f8-1e61-452e-9a11-b2a81ccd6594)
-
-
-  
-
-  
- 
- 
-#### `State_of_data_BR_2023_Kaggle - df_survey_2023`
-Essa base de dados contém os dados relacionados aos profissionais de dados que serão utilizados como base para o atual estudo
-
-Os atributos utilizados no estudo serão:
-- ('P1_b ', 'Genero') (Categórico)
-- ('P1_d ', 'PCD') (Categórico)
-- ('P1_i ', 'Estado onde mora') (Categórico)
-- ('P2_f ', 'Cargo Atual') (Categórico)
-- ('P2_g ', 'Nivel') (Categórico)
-- ('P2_h ', 'Faixa salarial') (Categórico)
-- ('P2_o_4 ', 'Flexibilidade de trabalho remoto') (Categórico)
-- ('P2_r ', 'Atualmente qual a sua forma de trabalho?') (Categórico)
-- ('P2_s ', 'Qual a forma de trabalho ideal para você?') (Categórico)
-
-###    Descrição de dados
-
-### Análise Exploratória dos Dados - `State_of_data_BR_2023_Kaggle - df_survey_2023`
-
-#### 1. Distribuição por Gênero
-
-- **Moda:** Masculino (3975 respostas)
-- **Distribuição:**
-  - Feminino: **24,46%**
-  - Masculino: **75,23%**
-  - Outro: **0,17%**
-  - Prefiro não informar: **0,30%**
-    
-![genero](https://github.com/user-attachments/assets/3df947d6-bf29-48f3-a2ff-c1cdfeaa71be)
-
-
-
-#### 2. Pessoas com Deficiência (PCD)
-
-- **Moda:** Não (5156 respostas)
-- **Distribuição:**
-  - Não: **97,22%**
-  - Prefiro não informar: **0,49%**
-  - Sim: **2,09%**
-    
-![pcd](https://github.com/user-attachments/assets/dc9d3912-e8c3-436f-a168-727c6a638f13)
-
-
-
-#### 3. Estado de Residência
-
-- **Moda:** São Paulo (2073 respostas)
-- **Estados com maior representação:**
-  - São Paulo (SP): **39,42%**
-  - Minas Gerais (MG): **10,59%**
-  - Rio de Janeiro (RJ): **8,31%**
-  - Paraná (PR): **7,99%**
-  - Rio Grande do Sul (RS): **5,54%**
- 
-![Estado](https://github.com/user-attachments/assets/69bdc86a-2929-417c-838f-3f1a2e3c4a64)
-
-
-
-#### 4. Nível Profissional
-
-- **Moda:** Sênior (1419 respostas)
-- **Distribuição:**
-  - Júnior: **27,46%**
-  - Pleno: **36,56%**
-  - Sênior: **36,98%**
- 
-![Nivel](https://github.com/user-attachments/assets/d760284c-8ba4-484a-813a-3e1ed06a9e58)
-
-
-
-#### 5. Faixa Salarial
-
-- **Moda:** de R$ 8.001/mês a R$ 12.000/mês (1026 respostas)
-- **Faixas com maior representação:**
-  - R$ 8.001 a R$ 12.000: **18,85%**
-  - R$ 12.001 a R$ 16.000: **11,95%**
-  - R$ 4.001 a R$ 6.000: **13,68%**
-  - R$ 6.001 a R$ 8.000: **11,71%**
-
-![salario](https://github.com/user-attachments/assets/fd0ad9d4-b767-4fb6-a390-d8245c6c268d)
-
-
-
-#### 6. Forma de Trabalho Atual
-
-- **Moda:** Modelo 100% remoto (2201 respostas)
-- **Distribuição:**
-  - Modelo 100% presencial: **14,91%**
-  - Modelo 100% remoto: **41,58%**
-  - Modelo híbrido com dias fixos: **14,91%**
-  - Modelo híbrido flexível: **18,38%**
-
-![FormaTrabalho](https://github.com/user-attachments/assets/786e5481-844d-4005-bb91-a9e45279475b)
-
-
-
-#### 7. Forma de Trabalho Ideal
-
-- **Moda:** Modelo híbrido flexível (2144 respostas)
-- **Distribuição:**
-  - Modelo 100% presencial: **1,81%**
-  - Modelo 100% remoto: **40,27%**
-  - Modelo híbrido com dias fixos: **7,37%**
-  - Modelo híbrido flexível: **40,69%**
-
-![formaIdeal](https://github.com/user-attachments/assets/6621eb7f-6d8c-4c6c-b494-f6fb14dffb8d)
-
-
 
 
 ## Preparação dos dados
