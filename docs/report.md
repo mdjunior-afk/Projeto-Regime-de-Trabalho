@@ -73,8 +73,6 @@ Desenvolver um sistema inteligente capaz de identificar padrões na escolha do r
 
 ###    Justificativas
 
-A transformação do mercado de trabalho nos últimos anos, impulsionada principalmente pela pandemia de Covid-19, intensificou o debate sobre os modelos de trabalho remoto, híbrido e presencial. No setor de dados, onde a digitalização permite maior flexibilidade, empresas enfrentam o desafio de definir políticas que conciliem produtividade, satisfação dos profissionais e eficiência organizacional.
-
 Este estudo se justifica pela necessidade de fornecer uma base analítica que auxilie empresas na formulação de cargos e na escolha do regime de trabalho mais adequado, considerando o perfil dos profissionais que possuem ou desejam atrair. Ao identificar os fatores que influenciam essa decisão, a pesquisa permite que organizações alinhem suas estratégias às expectativas do mercado, reduzindo a rotatividade e aumentando o engajamento dos colaboradores.
 
 Além disso, compreender a relação entre fatores como cargo, setor de atuação, tempo de deslocamento e interação social pode ajudar empresas a ajustar suas políticas de trabalho para atender melhor às necessidades dos profissionais. Dessa forma, a pesquisa contribui para a construção de ambientes mais flexíveis e alinhados às novas dinâmicas do mercado pós-pandemia, beneficiando tanto as empresas quanto os trabalhadores.
