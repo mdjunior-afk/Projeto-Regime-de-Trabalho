@@ -1,15 +1,16 @@
 # Regime de Trabalho na Área de Dados: Preferências Entre Remoto, Híbrido e Presencial
 
 
-**Luiz Felipe Assis Cavalcante, luizf.a.cavalcante@gmail.com**
+**Luiz Felipe Assis Cavalcante, lfacavalcante@sga.pucminas.br**
 
-**Arthur Viana Silva, email do aluno 2**
+**Arthur Viana Silva, arthur.silva.1564925@sga.pucminas.br**
 
-**João Vitor de Lima, jvlpaulino18@gmail.com**
+**João Vitor de Lima, joão.lima.1594303@sga.pucminas.br**
 
 **Márcio Douglas Cassemiro Junior, marcio.cassemiro@sga.pucminas.br**
 
-**Gustavo Horta, email do aluno 5**
+**Gustavo Horta, gustavo.horta@sga.pucminas.br**
+
 
 ---
 
