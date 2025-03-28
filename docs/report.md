@@ -221,6 +221,159 @@ Os atributos utilizados no estudo serão:
 ![formaIdeal](https://github.com/user-attachments/assets/6621eb7f-6d8c-4c6c-b494-f6fb14dffb8d)
 
 
+
+#### **1. Comparação entre Nível Profissional e Forma de Trabalho**
+
+- **Moda:** Profissionais **Sêniores** preferem o modelo **100% remoto** (**796 respostas**), enquanto os **Plenos** também escolhem majoritariamente o **100% remoto** (**673 respostas**). Já os **Júniores** têm uma distribuição mais equilibrada entre **100% remoto** (395 respostas) e **100% presencial** (283 respostas).  
+
+##### **Distribuição dentro de cada Nível Profissional**  
+
+- **Sênior**  
+  - **100% presencial:** **9,02%** (128)  
+  - **100% remoto:** **56,08%** (796)  
+  - **Híbrido fixo:** **14,52%** (206)  
+  - **Híbrido flexível:** **20,36%** (289)  
+
+- **Pleno**  
+  - **100% presencial:** **16,10%** (224)  
+  - **100% remoto:** **48,35%** (673)  
+  - **Híbrido fixo:** **17,11%** (238)  
+  - **Híbrido flexível:** **18,47%** (257)  
+
+- **Júnior**  
+  - **100% presencial:** **27,06%** (283)  
+  - **100% remoto:** **37,75%** (395)  
+  - **Híbrido fixo:** **17,78%** (186)  
+  - **Híbrido flexível:** **17,41%** (182)  
+
+- **Não informado**  
+  - **100% presencial:** **17,30%** (155)  
+  - **100% remoto:** **37,61%** (337)  
+  - **Híbrido fixo:** **17,86%** (160)  
+  - **Híbrido flexível:** **27,23%** (244)  
+
+![NivelXmodelo](https://github.com/user-attachments/assets/cf59df5f-0648-4393-8ebf-68c8e2d18607)
+
+
+
+#### **2. Comparação entre Estados e Forma de Trabalho**  
+
+- **Moda:** O modelo **100% remoto** é o mais comum em todos os estados, sendo **São Paulo (SP)** o que mais concentra profissionais nesse modelo (**759 respostas**), seguido por **Minas Gerais (MG) (252 respostas)** e **Rio de Janeiro (RJ) (194 respostas)**.   
+
+##### **Distribuição por Estado (%)**  
+
+###### **São Paulo (SP)**  
+- **100% presencial:** **11,29%** (214)  
+- **100% remoto:** **40,06%** (759)  
+- **Híbrido fixo:** **22,48%** (426)  
+- **Híbrido flexível:** **26,17%** (496)  
+
+###### **Minas Gerais (MG)**  
+- **100% presencial:** **17,46%** (88)  
+- **100% remoto:** **50,00%** (252)  
+- **Híbrido fixo:** **12,50%** (63)  
+- **Híbrido flexível:** **20,04%** (101)  
+
+###### **Rio de Janeiro (RJ)**  
+- **100% presencial:** **11,36%** (45)  
+- **100% remoto:** **48,99%** (194)  
+- **Híbrido fixo:** **18,94%** (75)  
+- **Híbrido flexível:** **20,71%** (82)  
+
+###### **Paraná (PR)**  
+- **100% presencial:** **21,54%** (84)  
+- **100% remoto:** **51,03%** (199)  
+- **Híbrido fixo:** **15,64%** (61)  
+- **Híbrido flexível:** **11,79%** (46)  
+
+###### **Rio Grande do Sul (RS)**  
+- **100% presencial:** **18,70%** (49)  
+- **100% remoto:** **48,85%** (128)  
+- **Híbrido fixo:** **8,40%** (22)  
+- **Híbrido flexível:** **24,05%** (63)  
+
+###### **Santa Catarina (SC)**  
+- **100% presencial:** **15,38%** (36)  
+- **100% remoto:** **50,85%** (119)  
+- **Híbrido fixo:** **13,25%** (31)  
+- **Híbrido flexível:** **20,51%** (48)  
+
+###### **Distrito Federal (DF)**  
+- **100% presencial:** **23,02%** (35)  
+- **100% remoto:** **43,42%** (66)  
+- **Híbrido fixo:** **19,74%** (30)  
+- **Híbrido flexível:** **13,82%** (21)  
+
+![EstadoXmodelo](https://github.com/user-attachments/assets/69b4db17-d1e1-41a0-8338-d0bd773d0eca)
+
+
+
+#### **3. Comparação entre Faixa Salarial e Modelo de Trabalho**  
+
+- **Moda:** O modelo **100% remoto** se destaca nas faixas salariais mais altas, especialmente **acima de R$ 8.000/mês**. Já o modelo **100% presencial** tem maior concentração em salários **abaixo de R$ 6.000/mês**.  
+
+##### **Distribuição por Faixa Salarial (%)**  
+
+###### **Faixa: R$ 8.001/mês a R$ 12.000/mês**  
+- **100% presencial:** **11,02%** (113)  
+- **100% remoto:** **51,08%** (524)  
+- **Híbrido fixo:** **17,45%** (179)  
+- **Híbrido flexível:** **20,45%** (210)  
+
+###### **Faixa: R$ 4.001/mês a R$ 6.000/mês**  
+- **100% presencial:** **21,61%** (161)  
+- **100% remoto:** **41,61%** (310)  
+- **Híbrido fixo:** **20,13%** (150)  
+- **Híbrido flexível:** **16,64%** (124)  
+
+###### **Faixa: R$ 12.001/mês a R$ 16.000/mês**  
+- **100% presencial:** **6,77%** (44)  
+- **100% remoto:** **56,00%** (364)  
+- **Híbrido fixo:** **12,92%** (84)  
+- **Híbrido flexível:** **24,31%** (158)  
+
+###### **Faixa: R$ 6.001/mês a R$ 8.000/mês**  
+- **100% presencial:** **13,50%** (86)  
+- **100% remoto:** **45,68%** (291)  
+- **Híbrido fixo:** **16,64%** (106)  
+- **Híbrido flexível:** **24,18%** (154)  
+
+###### **Faixa: R$ 3.001/mês a R$ 4.000/mês**  
+- **100% presencial:** **32,39%** (114)  
+- **100% remoto:** **33,81%** (119)  
+- **Híbrido fixo:** **20,45%** (72)  
+- **Híbrido flexível:** **13,35%** (47)  
+
+###### **Faixa: R$ 16.001/mês a R$ 20.000/mês**  
+- **100% presencial:** **7,92%** (26)  
+- **100% remoto:** **53,66%** (176)  
+- **Híbrido fixo:** **17,38%** (57)  
+- **Híbrido flexível:** **21,04%** (69)  
+
+###### **Faixa: R$ 2.001/mês a R$ 3.000/mês**  
+- **100% presencial:** **39,93%** (115)  
+- **100% remoto:** **30,56%** (88)  
+- **Híbrido fixo:** **16,32%** (47)  
+- **Híbrido flexível:** **13,19%** (38)  
+
+###### **Faixa: R$ 1.001/mês a R$ 2.000/mês**  
+- **100% presencial:** **35,81%** (77)  
+- **100% remoto:** **36,28%** (78)  
+- **Híbrido fixo:** **13,95%** (30)  
+- **Híbrido flexível:** **13,95%** (30)  
+
+###### **Faixa: Acima de R$ 25.000/mês**  
+- **100% presencial:** **14,28%** (35)  
+- **100% remoto:** **51,42%** (126)  
+- **Híbrido fixo:** **17,14%** (42)  
+- **Híbrido flexível:** **17,14%** (42)  
+
+![SalarioXmodelo](https://github.com/user-attachments/assets/0cbda8e9-5f41-4ef6-8e88-ff2f3673124c)
+
+
+
+
+
 ### Análise Exploratória dos Dados - `The Impacts of Working Remotely and in an Office Survey`
 
 ### 1. Você já trabalhou em casa?
