@@ -39,7 +39,7 @@ A escolha do regime de trabalho — remoto, híbrido ou presencial — tem se to
 
 Esse cenário levanta a questão sobre quais fatores determinam as escolhas dos profissionais de dados em relação ao regime de trabalho. A análise de aspectos como produtividade, tempo de deslocamento, saúde mental, flexibilidade e o impacto da interação social se torna essencial para entender as dinâmicas desse grupo específico. Compreender essas preferências pode não apenas ajudar a identificar as melhores práticas para aumentar a satisfação e a produtividade dos profissionais, mas também fornecer insights valiosos para empresas que buscam se adaptar às novas realidades do trabalho no pós-pandemia.
 
-Este trabalho, portanto, tem como objetivo explorar os principais fatores que influenciam a escolha dos profissionais de dados quanto ao regime de trabalho, oferecendo uma análise detalhada de como esses elementos afetam a decisão de adotar um modelo remoto, híbrido ou presencial.
+Este trabalho, portanto, tem como objetivo explorar os principais fatores que influenciam a escolha dos profissionais da área de dados quanto ao regime de trabalho. Dada a natureza altamente digital e analítica desse setor, compreender como elementos como produtividade, tempo de deslocamento, saúde mental, flexibilidade e interação social impactam suas preferências é essencial. A análise dessas variáveis pode fornecer insights valiosos tanto para profissionais que buscam otimizar seu desempenho e bem-estar quanto para empresas que precisam estruturar políticas de trabalho mais eficientes e alinhadas às demandas desse mercado específico.
 
 
 ###    Contextualização
