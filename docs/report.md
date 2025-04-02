@@ -97,6 +97,7 @@ Os atributos que serão utilizados para o estudo:
 
 | Atributo | Tipo | Dados |
 |----------|------|-------|
+| Response ID | Quantitativo Discreto | 1-100 |
 | Have you ever experienced working from home? | Categórico Binário | Yes; No |
 | Do you think that working from home increases your work productivity? | Categórico Binário | Yes; No
 | Do you think that working from home prevents you from going out? | Categórico Binário | Yes; No
