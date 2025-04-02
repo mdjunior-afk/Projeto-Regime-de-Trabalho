@@ -95,16 +95,18 @@ Essa base de dados contém atributos derivados de entrevistas com profissionais,
 
 Os atributos que serão utilizados para o estudo:
 
-- Have you ever experienced working from home? (Categórico)
-- Do you think that working from home increases your work productivity? (Categórico)
-- Do you think that working from home prevents you from going out? (Categórico)
-- Do you think that working from home gives you more flexibility? (Categórico)
-- Do you think that working from home saves you more time? (Categórico)
-- Which work type has the potential to cause you physical problems, such as the neck, back, and leg pain? (Categórico)
-- Which work type has the potential to cause mental disorders, such as stress, anxiety, and depression? (Categórico)
-- Do you think that working from home prevents you from getting in contact with people? (Categórico)
-- Which work type keeps you focused while working? (Categórico)
-- Which work type do you prefer the most? (Categórico)  
+| Atributo | Tipo | Dados |
+|----------|------|-------|
+| Have you ever experienced working from home? | Categórico Binário | Yes; No |
+| Do you think that working from home increases your work productivity? | Categórico Binário | Yes; No
+| Do you think that working from home prevents you from going out? | Categórico Binário | Yes; No
+| Do you think that working from home gives you more flexibility? | Categórico Binário | Yes; No
+| Do you think that working from home saves you more time? | Categórico Binário | Yes; No
+| Which work type has the potential to cause you physical problems, such as the neck, back, and leg pain? | Categórico Binário | Working from home; Working from office |
+| Which work type has the potential to cause mental disorders, such as stress, anxiety, and depression? | Categórico Binário | Working from home; Working from office |
+| Do you think that working from home prevents you from getting in contact with people? | Categórico Binário | Yes; No
+| Which work type keeps you focused while working? | Categórico Binário | Working from home; Working from office |
+| Which work type do you prefer the most? | Categórico Polinomial Não Ordinal | A mixed mode of working; Working from home; Working from office |
  
 #### `State_of_data_BR_2023_Kaggle - df_survey_2023`
 Essa base de dados contém os dados relacionados aos profissionais de dados que serão utilizados como base para o atual estudo
