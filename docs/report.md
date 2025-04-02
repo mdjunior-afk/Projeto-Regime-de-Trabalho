@@ -33,7 +33,7 @@ mostrar algum resultado relevante do trabalho (até 10 linhas)._
 ---
 
 
-## Introdução
+##	Introdução
 
 A escolha do regime de trabalho — remoto, híbrido ou presencial — tem se tornado um tema central nas discussões sobre a dinâmica do mercado de trabalho, especialmente após a pandemia de Covid-19. Com a aceleração da adoção do trabalho remoto, muitos profissionais passaram a reconsiderar suas preferências quanto à flexibilidade e à forma como suas atividades são realizadas. No setor de dados, onde a tecnologia e a produtividade estão fortemente interligadas, a adaptação a novos modelos de trabalho gerou tanto benefícios quanto desafios.
 
@@ -44,11 +44,7 @@ Este trabalho, portanto, tem como objetivo explorar os principais fatores que in
 
 ###    Contextualização
 
-A pandemia de Covid-19, iniciada no final de 2019, desencadeou uma crise global sem precedentes, afetando diretamente a economia, a mobilidade e a organização do trabalho. Com a necessidade de medidas de isolamento social para conter a propagação do vírus, diversas empresas foram forçadas a adotar o regime remoto como alternativa para manter suas atividades. Esse movimento acelerou transformações que já vinham ocorrendo em algumas áreas, especialmente no setor de tecnologia, onde a digitalização e a conectividade permitiram uma rápida adaptação ao novo cenário.
-
-Durante esse período, diversos estudos indicaram um aumento na produtividade em setores que puderam operar de forma remota, além de melhorias na qualidade de vida dos trabalhadores, que passaram a evitar longos deslocamentos e a ter maior autonomia sobre sua rotina. No entanto, o trabalho remoto também trouxe desafios, como a dificuldade de separar a vida profissional da pessoal, o isolamento social e a necessidade de novas formas de comunicação e gestão dentro das empresas.
-
-Com o avanço da vacinação e a flexibilização das restrições sanitárias, muitas organizações começaram a retornar gradualmente ao modelo presencial, enquanto outras adotaram o regime híbrido, combinando trabalho remoto e presencial. No entanto, muitos profissionais, principalmente da área de tecnologia e dados, passaram a preferir a continuidade do home office, considerando fatores como flexibilidade, redução do tempo de deslocamento e impactos na produtividade. Nesse sentido, este estudo tem como objetivo analisar os fatores que influenciam a escolha dos profissionais de dados pelo regime de trabalho que melhor atende às suas necessidades.
+A pandemia de Covid-19 acelerou mudanças na organização do trabalho, especialmente em áreas como tecnologia e dados, onde a digitalização permitiu uma rápida adaptação ao modelo remoto. Muitos profissionais do setor relataram ganhos em produtividade e qualidade de vida devido à flexibilidade e à eliminação do tempo de deslocamento, embora desafios como o isolamento social e a separação entre vida pessoal e profissional tenham surgido. Com a flexibilização das restrições, empresas adotaram diferentes regimes de trabalho, mas muitos profissionais de dados passaram a preferir o home office ou modelos híbridos.
 
 ###    Problema
 
@@ -71,7 +67,6 @@ Desenvolver um sistema inteligente capaz de identificar padrões na escolha do r
 > **Links Úteis**:
 > - [Objetivo geral e objetivo específico: como fazer e quais verbos utilizar](https://blog.mettzer.com/diferenca-entre-objetivo-geral-e-objetivo-especifico/)
 
-
 ###    Justificativas
 
 Este estudo se justifica pela necessidade de fornecer uma base analítica que auxilie empresas na formulação de cargos e na escolha do regime de trabalho mais adequado, considerando o perfil dos profissionais que possuem ou desejam atrair. Ao identificar os fatores que influenciam essa decisão, a pesquisa permite que organizações alinhem suas estratégias às expectativas do mercado, reduzindo a rotatividade e aumentando o engajamento dos colaboradores.
@@ -80,8 +75,6 @@ Além disso, compreender a relação entre fatores como cargo, setor de atuaçã
 
 > **Links Úteis**:
 > - [Como montar a justificativa](https://guiadamonografia.com.br/como-montar-justificativa-do-tcc/)
-
-
 
 ##    Público alvo
 
@@ -92,7 +85,6 @@ O público-alvo desse sistema inclui empresas de diversos setores que desejam en
 > - [Como definir o público alvo](https://exame.com/pme/5-dicas-essenciais-para-definir-o-publico-alvo-do-seu-negocio/)
 > - [Público-alvo: o que é, tipos, como definir seu público e exemplos](https://klickpages.com.br/blog/publico-alvo-o-que-e/)
 > - [Qual a diferença entre público-alvo e persona?](https://rockcontent.com/blog/diferenca-publico-alvo-e-persona/)
-
 
 ## Análise exploratórida dos dados
 
@@ -114,7 +106,6 @@ Os atributos que serão utilizados para o estudo:
 - Which work type keeps you focused while working? (Categórico)
 - Which work type do you prefer the most? (Categórico)  
  
- 
 #### `State_of_data_BR_2023_Kaggle - df_survey_2023`
 Essa base de dados contém os dados relacionados aos profissionais de dados que serão utilizados como base para o atual estudo
 
@@ -131,7 +122,7 @@ Os atributos utilizados no estudo serão:
 
 ###    Descrição de dados
 
-### Análise Exploratória dos Dados - `State_of_data_BR_2023_Kaggle - df_survey_2023`
+### `Análise Exploratória dos Dados - State_of_data_BR_2023_Kaggle - df_survey_2023`
 
 #### 1. Distribuição por Gênero
 
@@ -144,8 +135,6 @@ Os atributos utilizados no estudo serão:
     
 ![genero](https://github.com/user-attachments/assets/3df947d6-bf29-48f3-a2ff-c1cdfeaa71be)
 
-
-
 #### 2. Pessoas com Deficiência (PCD)
 
 - **Moda:** Não (5156 respostas)
@@ -155,8 +144,6 @@ Os atributos utilizados no estudo serão:
   - Sim: **2,09%**
     
 ![pcd](https://github.com/user-attachments/assets/dc9d3912-e8c3-436f-a168-727c6a638f13)
-
-
 
 #### 3. Estado de Residência
 
@@ -170,8 +157,6 @@ Os atributos utilizados no estudo serão:
  
 ![Estado](https://github.com/user-attachments/assets/69bdc86a-2929-417c-838f-3f1a2e3c4a64)
 
-
-
 #### 4. Nível Profissional
 
 - **Moda:** Sênior (1419 respostas)
@@ -181,8 +166,6 @@ Os atributos utilizados no estudo serão:
   - Sênior: **36,98%**
  
 ![Nivel](https://github.com/user-attachments/assets/d760284c-8ba4-484a-813a-3e1ed06a9e58)
-
-
 
 #### 5. Faixa Salarial
 
@@ -195,8 +178,6 @@ Os atributos utilizados no estudo serão:
 
 ![salario](https://github.com/user-attachments/assets/fd0ad9d4-b767-4fb6-a390-d8245c6c268d)
 
-
-
 #### 6. Forma de Trabalho Atual
 
 - **Moda:** Modelo 100% remoto (2201 respostas)
@@ -208,8 +189,6 @@ Os atributos utilizados no estudo serão:
 
 ![FormaTrabalho](https://github.com/user-attachments/assets/786e5481-844d-4005-bb91-a9e45279475b)
 
-
-
 #### 7. Forma de Trabalho Ideal
 
 - **Moda:** Modelo híbrido flexível (2144 respostas)
@@ -220,8 +199,6 @@ Os atributos utilizados no estudo serão:
   - Modelo híbrido flexível: **40,69%**
 
 ![formaIdeal](https://github.com/user-attachments/assets/6621eb7f-6d8c-4c6c-b494-f6fb14dffb8d)
-
-
 
 #### **1. Comparação entre Nível Profissional e Forma de Trabalho**
 
@@ -254,8 +231,6 @@ Os atributos utilizados no estudo serão:
   - **Híbrido flexível:** **27,23%** (244)  
 
 ![NivelXmodelo](https://github.com/user-attachments/assets/cf59df5f-0648-4393-8ebf-68c8e2d18607)
-
-
 
 #### **2. Comparação entre Estados e Forma de Trabalho**  
 
@@ -306,8 +281,6 @@ Os atributos utilizados no estudo serão:
 - **Híbrido flexível:** **13,82%** (21)  
 
 ![EstadoXmodelo](https://github.com/user-attachments/assets/69b4db17-d1e1-41a0-8338-d0bd773d0eca)
-
-
 
 #### **3. Comparação entre Faixa Salarial e Modelo de Trabalho**  
 
@@ -371,11 +344,7 @@ Os atributos utilizados no estudo serão:
 
 ![SalarioXmodelo](https://github.com/user-attachments/assets/0cbda8e9-5f41-4ef6-8e88-ff2f3673124c)
 
-
-
-
-
-### Análise Exploratória dos Dados - `The Impacts of Working Remotely and in an Office Survey`
+### `Análise Exploratória dos Dados - The Impacts of Working Remotely and in an Office Survey`
 
 ### 1. Você já trabalhou em casa?
 - **Moda:** Sim (60%)
@@ -385,18 +354,13 @@ Os atributos utilizados no estudo serão:
 
 ![Você já trabalhou em casa?](https://github.com/user-attachments/assets/a008207b-28f3-4665-bd10-63f400c36467)
 
-
- 
 ### 2. Você acha que trabalhar em casa aumenta sua produtividade?
 - **Moda:** Sim (70,00%)
 - **Distribuição:**
   - Sim: **70,00%**
   - Não: **30,00%**
  
-  ![Você acha que trabalhar em casa aumenta sua produtividade?](https://github.com/user-attachments/assets/ea750a56-e5f1-4152-bb81-8b2432c75d57)
-
-
-  
+![Você acha que trabalhar em casa aumenta sua produtividade?](https://github.com/user-attachments/assets/ea750a56-e5f1-4152-bb81-8b2432c75d57)
 
 ### 3. Você acha que trabalhar em casa impede você de sair?
 - **Moda:** Sim (70,00%)
@@ -404,23 +368,14 @@ Os atributos utilizados no estudo serão:
   - Sim: **70,00%**
   - Não: **30,00%**
     
-  ![Você acha que trabalhar em casa impede você de sair?](https://github.com/user-attachments/assets/9c316ebf-19f4-41bd-adcc-1d83a741ccf1)
-
-
-  
-
+![Você acha que trabalhar em casa impede você de sair?](https://github.com/user-attachments/assets/9c316ebf-19f4-41bd-adcc-1d83a741ccf1)
  
 ### 4. Você acha que trabalhar em casa lhe dá mais flexibilidade?
 - **Moda:** Sim (100,00%)
 - **Distribuição:**
   - Sim: **100,00%**
        
-  ![Você acha que trabalhar em casa lhe dá mais flexibilidade?](https://github.com/user-attachments/assets/98ea45f7-9712-4a20-9a64-f06fdf7c8f01)
-
-
-  
-
-  
+![Você acha que trabalhar em casa lhe dá mais flexibilidade?](https://github.com/user-attachments/assets/98ea45f7-9712-4a20-9a64-f06fdf7c8f01)
  
 ### 5. Você acha que trabalhar em casa economiza mais tempo?
 - **Moda:**  Não (60,00%)
@@ -428,70 +383,40 @@ Os atributos utilizados no estudo serão:
   - Sim: **40,00%**
   - Não: **60,00%**
            
-  ![Você acha que trabalhar em casa economiza mais tempo?](https://github.com/user-attachments/assets/3568e100-dd61-47e3-9759-49d06109e4a5)
+![Você acha que trabalhar em casa economiza mais tempo?](https://github.com/user-attachments/assets/3568e100-dd61-47e3-9759-49d06109e4a5)
 
-
-  
-
-  
- 
- 
 ### 6. Qual tipo de trabalho tem maior potencial para causar problemas físicos, como dores no pescoço, costas e pernas?
 - **Moda:** Trabalhar em casa (80,00%)
 - **Distribuição:**
   - Trabalhar em casa: **80,00%**
   - Trabalhar no escritório: **20,00%**
              
-  ![Qual tipo de trabalho tem maior potencial para causar problemas físicos, como dores no pescoço, costas e pernas?](https://github.com/user-attachments/assets/11f7024f-83ad-44bc-9c69-eb0f71d8e5ab)
+![Qual tipo de trabalho tem maior potencial para causar problemas físicos, como dores no pescoço, costas e pernas?](https://github.com/user-attachments/assets/11f7024f-83ad-44bc-9c69-eb0f71d8e5ab)
 
-
-  
-
-  
- 
- 
 ### 7. Qual tipo de trabalho tem maior potencial para causar transtornos mentais, como estresse, ansiedade e depressão?
 - **Moda:** Trabalhar em casa (60,00%)
 - **Distribuição:**
   - Trabalhar em casa: **60,00%**
   - Trabalhar no escritório: **40,00%**
               
-  ![Qual tipo de trabalho tem maior potencial para causar transtornos mentais, como estresse, ansiedade e depressão?](https://github.com/user-attachments/assets/36678202-95fd-4ffb-8ffd-ea7f64856968)
-
-
-  
-
-  
+![Qual tipo de trabalho tem maior potencial para causar transtornos mentais, como estresse, ansiedade e depressão?](https://github.com/user-attachments/assets/36678202-95fd-4ffb-8ffd-ea7f64856968)
  
-    
  ### 8. Você acha que trabalhar em casa impede você de ter contato com outras pessoas?
 - **Moda:** Trabalhar no escritório (60,00%)
 - **Distribuição:**
   - Sim: **60,00%**
   - Não: **40,00%**
               
-  ![Você acha que trabalhar em casa impede você de ter contato com outras pessoas?](https://github.com/user-attachments/assets/aff00bfa-074c-45da-a77d-900b2d6115ca)
+![Você acha que trabalhar em casa impede você de ter contato com outras pessoas?](https://github.com/user-attachments/assets/aff00bfa-074c-45da-a77d-900b2d6115ca)
 
-
-  
-
-  
- 
- 
 ### 9. Qual tipo de trabalho mantém você mais focado enquanto trabalha?
 - **Moda:** Sim (60%)
 - **Distribuição:**
   - Trabalhar no escritório: **60,00%**
   - Trabalhar em casa: **40,00%**
               
-  ![Qual tipo de trabalho mantém você mais focado enquanto trabalha?](https://github.com/user-attachments/assets/c8abd9a1-ae80-488f-b53d-9b274d766337)
+![Qual tipo de trabalho mantém você mais focado enquanto trabalha?](https://github.com/user-attachments/assets/c8abd9a1-ae80-488f-b53d-9b274d766337)
 
-
-  
-
-  
- 
- 
 ### 10. Qual tipo de trabalho você prefere?
 - **Moda:** Um modo de trabalho misto (50,00%)
 - **Distribuição:**
@@ -499,8 +424,7 @@ Os atributos utilizados no estudo serão:
   - Trabalhar em casa: **25,00%**
   - Trabalhar no escritório: **25,00%**
               
-  ![Qual tipo de trabalho você prefere?](https://github.com/user-attachments/assets/ff4e80f8-1e61-452e-9a11-b2a81ccd6594)
-
+![Qual tipo de trabalho você prefere?](https://github.com/user-attachments/assets/ff4e80f8-1e61-452e-9a11-b2a81ccd6594)
 
 ## Preparação dos dados
 
@@ -510,7 +434,6 @@ A preparação dos dados consiste dos seguintes passos:
 > - Tratamentos dos valores faltantes ou omissos: remoção, substituição, indução, etc.
 > - Tratamento dos valores inconsistentes: conversão, remoção de dados duplicados, remoção ou tratamento de ouliers.
 > - Conversão de dados: p. ex. numérico para categórico, categórico para binário, etc.
-
 
 ## Indução de modelos
 
