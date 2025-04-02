@@ -830,7 +830,27 @@ Os atributos que compõem o dataset são:
 
 A preparação dos dados consiste dos seguintes passos:
 
-> - Seleção dos atributos
+### Seleção de Atributos:
+#### `The Impacts of Working Remotely and in an Office Survey`
+* Do you think that working from home gives you more flexibility?
+* Do you think that working from home saves you more time?
+* Which work type has the potential to cause you physical problems, such as the neck, back, and leg pain?
+* Which work type has the potential to cause mental disorders, such as stress, anxiety, and depression?
+* Do you think that working from home prevents you from getting in contact with people?
+* Which work type keeps you focused while working? ()
+* Which work type do you prefer the most?
+
+#### `State_of_data_BR_2023_Kaggle - df_survey_2023`
+* ('P1_b ', 'Genero')
+* ('P1_d ', 'PCD')
+* ('P1_i ', 'Estado onde mora')
+* ('P2_f ', 'Cargo Atual')
+* ('P2_g ', 'Nivel')
+* ('P2_h ', 'Faixa salarial')
+* ('P2_o_4 ', 'Flexibilidade de trabalho remoto')
+* ('P2_r ', 'Atualmente qual a sua forma de trabalho?')
+* ('P2_s ', 'Qual a forma de trabalho ideal para você?')
+  
 > - Tratamentos dos valores faltantes ou omissos: remoção, substituição, indução, etc.
 > - Tratamento dos valores inconsistentes: conversão, remoção de dados duplicados, remoção ou tratamento de ouliers.
 > - Conversão de dados: p. ex. numérico para categórico, categórico para binário, etc.
