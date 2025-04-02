@@ -93,7 +93,7 @@ O público-alvo desse sistema inclui empresas de diversos setores que desejam en
 #### `The Impacts of Working Remotely and in an Office Survey`
 Essa base de dados contém atributos derivados de entrevistas com profissionais, nos quais eles compartilham percepções sobre produtividade, flexibilidade e outras experiências relacionadas ao trabalho remoto, híbrido e presencial. Esses dados servirão como referência para identificar padrões de comportamento, permitindo uma análise mais aprofundada das preferências e necessidades dos profissionais da área de dados.
 
-Os atributos que serão utilizados para o estudo:
+Os atributos que compõem o dataset são:
 
 | Atributo | Tipo | Dados |
 |----------|------|-------|
@@ -112,16 +112,413 @@ Os atributos que serão utilizados para o estudo:
 #### `State_of_data_BR_2023_Kaggle - df_survey_2023`
 Essa base de dados contém os dados relacionados aos profissionais de dados que serão utilizados como base para o atual estudo
 
-Os atributos utilizados no estudo serão:
-- ('P1_b ', 'Genero') (Categórico)
-- ('P1_d ', 'PCD') (Categórico)
-- ('P1_i ', 'Estado onde mora') (Categórico)
-- ('P2_f ', 'Cargo Atual') (Categórico)
-- ('P2_g ', 'Nivel') (Categórico)
-- ('P2_h ', 'Faixa salarial') (Categórico)
-- ('P2_o_4 ', 'Flexibilidade de trabalho remoto') (Categórico)
-- ('P2_r ', 'Atualmente qual a sua forma de trabalho?') (Categórico)
-- ('P2_s ', 'Qual a forma de trabalho ideal para você?') (Categórico)
+Os atributos que compõem o dataset são:
+
+<details>
+	<summary>📌Clique para ver todos os atributos⬇️</summary>
+	
+| Atributo | Tipo |
+|----------|------|
+| ('P0', 'id') | Quantitativo Discreto |
+| ('P1_a ', 'Idade') | Quantitativo Contínuo |
+| ('P1_a_1 ', 'Faixa idade') | Categórico Polinomial Não Ordinal |
+| ('P1_b ', 'Genero') | Categórico Polinomial Não Ordinal |
+| ('P1_c ', 'Cor/raca/etnia') | Categórico Polinomial Não Ordinal |
+| ('P1_d ', 'PCD') | Categórico Binário |
+| ('P1_e ', 'experiencia_profissional_prejudicada') | Categórico Polinomial Não Ordinal |
+| ('P1_e_1 ', 'Não acredito que minha experiência profissional seja afetada') | Categórico Binário |
+| ('P1_e_2 ', 'Experiencia prejudicada devido a minha Cor Raça Etnia') | Categórico Binário |
+| ('P1_e_3 ', 'Experiencia prejudicada devido a minha identidade de gênero') | Categórico Binário |
+| ('P1_e_4 ', 'Experiencia prejudicada devido ao fato de ser PCD') | Categórico Binário |
+| ('P1_f ', 'aspectos_prejudicados') | Categórico Polinomial Não Ordinal |
+| ('P1_f_1', 'Quantidade de oportunidades de emprego/vagas recebidas') | Categórico Binário |
+| ('P1_f_2', 'Senioridade das vagas recebidas em relação à sua experiência') | Categórico Binário |
+| ('P1_f_3', 'Aprovação em processos seletivos/entrevistas') | Categórico Binário |
+| ('P1_f_4', 'Oportunidades de progressão de carreira') | Categórico Binário |
+| ('P1_f_5', 'Velocidade de progressão de carreira') | Categórico Binário |
+| ('P1_f_6', 'Nível de cobrança no trabalho/Stress no trabalho') | Categórico Binário |
+| ('P1_f_7', 'Atenção dada diante das minhas opiniões e ideias') | Categórico Binário |
+| ('P1_f_8', 'Relação com outros membros da empresa, em momentos de trabalho') | Categórico Binário |
+| ('P1_f_9', 'Relação com outros membros da empresa, em momentos de integração e outros momentos fora do trabalho') | Categórico Binário |
+| ('P1_g ', 'vive_no_brasil') | Categórico Binário |
+| ('P1_i ', 'Estado onde mora') | Categórico Polinomial Não Ordinal |
+| ('P1_i_1 ', 'uf onde mora') | Categórico Polinomial Não Ordinal |
+| ('P1_i_2 ', 'Regiao onde mora') | Categórico Polinomial Não Ordinal |
+| ('P1_j ', 'Mudou de Estado?') | Categórico Binário |
+| ('P1_k ', 'Regiao de origem') | Categórico Polinomial Não Ordinal |
+| ('P1_l ', 'Nivel de Ensino') | Categórico Polinomial Não Ordinal |
+| ('P1_m ', 'Área de Formação') | Categórico Polinomial Não Ordinal |
+| ('P2_a ', 'Qual sua situação atual de trabalho?') | Categórico Polinomial Não Ordinal |
+| ('P2_b ', 'Setor') | Categórico Polinomial Não Ordinal |
+| ('P2_c ', 'Numero de Funcionarios') | Categórico Polinomial Não Ordinal |
+| ('P2_d ', 'Gestor?') | Categórico Binário |
+| ('P2_e ', 'Cargo como Gestor') | Categórico Polinomial Não Ordinal |
+| ('P2_f ', 'Cargo Atual') | Categórico Polinomial Não Ordinal |
+| ('P2_g ', 'Nivel') | Categórico Polinomial Ordinal |
+| ('P2_h ', 'Faixa salarial') | Categórico Polinomial Ordinal |
+| ('P2_i ', 'Quanto tempo de experiência na área de dados você tem?') | Categórico Polinomial Ordinal |
+| ('P2_j ', 'Quanto tempo de experiência na área de TI/Engenharia de Software você teve antes de começar a trabalhar na área de dados?') | Categórico Polinomial Ordinal |
+| ('P2_k ', 'Você está satisfeito na sua empresa atual?') | Categórico Binário |
+| ('P2_l ', 'Qual o principal motivo da sua insatisfação com a empresa atual?') | Categórico Polinomial Não Ordinal |
+| ('P2_l_1 ', 'Falta de oportunidade de crescimento no emprego atual') | Categórico Binário |
+| ('P2_l_2 ', 'Salário atual não corresponde ao mercado') | Categórico Binário |
+| ('P2_l_3 ', 'Não tenho uma boa relação com meu líder/gestor') | Categórico Binário |
+| ('P2_l_4 ', 'Gostaria de trabalhar em em outra área de atuação') | Categórico Binário |
+| ('P2_l_5 ', 'Gostaria de receber mais benefícios') | Categórico Binário |
+| ('P2_l_6 ', 'O clima de trabalho/ambiente não é bom') | Categórico Binário |
+| ('P2_l_7 ', 'Falta de maturidade analítica na empresa') | Categórico Binário |
+| ('P2_m ', 'Você participou de entrevistas de emprego nos últimos 6 meses?') | Categórico Polinomial Não Ordinal |
+| ('P2_n ', 'Você pretende mudar de emprego nos próximos 6 meses?') | Categórico Polinomial Não Ordinal |
+| ('P2_o ', 'Quais os principais critérios que você leva em consideração no momento de decidir onde trabalhar?') | Categórico Polinomial Não Ordinal |
+| ('P2_o_1 ', 'Remuneração/Salário') | Categórico Binário |
+| ('P2_o_2 ', 'Benefícios') | Categórico Binário |
+| ('P2_o_3 ', 'Propósito do trabalho e da empresa') | Categórico Binário |
+| ('P2_o_4 ', 'Flexibilidade de trabalho remoto') | Categórico Binário |
+| ('P2_o_5 ', 'Ambiente e clima de trabalho') | Categórico Binário |
+| ('P2_o_6 ', 'Oportunidade de aprendizado e trabalhar com referências na área') | Categórico Binário |
+| ('P2_o_7 ', 'Plano de carreira e oportunidades de crescimento profissional') | Categórico Binário |
+| ('P2_o_8 ', 'Maturidade da empresa em termos de tecnologia e dados') | Categórico Binário |
+| ('P2_o_9 ', 'Qualidade dos gestores e líderes') | Categórico Binário |
+| ('P2_o_10 ', 'Reputação que a empresa tem no mercado') | Categórico Binário |
+| ('P2_q ', 'Empresa que trabaha passou por layoff em 2023') | Categórico Polinomial Não Ordinal |
+| ('P2_r ', 'Atualmente qual a sua forma de trabalho?') | Categórico Polinomial Não Ordinal |
+| ('P2_s ', 'Qual a forma de trabalho ideal para você?') | Categórico Polinomial Não Ordinal |
+| ('P2_t ', 'Caso sua empresa decida pelo modelo 100% presencial qual será sua atitude?') | Categórico Polinomial Não Ordinal |
+| ('P3_a ', 'Qual o número aproximado de pessoas que atuam com dados na sua empresa hoje?') | Categórico Polinomial Não Ordinal |
+| ('P3_b ', 'Quais desses papéis/cargos fazem parte do time (ou chapter) de dados da sua empresa?') | Categórico Polinomial Não Ordinal |
+| ('P3_b_1 ', 'Analytics Engineer') | Categórico Binário |
+| ('P3_b_2 ', 'Engenharia de Dados/Data Engineer') | Categórico Binário |
+| ('P3_b_3 ', 'Analista de Dados/Data Analyst') | Categórico Binário |
+| ('P3_b_4 ', 'Cientista de Dados/Data Scientist') | Categórico Binário |
+| ('P3_b_5 ', 'Database Administrator/DBA') | Categórico Binário |
+| ('P3_b_6 ', 'Analista de Business Intelligence/BI') | Categórico Binário |
+| ('P3_b_7 ', 'Arquiteto de Dados/Data Architect') | Categórico Binário |
+| ('P3_b_8 ', 'Data Product Manager/DPM') | Categórico Binário |
+| ('P3_b_9 ', 'Business Analyst') | Categórico Binário |
+| ('P3_c ', 'Quais dessas responsabilidades fazem parte da sua rotina atual de trabalho como gestor?') | Categórico Polinomial Não Ordinal |
+| ('P3_c_1 ', 'Pensar na visão de longo prazo de dados da empresa e fortalecimento da cultura analítica da companhia.') | Categórico Binário |
+| ('P3_c_2 ', 'Organização de treinamentos e iniciativas com o objetivo de aumentar a maturidade analítica das áreas de negócios.') | Categórico Binário |
+| ('P3_c_3 ', 'Atração, seleção e contratação de talentos para o time de dados.') | Categórico Binário |
+| ('P3_c_4 ', 'Decisão sobre contratação de ferramentas e tecnologias relacionadas a dados.') | Categórico Binário |
+| ('P3_c_5 ', 'Sou gestor da equipe responsável pela engenharia de dados e por manter o Data Lake da empresa como fonte única dos dados, garantindo a qualidade e confiabilidade da informação.') | Categórico Binário |
+| ('P3_c_6 ', 'Sou gestor da equipe responsável pela entrega de dados, estudos, relatórios e dashboards para as áreas de negócio da empresa.') | Categórico Binário |
+| ('P3_c_7 ', 'Sou gestor da equipe responsável por iniciativas e projetos envolvendo Inteligência Artificial e Machine Learning.') | Categórico Binário |
+| ('P3_c_8 ', 'Apesar de ser gestor ainda atuo na parte técnica, construindo soluções/análises/modelos etc.') | Categórico Binário |
+| ('P3_c_9 ', 'Gestão de projetos de dados, cuidando das etapas, equipes envolvidas, atingimento dos objetivos etc.') | Categórico Binário |
+| ('P3_c_10 ', 'Gestão de produtos de dados, cuidando da visão dos produtos, backlog, feedback de usuários etc.') | Categórico Binário |
+| ('P3_c_11 ', 'Gestão de pessoas, apoio no desenvolvimento das pessoas, evolução de carreira') | Categórico Binário |
+| ('P3_d ', 'Quais são os 3 maiores desafios que você tem como gestor no atual momento?') | Categórico Polinomial Não Ordinal |
+| ('P3_d_1 ', 'a Contratar novos talentos.') | Categórico Binário |
+| ('P3_d_2 ', 'b Reter talentos.') | Categórico Binário |
+| ('P3_d_3 ', 'c Convencer a empresa a aumentar os investimentos na área de dados.') | Categórico Binário |
+| ('P3_d_4 ', 'd Gestão de equipes no ambiente remoto.') | Categórico Binário |
+| ('P3_d_5 ', 'e Gestão de projetos envolvendo áreas multidisciplinares da empresa.') | Categórico Binário |
+| ('P3_d_6 ', 'f Organizar as informações e garantir a qualidade e confiabilidade.') | Categórico Binário |
+| ('P3_d_7 ', 'g Conseguir processar e armazenar um alto volume de dados.') | Categórico Binário |
+| ('P3_d_8 ', 'h Conseguir gerar valor para as áreas de negócios através de estudos e experimentos.') | Categórico Binário |
+| ('P3_d_9 ', 'i Desenvolver e manter modelos Machine Learning em produção.') | Categórico Binário |
+| ('P3_d_10 ', 'j Gerenciar a expectativa das áreas de negócio em relação as entregas das equipes de dados.') | Categórico Binário |
+| ('P3_d_11 ', 'k Garantir a manutenção dos projetos e modelos em produção, em meio ao crescimento da empresa.') | Categórico Binário |
+| ('P3_d_12 ', 'Conseguir levar inovação para a empresa através dos dados.') | Categórico Binário |
+| ('P3_d_13 ', 'Garantir retorno do investimento (ROI) em projetos de dados.') | Categórico Binário |
+| ('P3_d_14 ', 'Dividir o tempo entre entregas técnicas e gestão.') | Categórico Binário |
+| ('P3_e ', 'AI Generativa é uma prioridade em sua empresa?') | Categórico Polinomial Não Ordinal |
+| ('P3_f ', 'Tipos de uso de AI Generativa e LLMs na empresa') | Categórico Polinomial Não Ordinal |
+| ('P3_f_1 ', 'Colaboradores usando AI generativa de forma independente e descentralizada') | Categórico Binário |
+| ('P3_f_2 ', 'Direcionamento centralizado do uso de AI generativa') | Categórico Binário |
+| ('P3_f_3 ', 'Desenvolvedores utilizando Copilots') | Categórico Binário |
+| ('P3_f_4 ', 'AI Generativa e LLMs para melhorar produtos externos') | Categórico Binário |
+| ('P3_f_5 ', 'AI Generativa e LLMs para melhorar produtos internos para os colaboradores') | Categórico Binário |
+| ('P3_f_6 ', 'IA Generativa e LLMs como principal frente do negócio') | Categórico Binário |
+| ('P3_f_7 ', 'IA Generativa e LLMs não é prioridade') | Categórico Binário |
+| ('P3_f_8 ', 'Não sei opinar sobre o uso de IA Generativa e LLMs na empresa') | Categórico Binário |
+| ('P3_g ', 'Motivos que levam a empresa a não usar AI Genrativa e LLMs') | Categórico Polinomial Não Ordinal |
+| ('P3_g_1 ', 'Falta de compreensão dos casos de uso') | Categórico Binário |
+| ('P3_g_2 ', 'Falta de confiabilidade das saídas (alucinação dos modelos)') | Categórico Binário |
+| ('P3_g_3 ', 'Incerteza em relação a regulamentação') | Categórico Binário |
+| ('P3_g_4 ', 'Preocupações com segurança e privacidade de dados') | Categórico Binário |
+| ('P3_g_5 ', 'Retorno sobre investimento (ROI) não comprovado de IA Generativa') | Categórico Binário |
+| ('P3_g_6 ', 'Dados da empresa não estão prontos para uso de IA Generativa') | Categórico Binário |
+| ('P3_g_7 ', 'Falta de expertise ou falta de recursos') | Categórico Binário |
+| ('P3_g_8 ', 'Alta direção da empresa não vê valor ou não vê como prioridade') | Categórico Binário |
+| ('P3_g_9 ', 'Preocupações com propriedade intelectual') | Categórico Binário |
+| ('P4_a ', 'Mesmo que esse não seja seu cargo formal, você considera que sua atuação no dia a dia, reflete alguma das opções listadas abaixo?') | Categórico Polinomial Não Ordinal |
+| ('P4_a_1 ', 'Atuacao') | Categórico Polinomial Não Ordinal |
+| ('P4_b ', 'Quais das fontes de dados listadas você já analisou ou processou no trabalho?') | Categórico Polinomial Não Ordinal |
+| ('P4_b_1 ', 'Dados relacionais (estruturados em bancos SQL)') | Categórico Binário |
+| ('P4_b_2 ', 'Dados armazenados em bancos NoSQL') | Categórico Binário |
+| ('P4_b_3 ', 'Imagens') | Categórico Binário |
+| ('P4_b_4 ', 'Textos/Documentos') | Categórico Binário |
+| ('P4_b_5 ', 'Vídeos') | Categórico Binário |
+| ('P4_b_6 ', 'Áudios') | Categórico Binário |
+| ('P4_b_7 ', 'Planilhas') | Categórico Binário |
+| ('P4_b_8 ', 'Dados georeferenciados') | Categórico Binário |
+| ('P4_c ', 'Entre as fontes de dados listadas, quais você utiliza na maior parte do tempo?') | Categórico Polinomial Não Ordinal |
+| ('P4_c_1 ', 'Dados relacionais (estruturados em bancos SQL)') | Categórico Binário |
+| ('P4_c_2 ', 'Dados armazenados em bancos NoSQL') | Categórico Binário |
+| ('P4_c_3 ', 'Imagens') | Categórico Binário |
+| ('P4_c_4 ', 'Textos/Documentos') | Categórico Binário |
+| ('P4_c_5 ', 'Vídeos') | Categórico Binário |
+| ('P4_c_6 ', 'Áudios') | Categórico Binário |
+| ('P4_c_7 ', 'Planilhas') | Categórico Binário |
+| ('P4_c_8 ', 'Dados georeferenciados') | Categórico Binário |
+| ('P4_d ', 'Quais das linguagens listadas abaixo você utiliza no trabalho?') | Categórico Polinomial Não Ordinal |
+| ('P4_d_1 ', 'SQL') | Categórico Binário |
+| ('P4_d_2 ', 'R ') | Categórico Binário |
+| ('P4_d_3 ', 'Python') | Categórico Binário |
+| ('P4_d_4 ', 'C/C++/C#') | Categórico Binário |
+| ('P4_d_5 ', '.NET') | Categórico Binário |
+| ('P4_d_6 ', 'Java') | Categórico Binário |
+| ('P4_d_7 ', 'Julia') | Categórico Binário |
+| ('P4_d_8 ', 'SAS/Stata') | Categórico Binário |
+| ('P4_d_9 ', 'Visual Basic/VBA') | Categórico Binário |
+| ('P4_d_10 ', 'Scala') | Categórico Binário |
+| ('P4_d_11 ', 'Matlab') | Categórico Binário |
+| ('P4_d_12 ', 'Rust') | Categórico Binário |
+| ('P4_d_13 ', 'PHP') | Categórico Binário |
+| ('P4_d_14 ', 'JavaScript') | Categórico Binário |
+| ('P4_d_15 ', 'Não utilizo nenhuma linguagem') | Categórico Binário |
+| ('P4_e ', 'Entre as linguagens listadas abaixo, qual é a que você mais utiliza no trabalho?') | Categórico Polinomial Não Ordinal |
+| ('P4_f ', 'Entre as linguagens listadas abaixo, qual é a sua preferida?') | Categórico Polinomial Não Ordinal |
+| ('P4_g ', 'Quais dos bancos de dados/fontes de dados listados abaixo você utiliza no trabalho?') | Categórico Polinomial Não Ordinal |
+| ('P4_g_1 ', 'MySQL') | Categórico Binário |
+| ('P4_g_2 ', 'Oracle') | Categórico Binário |
+| ('P4_g_3 ', 'SQL SERVER') | Categórico Binário |
+| ('P4_g_4 ', 'Amazon Aurora ou RDS') | Categórico Binário |
+| ('P4_g_5 ', 'DynamoDB') | Categórico Binário |
+| ('P4_g_6 ', 'CoachDB') | Categórico Binário |
+| ('P4_g_7 ', 'Cassandra') | Categórico Binário |
+| ('P4_g_8 ', 'MongoDB') | Categórico Binário |
+| ('P4_g_9 ', 'MariaDB') | Categórico Binário |
+| ('P4_g_10 ', 'Datomic') | Categórico Binário |
+| ('P4_g_11 ', 'S3') | Categórico Binário |
+| ('P4_g_12 ', 'PostgreSQL') | Categórico Binário |
+| ('P4_g_13 ', 'ElasticSearch') | Categórico Binário |
+| ('P4_g_14 ', 'DB2') | Categórico Binário |
+| ('P4_g_15 ', 'Microsoft Access') | Categórico Binário |
+| ('P4_g_16 ', 'SQLite') | Categórico Binário |
+| ('P4_g_17 ', 'Sybase') | Categórico Binário |
+| ('P4_g_18 ', 'Firebase') | Categórico Binário |
+| ('P4_g_19 ', 'Vertica') | Categórico Binário |
+| ('P4_g_20 ', 'Redis') | Categórico Binário |
+| ('P4_g_21 ', 'Neo4J') | Categórico Binário |
+| ('P4_g_22 ', 'Google BigQuery') | Categórico Binário |
+| ('P4_g_23 ', 'Google Firestore') | Categórico Binário |
+| ('P4_g_24 ', 'Amazon Redshift') | Categórico Binário |
+| ('P4_g_25 ', 'Amazon Athena') | Categórico Binário |
+| ('P4_g_26 ', 'Snowflake') | Categórico Binário |
+| ('P4_g_27 ', 'Databricks') | Categórico Binário |
+| ('P4_g_28 ', 'HBase') | Categórico Binário |
+| ('P4_g_29 ', 'Presto') | Categórico Binário |
+| ('P4_g_30 ', 'Splunk') | Categórico Binário |
+| ('P4_g_31 ', 'SAP HANA') | Categórico Binário |
+| ('P4_g_32 ', 'Hive') | Categórico Binário |
+| ('P4_g_33 ', 'Firebird') | Categórico Binário |
+| ('P4_h ', 'Dentre as opções listadas, qual sua Cloud preferida?') | Categórico Polinomial Não Ordinal |
+| ('P4_h_1 ', 'Azure (Microsoft)') | Categórico Binário |
+| ('P4_h_2 ', 'Amazon Web Services (AWS)') | Categórico Binário |
+| ('P4_h_3 ', 'Google Cloud (GCP)') | Categórico Binário |
+| ('P4_h_4 ', 'Oracle Cloud') | Categórico Binário |
+| ('P4_h_5 ', 'IBM') | Categórico Binário |
+| ('P4_h_6 ', 'Servidores On Premise/Não utilizamos Cloud') | Categórico Binário |
+| ('P4_h_7 ', 'Cloud Própria') | Categórico Binário |
+| ('P4_i ', 'Cloud preferida') | Categórico Polinomial Não Ordinal |
+| ('P4_j ', 'Ferramenta de BI utilizada no dia a dia') | Categórico Polinomial Não Ordinal |
+| ('P4_j_1 ', 'Microsoft PowerBI') | Categórico Binário |
+| ('P4_j_2 ', 'Qlik View/Qlik Sense') | Categórico Binário |
+| ('P4_j_3 ', 'Tableau') | Categórico Binário |
+| ('P4_j_4 ', 'Metabase') | Categórico Binário |
+| ('P4_j_5 ', 'Superset') | Categórico Binário |
+| ('P4_j_6 ', 'Redash') | Categórico Binário |
+| ('P4_j_7 ', 'Looker') | Categórico Binário |
+| ('P4_j_8 ', 'Looker Studio(Google Data Studio)') | Categórico Binário |
+| ('P4_j_9 ', 'Amazon Quicksight') | Categórico Binário |
+| ('P4_j_10 ', 'Mode') | Categórico Binário |
+| ('P4_j_11 ', 'Alteryx') | Categórico Binário |
+| ('P4_j_12 ', 'MicroStrategy') | Categórico Binário |
+| ('P4_j_13 ', 'IBM Analytics/Cognos') | Categórico Binário |
+| ('P4_j_14 ', 'SAP Business Objects/SAP Analytics') | Categórico Binário |
+| ('P4_j_15 ', 'Oracle Business Intelligence') | Categórico Binário |
+| ('P4_j_16 ', 'Salesforce/Einstein Analytics') | Categórico Binário |
+| ('P4_j_17 ', 'Birst') | Categórico Binário |
+| ('P4_j_18 ', 'SAS Visual Analytics') | Categórico Binário |
+| ('P4_j_19 ', 'Grafana') | Categórico Binário |
+| ('P4_j_20 ', 'TIBCO Spotfire') | Categórico Binário |
+| ('P4_j_21 ', 'Pentaho') | Categórico Binário |
+| ('P4_j_22 ', 'Fazemos todas as análises utilizando apenas Excel ou planilhas do google') | Categórico Binário |
+| ('P4_j_23 ', 'Não utilizo nenhuma ferramenta de BI no trabalho') | Categórico Binário |
+| ('P4_k ', 'Qual sua ferramenta de BI preferida?') | Categórico Polinomial Não Ordinal |
+| ('P4_l ', 'Qual o tipo de uso de AI Generativa e LLMs na empresa') | Categórico Polinomial Não Ordinal |
+| ('P4_l_1 ', 'Colaboradores usando AI generativa de forma independente e descentralizada') | Categórico Binário |
+| ('P4_l_2 ', 'Direcionamento centralizado do uso de AI generativa') | Categórico Binário |
+| ('P4_l_3 ', 'Desenvolvedores utilizando Copilots') | Categórico Binário |
+| ('P4_l_4 ', 'AI Generativa e LLMs para melhorar produtos externos para os clientes finais') | Categórico Binário |
+| ('P4_l_5 ', 'AI Generativa e LLMs para melhorar produtos internos para os colaboradores') | Categórico Binário |
+| ('P4_l_6 ', 'IA Generativa e LLMs como principal frente do negócio') | Categórico Binário |
+| ('P4_l_7 ', 'IA Generativa e LLMs não é prioridade') | Categórico Binário |
+| ('P4_l_8 ', 'Não sei opinar sobre o uso de IA Generativa e LLMs na empresa') | Categórico Binário |
+| ('P4_m ', 'Utiliza ChatGPT ou LLMs no trabalho?') | Categórico Polinomial Não Ordinal |
+| ('P4_m_1 ', 'Não uso soluções de AI Generativa com foco em produtividade') | Categórico Binário |
+| ('P4_m_2 ', 'Uso soluções gratuitas de AI Generativa com foco em produtividade') | Categórico Binário |
+| ('P4_m_3 ', 'Uso e pago pelas soluções de AI Generativa com foco em produtividade') | Categórico Binário |
+| ('P4_m_4 ', 'A empresa que trabalho paga pelas soluções de AI Generativa com foco em produtividade') | Categórico Binário |
+| ('P4_m_5 ', 'Uso soluções do tipo Copilot') | Categórico Binário |
+| ('P5_a ', 'Qual seu objetivo na área de dados?') | Categórico Polinomial Não Ordinal |
+| ('P5_b ', 'Qual oportunidade você está buscando?') | Categórico Polinomial Não Ordinal |
+| ('P5_c ', 'Há quanto tempo você busca uma oportunidade na área de dados?') | Categórico Polinomial Não Ordinal |
+| ('P5_d ', 'Como tem sido a busca por um emprego na área de dados?') | Categórico Polinomial Não Ordinal |
+| ('P6_a ', 'Quais das opções abaixo fazem parte da sua rotina no trabalho atual como engenheiro de dados?') | Categórico Polinomial Não Ordinal |
+| ('P6_a_1 ', 'Desenvolvo pipelines de dados utilizando linguagens de programação como Python, Scala, Java etc.') | Categórico Binário |
+| ('P6_a_2 ', 'Realizo construções de ETL's em ferramentas como Pentaho, Talend, Dataflow etc.') | Categórico Binário |
+| ('P6_a_3 ', 'Crio consultas através da linguagem SQL para exportar informações e compartilhar com as áreas de negócio.') | Categórico Binário |
+| ('P6_a_4 ', 'Atuo na integração de diferentes fontes de dados através de plataformas proprietárias como Stitch Data, Fivetran etc.') | Categórico Binário |
+| ('P6_a_5 ', 'Modelo soluções de arquitetura de dados, criando componentes de ingestão de dados, transformação e recuperação da informação.') | Categórico Binário |
+| ('P6_a_6 ', 'Desenvolvo/cuido da manutenção de repositórios de dados baseados em streaming de eventos como Data Lakes e Data Lakehouses.') | Categórico Binário |
+| ('P6_a_7 ', 'Atuo na modelagem dos dados, com o objetivo de criar conjuntos de dados como Data Warehouses, Data Marts etc.') | Categórico Binário |
+| ('P6_a_8 ', 'Cuido da qualidade dos dados, metadados e dicionário de dados.') | Categórico Binário |
+| ('P6_a_9 ', 'Nenhuma das opções listadas refletem meu dia a dia.') | Categórico Binário |
+| ('P6_b ', 'Quais as ferramentas/tecnologias de ETL que você utiliza no trabalho como Data Engineer?') | Categórico Polinomial Não Ordinal |
+| ('P6_b_1 ', 'Scripts Python') | Categórico Binário |
+| ('P6_b_2 ', 'SQL & Stored Procedures') | Categórico Binário |
+| ('P6_b_3 ', 'Apache Airflow') | Categórico Binário |
+| ('P6_b_4 ', 'Apache NiFi') | Categórico Binário |
+| ('P6_b_5 ', 'Luigi') | Categórico Binário |
+| ('P6_b_6 ', 'AWS Glue') | Categórico Binário |
+| ('P6_b_7 ', 'Talend') | Categórico Binário |
+| ('P6_b_8 ', 'Pentaho') | Categórico Binário |
+| ('P6_b_9 ', 'Alteryx') | Categórico Binário |
+| ('P6_b_10 ', 'Stitch') | Categórico Binário |
+| ('P6_b_11 ', 'Fivetran') | Categórico Binário |
+| ('P6_b_12 ', 'Google Dataflow') | Categórico Binário |
+| ('P6_b_13 ', 'Oracle Data Integrator') | Categórico Binário |
+| ('P6_b_14 ', 'IBM DataStage') | Categórico Binário |
+| ('P6_b_15 ', 'SAP BW ETL') | Categórico Binário |
+| ('P6_b_16 ', 'SQL Server Integration Services (SSIS)) | Categórico Binário |
+| ('P6_b_17 ', 'SAS Data Integration') | Categórico Binário |
+| ('P6_b_18 ', 'Qlik Sense') | Categórico Binário |
+| ('P6_b_19 ', 'Knime') | Categórico Binário |
+| ('P6_b_20 ', 'Databricks') | Categórico Binário |
+| ('P6_b_21 ', 'Não utilizo ferramentas de ETL') | Categórico Binário |
+| ('P6_c ', 'Sua organização possui um Data Lake?') | Categórico Binário |
+| ('P6_d ', 'Qual tecnologia utilizada como plataforma do Data Lake?') | Categórico Polinomial Não Ordinal |
+| ('P6_e ', 'Sua organização possui um Data Warehouse?') | Categórico Binário |
+| ('P6_f ', 'Qual tecnologia utilizada como plataforma do Data Warehouse?') | Categórico Polinomial Não Ordinal |
+| ('P6_g ', 'Quais as ferramentas de gestão de Qualidade de dados, Metadados e catálogo de dados você utiliza no trabalho?') | Categórico Polinomial Não Ordinal |
+| ('P6_h ', 'Em qual das opções abaixo você gasta a maior parte do seu tempo?') | Categórico Polinomial Não Ordinal |
+| ('P6_h_1 ', 'Desenvolvendo pipelines de dados utilizando linguagens de programação como Python, Scala, Java etc.') | Categórico Binário |
+| ('P6_h_2 ', 'Realizando construções de ETL's em ferramentas como Pentaho, Talend, Dataflow etc.') | Categórico Binário |
+| ('P6_h_3 ', 'Criando consultas através da linguagem SQL para exportar informações e compartilhar com as áreas de negócio.') | Categórico Binário |
+| ('P6_h_4 ', 'Atuando na integração de diferentes fontes de dados através de plataformas proprietárias como Stitch Data, Fivetran etc.') | Categórico Binário |
+| ('P6_h_5 ', 'Modelando soluções de arquitetura de dados, criando componentes de ingestão de dados, transformação e recuperação da informação.') | Categórico Binário |
+| ('P6_h_6 ', 'Desenvolvendo/cuidando da manutenção de repositórios de dados baseados em streaming de eventos como Data Lakes e Data Lakehouses.') | Categórico Binário |
+| ('P6_h_7 ', 'Atuando na modelagem dos dados, com o objetivo de criar conjuntos de dados como Data Warehouses, Data Marts etc.') | Categórico Binário |
+| ('P6_h_8 ', 'Cuidando da qualidade dos dados, metadados e dicionário de dados.') | Categórico Binário |
+| ('P6_h_9 ', 'Nenhuma das opções listadas refletem meu dia a dia.') | Categórico Binário |
+| ('P7_1 ', 'Quais das opções abaixo fazem parte da sua rotina no trabalho atual com análise de dados?') | Categórico Polinomial Não Ordinal |
+| ('P7_a_1 ', 'Processo e analiso dados utilizando linguagens de programação como Python, R etc.') | Categórico Binário |
+| ('P7_a_2 ', 'Realizo construções de dashboards em ferramentas de BI como PowerBI, Tableau, Looker, Qlik etc.') | Categórico Binário |
+| ('P7_a_3 ', 'Crio consultas através da linguagem SQL para exportar informações e compartilhar com as áreas de negócio.') | Categórico Binário |
+| ('P7_a_4 ', 'Utilizo API's para extrair dados e complementar minhas análises.') | Categórico Binário |
+| ('P7_a_5 ', 'Realizo experimentos e estudos utilizando metodologias estatísticas como teste de hipótese, modelos de regressão etc.') | Categórico Binário |
+| ('P7_a_6 ', 'Desenvolvo/cuido da manutenção de ETL's utilizando tecnologias como Talend, Pentaho, Airflow, Dataflow etc.') | Categórico Binário |
+| ('P7_a_7 ', 'Atuo na modelagem dos dados, com o objetivo de criar conjuntos de dados, Data Warehouses, Data Marts etc.') | Categórico Binário |
+| ('P7_a_8 ', 'Desenvolvo/cuido da manutenção de planilhas para atender as áreas de negócio.') | Categórico Binário |
+| ('P7_a_9 ', 'Utilizo ferramentas avançadas de estatística como SASS, PSS, Stata etc') | Categórico Binário |
+| ('P7_a_10 ', 'Nenhuma das opções listadas refletem meu dia a dia.') | Categórico Binário |
+| ('P7_b ', 'Quais as ferramentas/tecnologias de ETL que você utiliza no trabalho como Data Analyst?') | Categórico Polinomial Não Ordinal |
+| ('P7_b_1 ', 'Scripts Python') | Categórico Binário |
+| ('P7_b_2 ', 'SQL & Stored Procedures') | Categórico Binário |
+| ('P7_b_3 ', 'Apache Airflow') | Categórico Binário |
+| ('P7_b_4 ', 'Apache NiFi') | Categórico Binário |
+| ('P7_b_5 ', 'Luigi') | Categórico Binário |
+| ('P7_b_6 ', 'AWS Glue') | Categórico Binário |
+| ('P7_b_7 ', 'Talend') | Categórico Binário |
+| ('P7_b_8 ', 'Pentaho') | Categórico Binário |
+| ('P7_b_9 ', 'Alteryx') | Categórico Binário |
+| ('P7_b_10 ', 'Stitch') | Categórico Binário |
+| ('P7_b_11 ', 'Fivetran') | Categórico Binário |
+| ('P7_b_12 ', 'Google Dataflow') | Categórico Binário |
+| ('P7_b_13 ', 'Oracle Data Integrator') | Categórico Binário |
+| ('P7_b_14 ', 'IBM DataStage') | Categórico Binário |
+| ('P7_b_15 ', 'SAP BW ETL') | Categórico Binário |
+| ('P7_b_16 ', 'SQL Server Integration Services (SSIS)') | Categórico Binário |
+| ('P7_b_17 ', 'SAS Data Integration') | Categórico Binário |
+| ('P7_b_18 ', 'Qlik Sense') | Categórico Binário |
+| ('P7_b_19 ', 'Knime') | Categórico Binário |
+| ('P7_b_20 ', 'Databricks') | Categórico Binário |
+| ('P7_b_21 ', 'Não utilizo ferramentas de ETL') | Categórico Binário |
+| ('P7_c ', 'Sua empresa utiliza alguma das ferramentas listadas para dar mais autonomia em análise de dados para as áreas de negócio?') | Categórico Polinomial Não Ordinal |
+| ('P7_c_1 ', 'Ferramentas de AutoML como H2O.ai, Data Robot, BigML etc.') | Categórico Binário |
+| ('P7_c_2 ', '""Point and Click"" Analytics como Alteryx, Knime, Rapidminer etc.') | Categórico Binário |
+| ('P7_c_3 ', 'Product metricts & Insights como Mixpanel, Amplitude, Adobe Analytics.') | Categórico Binário |
+| ('P7_c_4 ', 'Ferramentas de análise dentro de ferramentas de CRM como Salesforce Einstein Anaytics ou Zendesk dashboards.') | Categórico Binário |
+| ('P7_c_5 ', 'Minha empresa não utiliza essas ferramentas.') | Categórico Binário |
+| ('P7_c_6 ', 'Não sei informar.') | Categórico Binário |
+| ('P7_d ', 'Em qual das opções abaixo você gasta a maior parte do seu tempo de trabalho?') | Categórico Polinomial Não Ordinal |
+| ('P7_d_1 ', 'Processando e analisando dados utilizando linguagens de programação como Python, R etc.') | Categórico Binário |
+| ('P7_d_2 ', 'Realizando construções de dashboards em ferramentas de BI como PowerBI, Tableau, Looker, Qlik etc.') | Categórico Binário |
+| ('P7_d_3 ', 'Criando consultas através da linguagem SQL para exportar informações e compartilhar com as áreas de negócio.') | Categórico Binário |
+| ('P7_d_4 ', 'Utilizando API's para extrair dados e complementar minhas análises.') | Categórico Binário |
+| ('P7_d_5 ', 'Realizando experimentos e estudos utilizando metodologias estatísticas como teste de hipótese, modelos de regressão etc.') | Categórico Binário |
+| ('P7_d_6 ', 'Desenvolvendo/cuidando da manutenção de ETL's utilizando tecnologias como Talend, Pentaho, Airflow, Dataflow etc.') | Categórico Binário |
+| ('P7_d_7 ', 'Atuando na modelagem dos dados, com o objetivo de criar conjuntos de dados, Data Warehouses, Data Marts etc.') | Categórico Binário |
+| ('P7_d_8 ', 'Desenvolvendo/cuidando da manutenção de planilhas do Excel ou Google Sheets para atender as áreas de negócio.') | Categórico Binário |
+| ('P7_d_9 ', 'Utilizando ferramentas avançadas de estatística como SAS, SPSS, Stata etc, para realizar análises.') | Categórico Binário |
+| ('P7_d_10 ', 'Nenhuma das opções listadas refletem meu dia a dia.') | Categórico Binário |
+| ('P8_a ', 'Quais das opções abaixo fazem parte da sua rotina no trabalho atual com ciência de dados?') | Categórico Polinomial Não Ordinal |
+| ('P8_a_1 ', 'Estudos Ad-hoc com o objetivo de confirmar hipóteses, realizar modelos preditivos, forecasts, análise de cluster para resolver problemas pontuais e responder perguntas das áreas de negócio.') | Categórico Binário |
+| ('P8_a_2 ', 'Sou responsável pela coleta e limpeza dos dados que uso para análise e modelagem.') | Categórico Binário |
+| ('P8_a_3 ', 'Sou responsável por entrar em contato com os times de negócio para definição do problema, identificar a solução e apresentação de resultados.') | Categórico Binário |
+| ('P8_a_4 ', 'Desenvolvo modelos de Machine Learning com o objetivo de colocar em produção em sistemas (produtos de dados).') | Categórico Binário |
+| ('P8_a_5 ', 'Sou responsável por colocar modelos em produção, criar os pipelines de dados, APIs de consumo e monitoramento.') | Categórico Binário |
+| ('P8_a_6 ', 'Cuido da manutenção de modelos de Machine Learning já em produção, atuando no monitoramento, ajustes e refatoração quando necessário.') | Categórico Binário |
+| ('P8_a_7 ', 'Realizo construções de dashboards em ferramentas de BI como PowerBI, Tableau, Looker, Qlik, etc') | Categórico Binário |
+| ('P8_a_8 ', 'Utilizo ferramentas avançadas de estatística como SAS, SPSS, Stata etc, para realizar análises estatísticas e ajustar modelos.') | Categórico Binário |
+| ('P8_a_9 ', 'Crio e dou manutenção em ETLs, DAGs e automações de pipelines de dados.') | Categórico Binário |
+| ('P8_a_10 ', 'Crio e gerencio soluções de Feature Store e cultura de MLOps.') | Categórico Binário |
+| ('P8_a_11 ', 'Sou responsável por criar e manter a infra que meus modelos e soluções rodam (clusters, servidores, API, containers, etc.)') | Categórico Binário |
+| ('P8_a_12 ', 'Treino e aplico LLM's para solucionar problemas de negócio.') | Categórico Binário |
+| ('P8_b ', 'Quais as técnicas e métodos listados abaixo você costuma utilizar no trabalho?') | Categórico Polinomial Não Ordinal |
+| ('P8_b_1 ', 'Utilizo modelos de regressão (linear, logística, GLM)') | Categórico Binário |
+| ('P8_b_2 ', 'Utilizo redes neurais ou modelos baseados em árvore para criar modelos de classificação') | Categórico Binário |
+| ('P8_b_3 ', 'Desenvolvo sistemas de recomendação (RecSys)') | Categórico Binário |
+| ('P8_b_4 ', 'Utilizo métodos estatísticos Bayesianos para analisar dados') | Categórico Binário |
+| ('P8_b_5 ', 'Utilizo técnicas de NLP (Natural Language Processing) para análisar dados não-estruturados') | Categórico Binário |
+| ('P8_b_6 ', 'Utilizo métodos estatísticos clássicos (Testes de hipótese, análise multivariada, sobrevivência, dados longitudinais, inferência estatistica) para analisar dados') | Categórico Binário |
+| ('P8_b_7 ', 'Utilizo cadeias de Markov ou HMM's para realizar análises de dados') | Categórico Binário |
+| ('P8_b_8 ', 'Desenvolvo técnicas de Clusterização (K-means, Spectral, DBScan etc)') | Categórico Binário |
+| ('P8_b_9 ', 'Realizo previsões através de modelos de Séries Temporais (Time Series)') | Categórico Binário |
+| ('P8_b_10 ', 'Utilizo modelos de Reinforcement Learning (aprendizado por reforço)') | Categórico Binário |
+| ('P8_b_11 ', 'Utilizo modelos de Machine Learning para detecção de fraude') | Categórico Binário |
+| ('P8_b_12 ', 'Utilizo métodos de Visão Computacional') | Categórico Binário |
+| ('P8_b_13 ', 'Utilizo modelos de Detecção de Churn') | Categórico Binário |
+| ('P8_b_14 ', 'Utilizo LLM's para solucionar problemas de negócio') | Categórico Binário |
+| ('P8_3 ', 'Quais dessas tecnologias fazem parte do seu dia a dia como cientista de dados?') | Categórico Polinomial Não Ordinal |
+| ('P8_c_1 ', 'Ferramentas de BI (PowerBI, Looker, Tableau, Qlik etc)') | Categórico Binário |
+| ('P8_c_2 ', 'Planilhas (Excel, Google Sheets etc)') | Categórico Binário |
+| ('P8_c_3 ', 'Ambientes de desenvolvimento local (R-studio, JupyterLab, Anaconda)') | Categórico Binário |
+| ('P8_c_4 ', 'Ambientes de desenvolvimento na nuvem (Google Colab, AWS Sagemaker, Kaggle Notebooks etc)') | Categórico Binário |
+| ('P8_c_5 ', 'Ferramentas de AutoML (Datarobot, H2O, Auto-Keras etc)') | Categórico Binário |
+| ('P8_c_6 ', 'Ferramentas de ETL (Apache Airflow, NiFi, Stitch, Fivetran, Pentaho etc)') | Categórico Binário |
+| ('P8_c_7 ', 'Plataformas de Machine Learning (TensorFlow, Azure Machine Learning, Kubeflow etc)') | Categórico Binário |
+| ('P8_c_8 ', 'Feature Store (Feast, Hopsworks, AWS Feature Store, Databricks Feature Store etc)') | Categórico Binário |
+| ('P8_c_9 ', 'Sistemas de controle de versão (Github, DVC, Neptune, Gitlab etc)') | Categórico Binário |
+| ('P8_c_10 ', 'Plataformas de Data Apps (Streamlit, Shiny, Plotly Dash etc)') | Categórico Binário |
+| ('P8_c_11 ', 'Ferramentas de estatística avançada como SPSS, SAS, etc.') | Categórico Binário |
+| ('P8_d ', 'Em qual das opções abaixo você gasta a maior parte do seu tempo no trabalho?') | Categórico Polinomial Não Ordinal |
+| ('P8_d_1 ', 'Estudos Ad-hoc com o objetivo de confirmar hipóteses, realizar modelos preditivos, forecasts, análise de cluster para resolver problemas pontuais e responder perguntas das áreas de negócio.') | Categórico Binário |
+| ('P8_d_2 ', 'Coletando e limpando os dados que uso para análise e modelagem.') | Categórico Binário |
+| ('P8_d_3 ', 'Entrando em contato com os times de negócio para definição do problema, identificar a solução e apresentação de resultados.') | Categórico Binário |
+| ('P8_d_4 ', 'Desenvolvendo modelos de Machine Learning com o objetivo de colocar em produção em sistemas (produtos de dados).') | Categórico Binário |
+| ('P8_d_5 ', 'Colocando modelos em produção, criando os pipelines de dados, APIs de consumo e monitoramento.') | Categórico Binário |
+| ('P8_d_6 ', 'Cuidando da manutenção de modelos de Machine Learning já em produção, atuando no monitoramento, ajustes e refatoração quando necessário.') | Categórico Binário |
+| ('P8_d_7 ', 'Realizando construções de dashboards em ferramentas de BI como PowerBI, Tableau, Looker, Qlik, etc.') | Categórico Binário |
+| ('P8_d_8 ', 'Utilizando ferramentas avançadas de estatística como SAS, SPSS, Stata etc, para realizar análises.') | Categórico Binário |
+| ('P8_d_9 ', 'Criando e dando manutenção em ETLs, DAGs e automações de pipelines de dados.') | Categórico Binário |
+| ('P8_d_10 ', 'Criando e gerenciando soluções de Feature Store e cultura de MLOps.') | Categórico Binário |
+| ('P8_d_11 ', 'Criando e mantendo a infra que meus modelos e soluções rodam (clusters, servidores, API, containers, etc.)') | Categórico Binário |
+| ('P8_d_12 ', 'Treinando e aplicando LLM's para solucionar problemas de negócio.') | Categórico Binário |
+</details>
 
 ###    Descrição de dados
 
