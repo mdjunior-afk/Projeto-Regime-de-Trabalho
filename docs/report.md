@@ -802,7 +802,7 @@ Os atributos que compõem o dataset são:
 ![Qual tipo de trabalho tem maior potencial para causar transtornos mentais, como estresse, ansiedade e depressão?](https://github.com/user-attachments/assets/36678202-95fd-4ffb-8ffd-ea7f64856968)
  
  ### 8. Você acha que trabalhar em casa impede você de ter contato com outras pessoas?
-- **Moda:** Trabalhar no escritório (60,00%)
+- **Moda:** Sim (60,00%)
 - **Distribuição:**
   - Sim: **60,00%**
   - Não: **40,00%**
@@ -810,7 +810,7 @@ Os atributos que compõem o dataset são:
 ![Você acha que trabalhar em casa impede você de ter contato com outras pessoas?](https://github.com/user-attachments/assets/aff00bfa-074c-45da-a77d-900b2d6115ca)
 
 ### 9. Qual tipo de trabalho mantém você mais focado enquanto trabalha?
-- **Moda:** Sim (60%)
+- **Moda:** Trabalhar no escritório (60%)
 - **Distribuição:**
   - Trabalhar no escritório: **60,00%**
   - Trabalhar em casa: **40,00%**
