@@ -59,5 +59,114 @@ import pandas as pd
  plt.tight_layout() 
  plt.show() 
   
-  
+
+
+
+  # Importando bibliotecas necessárias
+
+import pandas as pd
+
+import matplotlib.pyplot as plt
+
+import seaborn as sns
+
+from matplotlib.backends.backend_pdf import PdfPages  # Para salvar em PDF
+
+
+
+# Criando dicionário com os dados fornecidos
+
+dados = {
+
+    "Trabalhou em casa": [60, 40],
+
+    "Acha que aumenta a produtividade": [70, 30],
+
+    "Acha que impede de sair": [70, 30],
+
+    "Acha que dá mais flexibilidade": [100, 0],
+
+    "Acha que economiza tempo": [40, 60],
+
+    "Maior risco físico ao trabalhar em casa": [80, 20],
+
+    "Maior risco mental ao trabalhar em casa": [60, 40],
+
+    "Impede contato social": [60, 40],
+
+    "Mantém mais foco ao trabalhar em casa": [40, 60],
+
+    "Prefere modo de trabalho misto": [50, 50]
+
+}
+
+
+
+# Criando DataFrame
+
+df = pd.DataFrame(dados, index=["Sim (%)", "Não (%)"]).T
+
+
+
+# Criando o arquivo PDF
+
+pdf_filename = "graficos_correlacao.pdf"
+
+with PdfPages(pdf_filename) as pdf:
+
+    
+
+    # Criando gráficos de correlação
+
+    fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+
+
+
+    # Correlação entre "Trabalhou em casa" e produtividade
+
+    sns.scatterplot(ax=axes[0, 0], x=df["Trabalhou em casa"], y=df["Acha que aumenta a produtividade"], color='blue')
+
+    axes[0, 0].set_title("Trabalhou em casa vs Produtividade")
+
+
+
+    # Correlação entre "Trabalhou em casa" e contato social
+
+    sns.scatterplot(ax=axes[0, 1], x=df["Trabalhou em casa"], y=df["Impede contato social"], color='red')
+
+    axes[0, 1].set_title("Trabalhou em casa vs Contato Social")
+
+
+
+    # Correlação entre riscos físicos e mentais
+
+    sns.scatterplot(ax=axes[1, 0], x=df["Maior risco físico ao trabalhar em casa"], y=df["Maior risco mental ao trabalhar em casa"], color='green')
+
+    axes[1, 0].set_title("Risco Físico vs Risco Mental")
+
+
+
+    # Correlação entre economia de tempo e foco
+
+    sns.scatterplot(ax=axes[1, 1], x=df["Acha que economiza tempo"], y=df["Mantém mais foco ao trabalhar em casa"], color='purple')
+
+    axes[1, 1].set_title("Economia de Tempo vs Foco")
+
+
+
+    plt.tight_layout()
+
+    
+
+    # Salvando os gráficos no PDF
+
+    pdf.savefig(fig)
+
+    plt.close(fig)
+
+
+
+print(f"Gráficos salvos com sucesso em '{pdf_filename}'!")
+
+
  
