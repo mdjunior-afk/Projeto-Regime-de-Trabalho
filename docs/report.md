@@ -725,6 +725,44 @@ Os atributos que compõem o dataset são:
 
 ![SalarioXmodelo](https://github.com/user-attachments/assets/0cbda8e9-5f41-4ef6-8e88-ff2f3673124c)
 
+
+### Análise Exploratória dos Dados - PNAD Roubos e Furtos (Brasil)
+
+Este documento apresenta a análise exploratória dos dados da PNAD sobre roubos e furtos no Brasil, organizados por grande região e por tipo de ocorrência (veículos, carros, motos, bicicletas, domicílios e fora do domicílio). O objetivo é identificar padrões regionais e categorias mais recorrentes.
+
+#### 1. Total de Ocorrências por Região (Soma Geral)
+
+- **Moda:** Sudeste (814 ocorrências)
+- **Distribuição percentual:**
+  - Sudeste: **32,64%**
+  - Nordeste: **29,41%**
+  - Norte: **11,44%**
+  - Sul: **5,21%**
+  - Centro-Oeste: **5,17%**
+
+![Soma](https://github.com/user-attachments/assets/cf308f76-285a-430b-9e39-2ac119e8c1b3)
+
+#### 2. Ocorrências por Categoria e Região
+
+- **Categoria mais frequente no geral:** Fora do domicílio (1398 ocorrências)
+- **Categorias com maior concentração por região:**
+  - Sudeste: Fora do domicílio (565 ocorrências)
+  - Nordeste: Fora do domicílio (487 ocorrências)
+  - Norte: Fora do domicílio (190 ocorrências)
+  - Sul: Fora do domicílio (74 ocorrências)
+  - Centro-Oeste: Fora do domicílio (82 ocorrências)
+
+![SomaCategoria](https://github.com/user-attachments/assets/37ef8272-211b-43e1-adb9-35dd1358c3d5)
+
+#### 3. Domicílio x Fora do Domicílio por Região
+
+- **Moda:** Fora do domicílio em todas as regiões
+- **Distribuição total:**
+  - Domicílio: **195 ocorrências**
+  - Fora do domicílio: **1398 ocorrências**
+
+![DomicilioXforaDomicilio](https://github.com/user-attachments/assets/9114ae1b-2fef-48a2-9c5b-56b1c4eb9012)
+
 ## Preparação dos dados
 
 A preparação dos dados consiste dos seguintes passos:
@@ -740,6 +778,16 @@ A preparação dos dados consiste dos seguintes passos:
 * ('P2_o_4 ', 'Flexibilidade de trabalho remoto')
 * ('P2_r ', 'Atualmente qual a sua forma de trabalho?')
 * ('P2_s ', 'Qual a forma de trabalho ideal para você?')
+
+#### `PNAD_Roubos_Furtos - df_roubos_furtos`
+* ('Grande Região', 'Região geográfica do Brasil')
+* ('Veículo', 'Ocorrências de roubo/furto de veículos em geral')
+* ('Carro', 'Ocorrências de roubo/furto de carros')
+* ('Moto', 'Ocorrências de roubo/furto de motos')
+* ('Bicicleta', 'Ocorrências de roubo/furto de bicicletas')
+* ('Domicílio', 'Ocorrências de roubo/furto dentro do domicílio')
+* ('Fora do domicílio', 'Ocorrências de roubo/furto fora do domicílio')
+* ('Soma', 'Total de ocorrências registradas por região')
   
 > - Tratamentos dos valores faltantes ou omissos: remoção, substituição, indução, etc.
 > - Tratamento dos valores inconsistentes: conversão, remoção de dados duplicados, remoção ou tratamento de ouliers.
