@@ -501,6 +501,23 @@ Os atributos que compõem o dataset são:
 | ('P8_d_12 ', 'Treinando e aplicando LLM's para solucionar problemas de negócio.') | Categórico Binário |
 </details>
 
+#### `PNAD_Roubos_Furtos_Brasil_2023`
+
+Esta base de dados contém informações agregadas sobre ocorrências de roubos e furtos no Brasil, organizadas por grande região. Os dados abrangem diferentes categorias de ocorrência, como roubos de veículos, em domicílios e em locais públicos, possibilitando uma análise do perfil e distribuição regional desses eventos. Essa base pode ser utilizada para identificar padrões territoriais de criminalidade patrimonial, auxiliando em estudos sobre segurança pública e desigualdades regionais.
+
+- Atributos da Base
+
+| Atributo             | Tipo                  | Descrição |
+|----------------------|-----------------------|-----------|
+| Grande Região        | Categórico Nominal    | Região do Brasil onde o crime ocorreu (Sudeste, Nordeste, Norte, Sul, Centro-Oeste) |
+| Veículo              | Quantitativo Discreto | Total de ocorrências envolvendo qualquer tipo de veículo |
+| Carro                | Quantitativo Discreto | Total de ocorrências envolvendo carros |
+| Moto                 | Quantitativo Discreto | Total de ocorrências envolvendo motos |
+| Bicicleta            | Quantitativo Discreto | Total de ocorrências envolvendo bicicletas |
+| Domicílio            | Quantitativo Discreto | Total de ocorrências registradas em residências |
+| Fora do domicílio    | Quantitativo Discreto | Total de ocorrências em locais públicos ou externos |
+
+
 ###    Descrição de dados
 
 ### `Análise Exploratória dos Dados - State_of_data_BR_2023_Kaggle - df_survey_2023`
