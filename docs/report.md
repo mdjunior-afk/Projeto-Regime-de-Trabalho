@@ -744,102 +744,11 @@ Os atributos que compõem o dataset são:
 
 ![SalarioXmodelo](https://github.com/user-attachments/assets/0cbda8e9-5f41-4ef6-8e88-ff2f3673124c)
 
-### `Análise Exploratória dos Dados - The Impacts of Working Remotely and in an Office Survey`
-
-### 1. Você já trabalhou em casa?
-- **Moda:** Sim (60%)
-- **Distribuição:**
-  - Sim: **60,00%**
-  - Não: **40,00%**
-
-![Você já trabalhou em casa?](https://github.com/user-attachments/assets/a008207b-28f3-4665-bd10-63f400c36467)
-
-### 2. Você acha que trabalhar em casa aumenta sua produtividade?
-- **Moda:** Sim (70,00%)
-- **Distribuição:**
-  - Sim: **70,00%**
-  - Não: **30,00%**
- 
-![Você acha que trabalhar em casa aumenta sua produtividade?](https://github.com/user-attachments/assets/ea750a56-e5f1-4152-bb81-8b2432c75d57)
-
-### 3. Você acha que trabalhar em casa impede você de sair?
-- **Moda:** Sim (70,00%)
-- **Distribuição:**
-  - Sim: **70,00%**
-  - Não: **30,00%**
-    
-![Você acha que trabalhar em casa impede você de sair?](https://github.com/user-attachments/assets/9c316ebf-19f4-41bd-adcc-1d83a741ccf1)
- 
-### 4. Você acha que trabalhar em casa lhe dá mais flexibilidade?
-- **Moda:** Sim (100,00%)
-- **Distribuição:**
-  - Sim: **100,00%**
-       
-![Você acha que trabalhar em casa lhe dá mais flexibilidade?](https://github.com/user-attachments/assets/98ea45f7-9712-4a20-9a64-f06fdf7c8f01)
- 
-### 5. Você acha que trabalhar em casa economiza mais tempo?
-- **Moda:**  Não (60,00%)
-- **Distribuição:**
-  - Sim: **40,00%**
-  - Não: **60,00%**
-           
-![Você acha que trabalhar em casa economiza mais tempo?](https://github.com/user-attachments/assets/3568e100-dd61-47e3-9759-49d06109e4a5)
-
-### 6. Qual tipo de trabalho tem maior potencial para causar problemas físicos, como dores no pescoço, costas e pernas?
-- **Moda:** Trabalhar em casa (80,00%)
-- **Distribuição:**
-  - Trabalhar em casa: **80,00%**
-  - Trabalhar no escritório: **20,00%**
-             
-![Qual tipo de trabalho tem maior potencial para causar problemas físicos, como dores no pescoço, costas e pernas?](https://github.com/user-attachments/assets/11f7024f-83ad-44bc-9c69-eb0f71d8e5ab)
-
-### 7. Qual tipo de trabalho tem maior potencial para causar transtornos mentais, como estresse, ansiedade e depressão?
-- **Moda:** Trabalhar em casa (60,00%)
-- **Distribuição:**
-  - Trabalhar em casa: **60,00%**
-  - Trabalhar no escritório: **40,00%**
-              
-![Qual tipo de trabalho tem maior potencial para causar transtornos mentais, como estresse, ansiedade e depressão?](https://github.com/user-attachments/assets/36678202-95fd-4ffb-8ffd-ea7f64856968)
- 
- ### 8. Você acha que trabalhar em casa impede você de ter contato com outras pessoas?
-- **Moda:** Sim (60,00%)
-- **Distribuição:**
-  - Sim: **60,00%**
-  - Não: **40,00%**
-              
-![Você acha que trabalhar em casa impede você de ter contato com outras pessoas?](https://github.com/user-attachments/assets/aff00bfa-074c-45da-a77d-900b2d6115ca)
-
-### 9. Qual tipo de trabalho mantém você mais focado enquanto trabalha?
-- **Moda:** Trabalhar no escritório (60%)
-- **Distribuição:**
-  - Trabalhar no escritório: **60,00%**
-  - Trabalhar em casa: **40,00%**
-              
-![Qual tipo de trabalho mantém você mais focado enquanto trabalha?](https://github.com/user-attachments/assets/c8abd9a1-ae80-488f-b53d-9b274d766337)
-
-### 10. Qual tipo de trabalho você prefere?
-- **Moda:** Um modo de trabalho misto (50,00%)
-- **Distribuição:**
-  - Um modo de trabalho misto: **50,00%**
-  - Trabalhar em casa: **25,00%**
-  - Trabalhar no escritório: **25,00%**
-              
-![Qual tipo de trabalho você prefere?](https://github.com/user-attachments/assets/ff4e80f8-1e61-452e-9a11-b2a81ccd6594)
-
 ## Preparação dos dados
 
 A preparação dos dados consiste dos seguintes passos:
 
 ### Seleção de Atributos:
-#### `The Impacts of Working Remotely and in an Office Survey`
-* Do you think that working from home gives you more flexibility?
-* Do you think that working from home saves you more time?
-* Which work type has the potential to cause you physical problems, such as the neck, back, and leg pain?
-* Which work type has the potential to cause mental disorders, such as stress, anxiety, and depression?
-* Do you think that working from home prevents you from getting in contact with people?
-* Which work type keeps you focused while working? ()
-* Which work type do you prefer the most?
-
 #### `State_of_data_BR_2023_Kaggle - df_survey_2023`
 * ('P1_b ', 'Genero')
 * ('P1_d ', 'PCD')
