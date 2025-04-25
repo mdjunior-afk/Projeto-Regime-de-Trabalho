@@ -89,25 +89,6 @@ O público-alvo desse sistema inclui empresas de diversos setores que desejam en
 ## Análise exploratórida dos dados
 
 ###    Dicionário de dados
-
-#### `The Impacts of Working Remotely and in an Office Survey`
-Essa base de dados contém atributos derivados de entrevistas com profissionais, nos quais eles compartilham percepções sobre produtividade, flexibilidade e outras experiências relacionadas ao trabalho remoto, híbrido e presencial. Esses dados servirão como referência para identificar padrões de comportamento, permitindo uma análise mais aprofundada das preferências e necessidades dos profissionais da área de dados.
-
-Os atributos que compõem o dataset são:
-
-| Atributo | Tipo | Dados |
-|----------|------|-------|
-| Response ID | Quantitativo Discreto | 1-100 |
-| Have you ever experienced working from home? | Categórico Binário | Yes; No |
-| Do you think that working from home increases your work productivity? | Categórico Binário | Yes; No
-| Do you think that working from home prevents you from going out? | Categórico Binário | Yes; No
-| Do you think that working from home gives you more flexibility? | Categórico Binário | Yes; No
-| Do you think that working from home saves you more time? | Categórico Binário | Yes; No
-| Which work type has the potential to cause you physical problems, such as the neck, back, and leg pain? | Categórico Binário | Working from home; Working from office |
-| Which work type has the potential to cause mental disorders, such as stress, anxiety, and depression? | Categórico Binário | Working from home; Working from office |
-| Do you think that working from home prevents you from getting in contact with people? | Categórico Binário | Yes; No
-| Which work type keeps you focused while working? | Categórico Binário | Working from home; Working from office |
-| Which work type do you prefer the most? | Categórico Polinomial Não Ordinal | A mixed mode of working; Working from home; Working from office |
  
 #### `State_of_data_BR_2023_Kaggle - df_survey_2023`
 Essa base de dados contém os dados relacionados aos profissionais de dados que serão utilizados como base para o atual estudo
