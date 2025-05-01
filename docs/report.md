@@ -866,16 +866,14 @@ print(df.describe())
 
 df = df.dropna(subset=['Forma de trabalho ideal'])
 
-# Preparar as variáveis
 X_dict = df.drop(columns=['Forma de trabalho ideal', 'Cargo atual']).T.to_dict().values()
 vect = DictVectorizer(sparse=False)
 X_train = vect.fit_transform(X_dict)
-
-# Codificar as variáveis 
+ 
 le = LabelEncoder()
 y_train = le.fit_transform(df['Forma de trabalho ideal'])
 
-# Exibir as variáveis e o formato dos dados
+Exibir as variáveis e o formato dos dados
 print("Atributos:", X_dict)
 print("Shape do dado de treinamento:", X_train.shape)
 print("Labels:", y_train)
@@ -885,13 +883,12 @@ print("Labels:", y_train)
 treeForma = DecisionTreeClassifier(random_state=0, criterion='entropy')
 treeForma.fit(X_train, y_train)
 
-# Avaliar o modelo por ACURÁCIA
 print("Acurácia:", treeForma.score(X_train, y_train))
 
-# Realizar previsões
+
 y_pred = treeForma.predict(X_train)
 
-# Exibir os resultados de acurácia, relatório de classificação e matriz de confusão
+
 print("Acurácia de previsão:", accuracy_score(y_train, y_pred))
 print(classification_report(y_train, y_pred))
 
