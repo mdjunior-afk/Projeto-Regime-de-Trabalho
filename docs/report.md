@@ -843,14 +843,79 @@ A preparação dos dados consiste dos seguintes passos:
 
 ## Indução de modelos
 
-### Modelo 1: Algoritmo
+### Modelo 1: árvore de decisão
 
-Substitua o título pelo nome do algoritmo que será utilizado. P. ex. árvore de decisão, rede neural, SVM, etc.
-Justifique a escolha do modelo.
-Apresente o processo utilizado para amostragem de dados (particionamento, cross-validation).
-Descreva os parâmetros utilizados. 
-Apresente trechos do código utilizado comentados. Se utilizou alguma ferramenta gráfica, apresente imagens
-com o fluxo de processamento.
+### Importção de Bibliotecas
+!pip install pandas scikit-learn matplotlib pydotplus dtreeviz
+
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.feature_extraction import DictVectorizer
+from sklearn.preprocessing import LabelEncoder
+from sklearn import tree
+import matplotlib.pyplot as plt
+
+### Transformação de Dados
+df = pd.read_csv("data_tratada.csv")  
+
+print("\nDimensões:", df.shape)
+print("\nCampos:", df.columns)
+print(df.describe())
+
+
+df = df.dropna(subset=['Forma de trabalho ideal'])
+
+# Preparar as variáveis
+X_dict = df.drop(columns=['Forma de trabalho ideal', 'Cargo atual']).T.to_dict().values()
+vect = DictVectorizer(sparse=False)
+X_train = vect.fit_transform(X_dict)
+
+# Codificar as variáveis 
+le = LabelEncoder()
+y_train = le.fit_transform(df['Forma de trabalho ideal'])
+
+# Exibir as variáveis e o formato dos dados
+print("Atributos:", X_dict)
+print("Shape do dado de treinamento:", X_train.shape)
+print("Labels:", y_train)
+
+
+### Indução do Modelo
+treeForma = DecisionTreeClassifier(random_state=0, criterion='entropy')
+treeForma.fit(X_train, y_train)
+
+# Avaliar o modelo por ACURÁCIA
+print("Acurácia:", treeForma.score(X_train, y_train))
+
+# Realizar previsões
+y_pred = treeForma.predict(X_train)
+
+# Exibir os resultados de acurácia, relatório de classificação e matriz de confusão
+print("Acurácia de previsão:", accuracy_score(y_train, y_pred))
+print(classification_report(y_train, y_pred))
+
+cnf_matrix = confusion_matrix(y_train, y_pred)
+cnf_table = pd.DataFrame(cnf_matrix, index=[f"Real={c}" for c in le.classes_], columns=[f"Prev={c}" for c in le.classes_])
+print(cnf_table)
+
+![Indução do Modelo](https://github.com/user-attachments/assets/af853708-fe24-4bec-93c8-aed766a1cd5e)
+
+
+### Exibição da Arvore
+import matplotlib.pyplot as plt
+from sklearn import tree
+
+plt.figure(figsize=(20, 10))
+tree.plot_tree(treeForma,
+               feature_names=vect.feature_names_,
+               class_names=le.classes_,
+               filled=True,
+               rounded=True)
+plt.show()
+
+![Exibição da Árvore de Decisão](https://github.com/user-attachments/assets/229699dc-3987-439c-bc51-844494a1c5aa)
+
 
 ### Modelo 2: Algoritmo
 
@@ -861,17 +926,53 @@ Repita os passos anteriores para o segundo modelo.
 
 ### Resultados obtidos com o modelo 1.
 
-Apresente aqui os resultados obtidos com a indução do modelo 1. 
-Apresente uma matriz de confusão quando pertinente. Apresente as medidas de performance
-apropriadas para o seu problema. 
-Por exemplo, no caso de classificação: precisão, revocação, F-measure, acurácia.
+### ANÁLISE DA MATRIZ DE CONFUSÃO
+
+Resumo das Classes:
+| Código | Classe                                                    |
+|--------|-----------------------------------------------------------|
+|   0    | Modelo 100% presencial                                    |
+|   1    | Modelo 100% remoto                                        |
+|   2    | Modelo híbrido com dias fixos de trabalho presencial      |
+|   3    | Modelo híbrido flexível (o funcionário tem autonomia)     |
+
+Acurácia geral:
+99,73%
+O modelo acerta quase todas as classificações.
+
+Relatório de Classificação:
+| Classe  | Precision | Recall | F1-Score | Support |
+|---------|-----------|--------|----------|---------|
+| 0       | 1.00      | 1.00   | 1.00     | 96      |
+| 1       | 0.99      | 1.00   | 1.00     | 2124    |
+| 2       | 1.00      | 0.99   | 1.00     | 389     |
+| 3       | 1.00      | 1.00   | 1.00     | 2144    |
+
+Análise da Matriz de Confusão:
+Todos os 96 exemplos do modelo 100% presencial foram classificados corretamente.
+Para o modelo 100% remoto: houve alguns erros pequenos — 3 casos foram confundidos com o modelo híbrido fixo e 10 com o híbrido flexível.
+Para o modelo híbrido com dias fixos: a maioria foi corretamente classificada, mas alguns poucos exemplos foram confundidos com o modelo remoto e com o flexível.
+Para o modelo híbrido flexível: praticamente todos foram corretamente classificados.
 
 ### Interpretação do modelo 1
 
-Apresente os parâmetros do modelo obtido. Tentre mostrar as regras que são utilizadas no
-processo de 'raciocínio' (*reasoning*) do sistema inteligente. Utilize medidas como 
-o *feature importances* para tentar entender quais atributos o modelo se baseia no
-processo de tomada de decisão.
+Interpretação final:
+O modelo tem desempenho altíssimo. A leve confusão entre os modelos remoto e os híbridos é natural, pois há sobreposição de características (ex: trabalho remoto com certa flexibilidade pode parecer um híbrido flexível).
+O modelo 100% presencial se destacou com 100% de acerto, o que mostra que ele tem características bem distintas das demais classes.
+As métricas indicam que o modelo não está sofrendo de overfitting grave, já que o conjunto de treino é grande e o desempenho é consistente.
+
+Matriz em forma de tabela/grafico:
+| **Classe Real / Prevista**  | **Modelo 100% presencial** | **Modelo 100% remoto** | **Modelo híbrido fixo** | **Modelo híbrido flexível** |
+| --------------------------- | -------------------------- | ---------------------- | ----------------------- | --------------------------- |
+| **Modelo 100% presencial**  | 96                         | 0                      | 0                       | 0                           |
+| **Modelo 100% remoto**      | 0                          | 2124                   | 3                       | 10                          |
+| **Modelo híbrido fixo**     | 0                          | 2                      | 385                     | 2                           |
+| **Modelo híbrido flexível** | 0                          | 0                      | 10                      | 2134                        |
+
+A diagonal principal está praticamente completa, o que confirma os altos índices de acerto.
+Pequenos erros ocorrem principalmente entre as classes remoto e os híbridos, o que é esperado por sua semelhança.
+O modelo 100% presencial é perfeitamente separado das demais.
+
 
 
 ### Resultados obtidos com o modelo 2.
@@ -906,53 +1007,6 @@ Uma conclusão deve ter 3 partes:
    * Breve resumo do que foi desenvolvido
 	 * Apresenação geral dos resultados obtidos com discussão das vantagens e desvantagens do sistema inteligente
 	 * Limitações e possibilidades de melhoria
-
-
-
-### ANÁLISE DA MATRIZ DE CONFUSÃO
-
-Resumo das Classes:
-| Código | Classe                                                    |
-|--------|-----------------------------------------------------------|
-|   0    | Modelo 100% presencial                                    |
-|   1    | Modelo 100% remoto                                        |
-|   2    | Modelo híbrido com dias fixos de trabalho presencial      |
-|   3    | Modelo híbrido flexível (o funcionário tem autonomia)     |
-
-Acurácia geral:
-99,73%
-O modelo acerta quase todas as classificações.
-
-Relatório de Classificação:
-| Classe  | Precision | Recall | F1-Score | Support |
-|---------|-----------|--------|----------|---------|
-| 0       | 1.00      | 1.00   | 1.00     | 96      |
-| 1       | 0.99      | 1.00   | 1.00     | 2124    |
-| 2       | 1.00      | 0.99   | 1.00     | 389     |
-| 3       | 1.00      | 1.00   | 1.00     | 2144    |
-
-Análise da Matriz de Confusão:
-Todos os 96 exemplos do modelo 100% presencial foram classificados corretamente.
-Para o modelo 100% remoto: houve alguns erros pequenos — 3 casos foram confundidos com o modelo híbrido fixo e 10 com o híbrido flexível.
-Para o modelo híbrido com dias fixos: a maioria foi corretamente classificada, mas alguns poucos exemplos foram confundidos com o modelo remoto e com o flexível.
-Para o modelo híbrido flexível: praticamente todos foram corretamente classificados.
-
-Interpretação final:
-O modelo tem desempenho altíssimo. A leve confusão entre os modelos remoto e os híbridos é natural, pois há sobreposição de características (ex: trabalho remoto com certa flexibilidade pode parecer um híbrido flexível).
-O modelo 100% presencial se destacou com 100% de acerto, o que mostra que ele tem características bem distintas das demais classes.
-As métricas indicam que o modelo não está sofrendo de overfitting grave, já que o conjunto de treino é grande e o desempenho é consistente.
-
-Matriz em forma de tabela/grafico:
-| **Classe Real / Prevista**  | **Modelo 100% presencial** | **Modelo 100% remoto** | **Modelo híbrido fixo** | **Modelo híbrido flexível** |
-| --------------------------- | -------------------------- | ---------------------- | ----------------------- | --------------------------- |
-| **Modelo 100% presencial**  | 96                         | 0                      | 0                       | 0                           |
-| **Modelo 100% remoto**      | 0                          | 2124                   | 3                       | 10                          |
-| **Modelo híbrido fixo**     | 0                          | 2                      | 385                     | 2                           |
-| **Modelo híbrido flexível** | 0                          | 0                      | 10                      | 2134                        |
-
-A diagonal principal está praticamente completa, o que confirma os altos índices de acerto.
-Pequenos erros ocorrem principalmente entre as classes remoto e os híbridos, o que é esperado por sua semelhança.
-O modelo 100% presencial é perfeitamente separado das demais.
 
 
 
