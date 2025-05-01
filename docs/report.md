@@ -5,7 +5,7 @@
 
 **Arthur Viana Silva, arthur.silva.1564925@sga.pucminas.br**
 
-**João Vitor de Lima, joão.lima.1594303@sga.pucminas.br**
+**João Vitor de Lima, joao.lima.1594303@sga.pucminas.br**
 
 **Márcio Douglas Cassemiro Junior, marcio.cassemiro@sga.pucminas.br**
 
@@ -517,6 +517,17 @@ Esta base de dados contém informações agregadas sobre ocorrências de roubos 
 | Domicílio            | Quantitativo Discreto | Total de ocorrências registradas em residências |
 | Fora do domicílio    | Quantitativo Discreto | Total de ocorrências em locais públicos ou externos |
 
+#### `PNAD Média Horas Semanais de Trabalho Doméstico por Cor ou Raça - Brasil`
+
+Esta base de dados apresenta a média de horas semanais dedicadas ao trabalho doméstico por diferentes grupos raciais no Brasil. Os dados são úteis para identificar desigualdades na distribuição do trabalho não remunerado e suas possíveis relações com raça/cor.
+
+- Atributos da Base
+
+| Atributo     | Tipo                   | Dados                        |
+|--------------|------------------------|------------------------------|
+| Cor ou raça  | Categórico Nominal     | Branca; Preta; Parda; Total |
+| Total        | Quantitativo Contínuo  | Horas semanais (ex: 17,4)   |
+
 
 ###    Descrição de dados
 
@@ -820,6 +831,11 @@ A preparação dos dados consiste dos seguintes passos:
 * ('Domicílio', 'Ocorrências de roubo/furto dentro do domicílio')
 * ('Fora do domicílio', 'Ocorrências de roubo/furto fora do domicílio')
 * ('Soma', 'Total de ocorrências registradas por região')
+
+#### `PNAD_Tempo_Trab_Doméstico - df_trabalho_domestico`
+
+* ('Cor ou raça', 'Grupo racial da pessoa entrevistada')
+* ('Total', 'Quantidade média de horas semanais dedicadas ao trabalho doméstico')
   
 > - Tratamentos dos valores faltantes ou omissos: remoção, substituição, indução, etc.
 > - Tratamento dos valores inconsistentes: conversão, remoção de dados duplicados, remoção ou tratamento de ouliers.
