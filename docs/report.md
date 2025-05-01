@@ -948,4 +948,47 @@ Do vídeo de apresentação (armazenado no repositório).
 
 
 
+### ANÁLISE DA MATRIZ DE CONFUSÃO
 
+Resumo das Classes:
+| Código | Classe                                                    |
+|--------|-----------------------------------------------------------|
+|   0    | Modelo 100% presencial                                    |
+|   1    | Modelo 100% remoto                                        |
+|   2    | Modelo híbrido com dias fixos de trabalho presencial      |
+|   3    | Modelo híbrido flexível (o funcionário tem autonomia)     |
+
+Acurácia geral:
+99,73%
+O modelo acerta quase todas as classificações.
+
+Relatório de Classificação:
+| Classe  | Precision | Recall | F1-Score | Support |
+|---------|-----------|--------|----------|---------|
+| 0       | 1.00      | 1.00   | 1.00     | 96      |
+| 1       | 0.99      | 1.00   | 1.00     | 2124    |
+| 2       | 1.00      | 0.99   | 1.00     | 389     |
+| 3       | 1.00      | 1.00   | 1.00     | 2144    |
+
+Análise da Matriz de Confusão:
+Todos os 96 exemplos do modelo 100% presencial foram classificados corretamente.
+Para o modelo 100% remoto: houve alguns erros pequenos — 3 casos foram confundidos com o modelo híbrido fixo e 10 com o híbrido flexível.
+Para o modelo híbrido com dias fixos: a maioria foi corretamente classificada, mas alguns poucos exemplos foram confundidos com o modelo remoto e com o flexível.
+Para o modelo híbrido flexível: praticamente todos foram corretamente classificados.
+
+Interpretação final:
+O modelo tem desempenho altíssimo. A leve confusão entre os modelos remoto e os híbridos é natural, pois há sobreposição de características (ex: trabalho remoto com certa flexibilidade pode parecer um híbrido flexível).
+O modelo 100% presencial se destacou com 100% de acerto, o que mostra que ele tem características bem distintas das demais classes.
+As métricas indicam que o modelo não está sofrendo de overfitting grave, já que o conjunto de treino é grande e o desempenho é consistente.
+
+Matriz em forma de tabela/grafico:
+| **Classe Real / Prevista**  | **Modelo 100% presencial** | **Modelo 100% remoto** | **Modelo híbrido fixo** | **Modelo híbrido flexível** |
+| --------------------------- | -------------------------- | ---------------------- | ----------------------- | --------------------------- |
+| **Modelo 100% presencial**  | 96                         | 0                      | 0                       | 0                           |
+| **Modelo 100% remoto**      | 0                          | 2124                   | 3                       | 10                          |
+| **Modelo híbrido fixo**     | 0                          | 2                      | 385                     | 2                           |
+| **Modelo híbrido flexível** | 0                          | 0                      | 10                      | 2134                        |
+
+A diagonal principal está praticamente completa, o que confirma os altos índices de acerto.
+Pequenos erros ocorrem principalmente entre as classes remoto e os híbridos, o que é esperado por sua semelhança.
+O modelo 100% presencial é perfeitamente separado das demais.
