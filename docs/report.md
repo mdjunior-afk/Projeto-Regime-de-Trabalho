@@ -780,6 +780,21 @@ Este documento apresenta a análise exploratória dos dados da PNAD sobre roubos
 
 ![DomicilioXforaDomicilio](https://github.com/user-attachments/assets/9114ae1b-2fef-48a2-9c5b-56b1c4eb9012)
 
+
+### Análise Exploratória dos Dados - PNAD Média Horas de Trabalho Doméstico por Cor ou Raça (Brasil)
+
+Este documento apresenta uma análise exploratória sobre o tempo médio semanal dedicado ao trabalho doméstico, categorizado por cor ou raça no Brasil. Os dados analisados permitem observar disparidades sutis, mas relevantes, que refletem aspectos sociais e estruturais presentes na divisão de tarefas não remuneradas.
+
+#### 1. Horas Semanais de Trabalho Doméstico por Cor ou Raça
+- **Média Geral:** 17 horas/semana
+- **Distribuição por grupo racial:**
+  - **Branca:** 16,5 horas
+  - **Preta:** 17,1 horas
+  - **Parda:** 17,4 horas
+  
+![HorasDomesticas](https://github.com/user-attachments/assets/e3e3678b-dee1-47b5-8a7e-29c5c2a3e049)
+
+
 ## Preparação dos dados
 
 A preparação dos dados consiste dos seguintes passos:
