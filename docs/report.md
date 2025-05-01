@@ -9,7 +9,7 @@
 
 **Márcio Douglas Cassemiro Junior, marcio.cassemiro@sga.pucminas.br**
 
-**Gustavo Horta, gustavo.horta@sga.pucminas.br**
+**Gustavo Horta, gustavo.horta.1524459@sga.pucminas.br**
 
 
 ---
