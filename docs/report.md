@@ -836,16 +836,13 @@ A preparação dos dados consiste dos seguintes passos:
 
 * ('Cor ou raça', 'Grupo racial da pessoa entrevistada')
 * ('Total', 'Quantidade média de horas semanais dedicadas ao trabalho doméstico')
-  
-> - Tratamentos dos valores faltantes ou omissos: remoção, substituição, indução, etc.
-> - Tratamento dos valores inconsistentes: conversão, remoção de dados duplicados, remoção ou tratamento de ouliers.
-> - Conversão de dados: p. ex. numérico para categórico, categórico para binário, etc.
 
 ## Indução de modelos
 
 ### Modelo 1: árvore de decisão
 
 ### Importção de Bibliotecas
+```python
 !pip install pandas scikit-learn matplotlib pydotplus dtreeviz
 
 import pandas as pd
@@ -855,8 +852,9 @@ from sklearn.feature_extraction import DictVectorizer
 from sklearn.preprocessing import LabelEncoder
 from sklearn import tree
 import matplotlib.pyplot as plt
-
+```
 ### Transformação de Dados
+```python
 df = pd.read_csv("data_tratada.csv")  
 
 print("\nDimensões:", df.shape)
@@ -873,21 +871,19 @@ X_train = vect.fit_transform(X_dict)
 le = LabelEncoder()
 y_train = le.fit_transform(df['Forma de trabalho ideal'])
 
-Exibir as variáveis e o formato dos dados
+#Exibir as variáveis e o formato dos dados
 print("Atributos:", X_dict)
 print("Shape do dado de treinamento:", X_train.shape)
 print("Labels:", y_train)
-
-
+```
 ### Indução do Modelo
+```python
 treeForma = DecisionTreeClassifier(random_state=0, criterion='entropy')
 treeForma.fit(X_train, y_train)
 
 print("Acurácia:", treeForma.score(X_train, y_train))
 
-
 y_pred = treeForma.predict(X_train)
-
 
 print("Acurácia de previsão:", accuracy_score(y_train, y_pred))
 print(classification_report(y_train, y_pred))
@@ -895,11 +891,11 @@ print(classification_report(y_train, y_pred))
 cnf_matrix = confusion_matrix(y_train, y_pred)
 cnf_table = pd.DataFrame(cnf_matrix, index=[f"Real={c}" for c in le.classes_], columns=[f"Prev={c}" for c in le.classes_])
 print(cnf_table)
-
+```
 ![Indução do Modelo](https://github.com/user-attachments/assets/af853708-fe24-4bec-93c8-aed766a1cd5e)
 
-
 ### Exibição da Arvore
+```python
 import matplotlib.pyplot as plt
 from sklearn import tree
 
@@ -910,20 +906,18 @@ tree.plot_tree(treeForma,
                filled=True,
                rounded=True)
 plt.show()
-
+```
 ![Exibição da Árvore de Decisão](https://github.com/user-attachments/assets/229699dc-3987-439c-bc51-844494a1c5aa)
-
 
 ### Modelo 2: Algoritmo
 
 Repita os passos anteriores para o segundo modelo.
 
-
 ## Resultados
 
 ### Resultados obtidos com o modelo 1.
 
-### ANÁLISE DA MATRIZ DE CONFUSÃO
+### Análise da Matriz de Confusão
 
 Resumo das Classes:
 | Código | Classe                                                    |
@@ -945,20 +939,17 @@ Relatório de Classificação:
 | 2       | 1.00      | 0.99   | 1.00     | 389     |
 | 3       | 1.00      | 1.00   | 1.00     | 2144    |
 
-Análise da Matriz de Confusão:
 Todos os 96 exemplos do modelo 100% presencial foram classificados corretamente.
 Para o modelo 100% remoto: houve alguns erros pequenos — 3 casos foram confundidos com o modelo híbrido fixo e 10 com o híbrido flexível.
 Para o modelo híbrido com dias fixos: a maioria foi corretamente classificada, mas alguns poucos exemplos foram confundidos com o modelo remoto e com o flexível.
 Para o modelo híbrido flexível: praticamente todos foram corretamente classificados.
 
 ### Interpretação do modelo 1
-
-Interpretação final:
 O modelo tem desempenho altíssimo. A leve confusão entre os modelos remoto e os híbridos é natural, pois há sobreposição de características (ex: trabalho remoto com certa flexibilidade pode parecer um híbrido flexível).
 O modelo 100% presencial se destacou com 100% de acerto, o que mostra que ele tem características bem distintas das demais classes.
 As métricas indicam que o modelo não está sofrendo de overfitting grave, já que o conjunto de treino é grande e o desempenho é consistente.
 
-Matriz em forma de tabela/grafico:
+#### Matriz em forma de tabela/grafico:
 | **Classe Real / Prevista**  | **Modelo 100% presencial** | **Modelo 100% remoto** | **Modelo híbrido fixo** | **Modelo híbrido flexível** |
 | --------------------------- | -------------------------- | ---------------------- | ----------------------- | --------------------------- |
 | **Modelo 100% presencial**  | 96                         | 0                      | 0                       | 0                           |
@@ -970,8 +961,6 @@ A diagonal principal está praticamente completa, o que confirma os altos índic
 Pequenos erros ocorrem principalmente entre as classes remoto e os híbridos, o que é esperado por sua semelhança.
 O modelo 100% presencial é perfeitamente separado das demais.
 
-
-
 ### Resultados obtidos com o modelo 2.
 
 Repita o passo anterior com os resultados do modelo 2.
@@ -979,7 +968,6 @@ Repita o passo anterior com os resultados do modelo 2.
 ### Interpretação do modelo 2
 
 Repita o passo anterior com os parâmetros do modelo 2.
-
 
 ## Análise comparativa dos modelos
 
