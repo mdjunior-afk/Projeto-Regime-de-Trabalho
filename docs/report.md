@@ -910,7 +910,7 @@ importances.plot(kind='barh', figsize=(10, 6), title='Importância dos Atributos
 plt.gca().invert_yaxis()
 plt.show()
 ```
-![Exibicão Importancia Atributos](https://github.com/user-attachments/assets/e85640c1-1b54-4c3d-a5f8-97122651a847)
+![Exibicão Importancia Atributos](https://github.com/user-attachments/assets/5790bd38-25dc-4d93-b137-a0413ee32bf4)
 
 ![Exibicão Importancia Atributos Graficamente](https://github.com/user-attachments/assets/5bcbfd4a-e76e-44b8-9633-5d0eadcd1f31)
 
