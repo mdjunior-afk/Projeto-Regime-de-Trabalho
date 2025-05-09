@@ -850,64 +850,84 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.preprocessing import LabelEncoder
-from sklearn import tree
+from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 ```
 ### Transformação de Dados
 ```python
-df = pd.read_csv("data_tratada.csv")  
+df = pd.read_csv("data_tratada.csv")
 
 print("\nDimensões:", df.shape)
 print("\nCampos:", df.columns)
 print(df.describe())
 
-
+# Remover registros com alvo ausente
 df = df.dropna(subset=['Forma de trabalho ideal'])
 
-X_dict = df.drop(columns=['Forma de trabalho ideal', 'Cargo atual']).T.to_dict().values()
+# Separar variáveis independentes e alvo
+X_dict = df.drop(columns=['Forma de trabalho ideal', 'Cargo atual']).to_dict(orient='records')
 vect = DictVectorizer(sparse=False)
-X_train = vect.fit_transform(X_dict)
- 
-le = LabelEncoder()
-y_train = le.fit_transform(df['Forma de trabalho ideal'])
+X = vect.fit_transform(X_dict)
 
-#Exibir as variáveis e o formato dos dados
-print("Atributos:", X_dict)
-print("Shape do dado de treinamento:", X_train.shape)
-print("Labels:", y_train)
+le = LabelEncoder()
+y = le.fit_transform(df['Forma de trabalho ideal'])
+
+# Dividir os dados corretamente
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+print("Shape dos dados de treino:", X_train.shape)
+print("Shape dos dados de teste:", X_test.shape)
 ```
+![Transformação de Dados](https://github.com/user-attachments/assets/b6c22b4d-c529-4099-9024-bd8a5e9db735)
+
 ### Indução do Modelo
 ```python
-treeForma = DecisionTreeClassifier(random_state=0, criterion='entropy')
+# Definir modelo com limitação de profundidade e folhas mínimas
+treeForma = DecisionTreeClassifier(random_state=0, criterion='entropy', max_depth=5, min_samples_leaf=4)
 treeForma.fit(X_train, y_train)
 
-print("Acurácia:", treeForma.score(X_train, y_train))
-
-y_pred = treeForma.predict(X_train)
-
-print("Acurácia de previsão:", accuracy_score(y_train, y_pred))
-print(classification_report(y_train, y_pred))
-
-cnf_matrix = confusion_matrix(y_train, y_pred)
+# Avaliação no conjunto de teste
+y_pred = treeForma.predict(X_test)
+print("Acurácia no teste:", accuracy_score(y_test, y_pred))
+print(classification_report(y_test, y_pred))
+cnf_matrix = confusion_matrix(y_test, y_pred)
 cnf_table = pd.DataFrame(cnf_matrix, index=[f"Real={c}" for c in le.classes_], columns=[f"Prev={c}" for c in le.classes_])
 print(cnf_table)
-```
-![Indução do Modelo](https://github.com/user-attachments/assets/af853708-fe24-4bec-93c8-aed766a1cd5e)
 
-### Exibição da Arvore
+```
+![Indução do Modelo](https://github.com/user-attachments/assets/ffb88ccd-1682-4f3f-a75c-17b1f18e9d0c)
+
+### Exibição das Importancias dos Atributos 
 ```python
-import matplotlib.pyplot as plt
+# Exibir importâncias dos atributos
+importances = pd.Series(treeForma.feature_importances_, index=vect.feature_names_)
+importances = importances[importances > 0].sort_values(ascending=False)
+print("\nImportância dos atributos:")
+print(importances)
+
+# Visualizar graficamente
+importances.plot(kind='barh', figsize=(10, 6), title='Importância dos Atributos')
+plt.gca().invert_yaxis()
+plt.show()
+```
+![Exibicão Importancia Atributos](https://github.com/user-attachments/assets/e85640c1-1b54-4c3d-a5f8-97122651a847)
+
+![Exibicão Importancia Atributos Graficamente](https://github.com/user-attachments/assets/5bcbfd4a-e76e-44b8-9633-5d0eadcd1f31)
+
+### Exibição da Arvore de Decisão
+```python
+# Visualizar a árvore com profundidade limitada
 from sklearn import tree
 
 plt.figure(figsize=(20, 10))
 tree.plot_tree(treeForma,
-               feature_names=vect.feature_names_,
-               class_names=le.classes_,
+               feature_names=vect.get_feature_names_out(),  # alternativo mais robusto
+               class_names=[str(c) for c in le.classes_],    # garantir strings
                filled=True,
                rounded=True)
 plt.show()
 ```
-![Exibição da Árvore de Decisão](https://github.com/user-attachments/assets/229699dc-3987-439c-bc51-844494a1c5aa)
+![Exibição da Árvore de Decisão](https://github.com/user-attachments/assets/4eeb09b2-e703-45dd-8f9a-68201ed24ed2)
 
 ### Modelo 2: Algoritmo
 
