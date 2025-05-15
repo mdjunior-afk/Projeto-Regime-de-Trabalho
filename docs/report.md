@@ -937,7 +937,7 @@ Repita os passos anteriores para o segundo modelo.
 
 ### Resultados obtidos com o modelo 1.
 
-### Análise da Matriz de Confusão
+#### Análise da Matriz de Confusão
 
  Resumo das Classes:
 | Código | Classe                                                    |
@@ -981,7 +981,45 @@ O resultado sugere a necessidade de ajustes no modelo, coleta de mais dados para
 
 ### Resultados obtidos com o modelo 2.
 
-Repita o passo anterior com os resultados do modelo 2.
+#### Análise da Matriz de Confusão
+
+Resumo das Classes:
+| Código | Classe                                                                 |
+|--------|------------------------------------------------------------------------|
+|   0    | Modelo híbrido com estrutura fixa e baixa vulnerabilidade social       |
+|   1    | Modelo remoto ou híbrido flexível com perfil misto                     |
+|   2    | Modelo 100% remoto com alta vulnerabilidade e atuação em regiões de risco |
+
+Acurácia geral: 
+100%  
+O modelo acerta todas as classificações.
+
+Relatório de Classificação:
+| Classe  | Precision | Recall | F1-Score | Support |
+|---------|-----------|--------|----------|---------|
+| 0       | 1.00      | 1.00   | 1.00     | 1172    |
+| 1       | 1.00      | 1.00   | 1.00     | 2322    |
+| 2       | 1.00      | 1.00   | 1.00     | 1259    |
+
+Análise da Matriz de Confusão:
+Modelo híbrido com estrutura fixa (classe 0): Todos os 1172 exemplos foram classificados corretamente.  
+Modelo remoto ou híbrido flexível (classe 1): Todos os 2322 exemplos foram classificados corretamente, sem confusões com outras classes.  
+Modelo 100% remoto com alta vulnerabilidade (classe 2): Os 1259 exemplos dessa classe também foram perfeitamente identificados.
+
+Matriz em forma de tabela/gráfico:
+| **Classe Real / Prevista**  | **Híbrido fixo** | **Remoto / Híbrido flexível** | **100% remoto vulnerável** |
+|-----------------------------|------------------|-------------------------------|-----------------------------|
+| **Híbrido fixo**            | 1172             | 0                             | 0                           |
+| **Remoto / Flexível**       | 0                | 2322                          | 0                           |
+| **100% remoto vulnerável**  | 0                | 0                             | 1259                        |
+
+Interpretação final:
+O modelo teve desempenho perfeito na separação dos clusters, o que demonstra que os grupos definidos apresentam características bem distintas.  
+A ausência total de erros na matriz de confusão indica que o KMeans encontrou padrões claros nas variáveis usadas.  
+A consistência entre os clusters pode refletir divisões socioeconômicas e de estilo de trabalho relevantes no contexto atual.  
+O cluster 2, que representa trabalhadores remotos em situação de maior vulnerabilidade, foi identificado com alta precisão, o que pode ser útil para políticas públicas ou estratégias específicas de gestão.  
+A qualidade da clusterização sugere que os dados estão bem estruturados e que as variáveis escolhidas são altamente informativas para segmentação de perfis profissionais.
+
 
 ### Interpretação do modelo 2
 
