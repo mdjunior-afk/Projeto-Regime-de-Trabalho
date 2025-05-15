@@ -1,0 +1,41 @@
+**Resumo das Classes:**
+
+| Código | Classe                                                |
+| ------ | ----------------------------------------------------- |
+| 0      | Modelo 100% presencial                                |
+| 1      | Modelo 100% remoto                                    |
+| 2      | Modelo híbrido com dias fixos de trabalho presencial  |
+| 3      | Modelo híbrido flexível (o funcionário tem autonomia) |
+
+**Acurácia geral:**
+100%
+O modelo acertou todas as classificações, com separação perfeita entre os clusters gerados.
+
+**Relatório de Classificação:**
+
+| Classe | Precision | Recall | F1-Score | Support |
+| ------ | --------- | ------ | -------- | ------- |
+| 0      | 1.00      | 1.00   | 1.00     | 1172    |
+| 1      | 1.00      | 1.00   | 1.00     | 2322    |
+| 2      | 1.00      | 1.00   | 1.00     | 1259    |
+
+**Análise da Matriz de Confusão:**
+
+* **Modelo 100% presencial (classe 0):** Todos os 1172 exemplos foram classificados corretamente, sem qualquer confusão com outras classes.
+* **Modelo 100% remoto (classe 1):** Todos os 2322 exemplos foram também classificados corretamente.
+* **Modelo híbrido com dias fixos (classe 2):** Todos os 1259 exemplos foram corretamente identificados.
+
+**Matriz em forma de tabela/gráfico:**
+
+| **Classe Real / Prevista** | **Modelo 100% presencial** | **Modelo 100% remoto** | **Modelo híbrido fixo** |
+| -------------------------- | -------------------------- | ---------------------- | ----------------------- |
+| **Modelo 100% presencial** | 1172                       | 0                      | 0                       |
+| **Modelo 100% remoto**     | 0                          | 2322                   | 0                       |
+| **Modelo híbrido fixo**    | 0                          | 0                      | 1259                    |
+
+**Interpretação final:**
+
+O modelo KMeans obteve separação perfeita entre os três clusters gerados, o que indica que os dados possuem padrões bem definidos que possibilitam a segmentação precisa sem rótulos supervisionados.
+Apesar disso, vale destacar que o KMeans não possui conhecimento semântico sobre os nomes das classes. A correspondência entre os rótulos reais e os rótulos previstos foi feita após o mapeamento dos clusters.
+Esse resultado sugere que as variáveis utilizadas têm alta capacidade discriminante entre os perfis de regime de trabalho, e que a estrutura latente dos dados favorece uma boa separação mesmo com métodos não supervisionados.
+A ausência de erros na matriz de confusão reforça que os agrupamentos são bem distintos no espaço vetorial representado após a normalização.
