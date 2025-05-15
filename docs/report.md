@@ -929,9 +929,169 @@ plt.show()
 ```
 ![Exibição da Árvore de Decisão](https://github.com/user-attachments/assets/4eeb09b2-e703-45dd-8f9a-68201ed24ed2)
 
-### Modelo 2: Algoritmo
+### Modelo 2: Clusterização com KMeans
 
-Repita os passos anteriores para o segundo modelo.
+### Importação das bibliotecas e do dataset
+```python
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.metrics import confusion_matrix
+from sklearn.cluster import KMeans
+
+# 1. Carregar os dados
+df = pd.read_csv("data_tratada.csv")
+```
+### Transformação de valores categóricos para numéricos
+```python
+# 2. Codificar colunas categóricas
+df_encoded = df.copy()
+
+# 3. Remover linhas com valores ausentes (NaN)
+df_encoded = df_encoded.dropna()
+
+categorical_columns = df_encoded.select_dtypes(include=["object"]).columns
+
+label_encoders = {}
+for col in categorical_columns:
+    le = LabelEncoder()
+    df_encoded[col] = le.fit_transform(df_encoded[col].astype(str))
+    label_encoders[col] = le
+
+for col, le in label_encoders.items():
+  mapeamento = dict(zip(le.classes_, le.transform(le.classes_)))
+  print(mapeamento)
+```
+```
+{'Feminino': np.int64(0), 'Masculino': np.int64(1), 'Outro': np.int64(2), 'Prefiro não informar': np.int64(3)}\n
+{'Amarela': np.int64(0), 'Branca': np.int64(1), 'Indígena': np.int64(2), 'Outra': np.int64(3), 'Parda': np.int64(4), 'Prefiro não informar': np.int64(5), 'Preta': np.int64(6)}
+{'Não': np.int64(0), 'Prefiro não informar': np.int64(1), 'Sim': np.int64(2)}
+{'Acre (AC)': np.int64(0), 'Alagoas (AL)': np.int64(1), 'Amapá (AP)': np.int64(2), 'Amazonas (AM)': np.int64(3), 'Bahia (BA)': np.int64(4), 'Ceará (CE)': np.int64(5), 'Distrito Federal (DF)': np.int64(6), 'Espírito Santo (ES)': np.int64(7), 'Goiás (GO)': np.int64(8), 'Maranhão (MA)': np.int64(9), 'Mato Grosso (MT)': np.int64(10), 'Mato Grosso do Sul (MS)': np.int64(11), 'Minas Gerais (MG)': np.int64(12), 'Paraná (PR)': np.int64(13), 'Paraíba (PB)': np.int64(14), 'Pará (PA)': np.int64(15), 'Pernambuco (PE)': np.int64(16), 'Piauí (PI)': np.int64(17), 'Rio Grande do Norte (RN)': np.int64(18), 'Rio Grande do Sul (RS)': np.int64(19), 'Rio de Janeiro (RJ)': np.int64(20), 'Rondônia (RO)': np.int64(21), 'Santa Catarina (SC)': np.int64(22), 'Sergipe (SE)': np.int64(23), 'São Paulo (SP)': np.int64(24), 'Tocantins (TO)': np.int64(25)}
+{'Centro-oeste': np.int64(0), 'Nordeste': np.int64(1), 'Norte': np.int64(2), 'Sudeste': np.int64(3), 'Sul': np.int64(4)}
+{'Doutorado ou Phd': np.int64(0), 'Estudante de Graduação': np.int64(1), 'Graduação/Bacharelado': np.int64(2), 'Mestrado': np.int64(3), 'Não tenho graduação formal': np.int64(4), 'Prefiro não informar': np.int64(5), 'Pós-graduação': np.int64(6)}
+{'Ciências Biológicas/ Farmácia/ Medicina/ Área da Saúde': np.int64(0), 'Ciências Sociais': np.int64(1), 'Computação / Engenharia de Software / Sistemas de Informação/ TI': np.int64(2), 'Economia/ Administração / Contabilidade / Finanças/ Negócios': np.int64(3), 'Estatística/ Matemática / Matemática Computacional/ Ciências Atuariais': np.int64(4), 'Marketing / Publicidade / Comunicação / Jornalismo': np.int64(5), 'Não informado': np.int64(6), 'Outra opção': np.int64(7), 'Outras Engenharias': np.int64(8), 'Química / Física': np.int64(9)}
+{'Empreendedor ou Empregado (CNPJ)': np.int64(0), 'Empregado (CLT)': np.int64(1), 'Estagiário': np.int64(2), 'Freelancer': np.int64(3), 'Prefiro não informar': np.int64(4), 'Servidor Público': np.int64(5), 'Vivo fora do Brasil e trabalho para empresa de fora do Brasil': np.int64(6), 'Vivo no Brasil e trabalho remoto para empresa de fora do Brasil': np.int64(7)}
+{'Analista de BI/BI Analyst': np.int64(0), 'Analista de Dados/Data Analyst': np.int64(1), 'Analista de Inteligência de Mercado/Market Intelligence': np.int64(2), 'Analista de Negócios/Business Analyst': np.int64(3), 'Analista de Suporte/Analista Técnico': np.int64(4), 'Analytics Engineer': np.int64(5), 'Cientista de Dados/Data Scientist': np.int64(6), 'DBA/Administrador de Banco de Dados': np.int64(7), 'Data Product Manager/ Product Manager (PM/APM/DPM/GPM/PO)': np.int64(8), 'Desenvolvedor/ Engenheiro de Software/ Analista de Sistemas': np.int64(9), 'Economista': np.int64(10), 'Engenheiro de Dados/Arquiteto de Dados/Data Engineer/Data Architect': np.int64(11), 'Engenheiro de Machine Learning/ML Engineer/AI Engineer': np.int64(12), 'Estatístico': np.int64(13), 'Não informado': np.int64(14), 'Outra Opção': np.int64(15), 'Outras Engenharias (não inclui dev)': np.int64(16), 'Professor/Pesquisador': np.int64(17)}
+{'Júnior': np.int64(0), 'Não informado': np.int64(1), 'Pleno': np.int64(2), 'Sênior': np.int64(3)}
+{'Acima de R$ 40.001/mês': np.int64(0), 'Menos de R$ 1.000/mês': np.int64(1), 'de R$ 1.001/mês a R$ 2.000/mês': np.int64(2), 'de R$ 101/mês a R$ 2.000/mês': np.int64(3), 'de R$ 12.001/mês a R$ 16.000/mês': np.int64(4), 'de R$ 16.001/mês a R$ 20.000/mês': np.int64(5), 'de R$ 2.001/mês a R$ 3.000/mês': np.int64(6), 'de R$ 20.001/mês a R$ 25.000/mês': np.int64(7), 'de R$ 25.001/mês a R$ 30.000/mês': np.int64(8), 'de R$ 3.001/mês a R$ 4.000/mês': np.int64(9), 'de R$ 30.001/mês a R$ 40.000/mês': np.int64(10), 'de R$ 4.001/mês a R$ 6.000/mês': np.int64(11), 'de R$ 6.001/mês a R$ 8.000/mês': np.int64(12), 'de R$ 8.001/mês a R$ 12.000/mês': np.int64(13)}
+{'Mais de 10 anos': np.int64(0), 'Menos de 1 ano': np.int64(1), 'Não tenho experiência na área de dados': np.int64(2), 'de 1 a 2 anos': np.int64(3), 'de 3 a 4 anos': np.int64(4), 'de 4 a 6 anos': np.int64(5), 'de 5 a 6 anos': np.int64(6), 'de 7 a 10 anos': np.int64(7)}
+{'Modelo 100% presencial': np.int64(0), 'Modelo 100% remoto': np.int64(1), 'Modelo híbrido com dias fixos de trabalho presencial': np.int64(2), 'Modelo híbrido flexível (o funcionário tem liberdade para escolher quando estar no escritório presencialmente)': np.int64(3), 'Sim, ocorreram layoffs/demissões em massa na empresa em que trabalho mas não fui afetado': np.int64(4)}
+{'Modelo 100% presencial': np.int64(0), 'Modelo 100% remoto': np.int64(1), 'Modelo híbrido com dias fixos de trabalho presencial': np.int64(2), 'Modelo híbrido flexível (o funcionário tem liberdade para escolher quando estar no escritório presencialmente)': np.int64(3)}
+```
+### Padroniza os dados
+Isso é feito para que o KMeans de importância para todos os dados da mesma forma
+```python
+# 4. Padronizar os dados
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(df_encoded)
+```
+### Método do cotovelo
+```python
+import matplotlib.pyplot as plt
+inertias = []
+
+# 5. Aplicar KMeans
+for i in range(1, 11):
+  kmeans = KMeans(n_clusters=i, random_state=42, n_init=10)
+  clusters = kmeans.fit_predict(X_scaled)
+  inertias.append(kmeans.inertia_)
+
+plt.plot(range(1,11), inertias, marker='o')
+plt.title('Elbow method')
+plt.xlabel('Number of clusters')
+plt.ylabel('Inertia')
+plt.show()
+```
+![download (2)](https://github.com/user-attachments/assets/eff50cf5-eda0-4cfc-b04b-a4383022cee9)
+### Treinamento do KMeans
+```python
+# 5. Aplicar KMeans
+kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
+clusters = kmeans.fit_predict(X_scaled)
+
+# 6. Adicionar a coluna de cluster
+df_encoded["Cluster"] = clusters
+
+rotulos = kmeans.labels_
+print("Rótulos dos clusters:", rotulos)
+
+centroides = kmeans.cluster_centers_
+print("Centroides dos clusters:", centroides)
+
+# Matriz de confusão
+conf_matrix = confusion_matrix(df_encoded["Cluster"], clusters)
+print("Matriz de confusão:")
+print(conf_matrix)
+
+cluster_labels = sorted(df_encoded["Cluster"].unique()) # Get unique cluster labels (0, 1, 2)
+cnf_table = pd.DataFrame(conf_matrix,
+                         index=[f"Cluster Real={c}" for c in cluster_labels],
+                         columns=[f"Cluster Previsto={c}" for c in cluster_labels])
+print(cnf_table)
+```
+```
+Rótulos dos clusters: [1 1 1 ... 0 1 1]
+Centroides dos clusters: [[-0.04810833  0.0228444   1.40172117  1.39255573  0.01099314 -0.0809202
+  -0.21011936  0.57009865  0.38072631  0.63464735  0.52575658  0.56388946
+  -0.02144292 -0.06398685 -0.03158451 -0.0668437  -0.02975104  0.03405519
+  -0.02016485  0.00249944 -0.02294635]
+ [ 0.01531095 -0.01987136 -0.6569418  -0.64815174 -0.03194477  0.32519247
+   0.02733733  0.61060077  0.59113822  0.35928033  0.61224671  0.61111646
+  -0.01158416  0.07964574 -0.00923832  0.04757262  0.02169458 -0.05693992
+   0.02447255  0.11624551  0.05838313]
+ [ 0.01654562  0.01538337 -0.0932473  -0.1009269   0.04868291 -0.52443085
+   0.14518079 -1.65684718 -1.44466575 -1.25341987 -1.6186049  -1.65201817
+   0.04132608 -0.0873271   0.04644036 -0.02551454 -0.01231661  0.07331359
+  -0.02636383 -0.21672075 -0.08631652]]
+Matriz de confusão:
+[[1172    0    0]
+ [   0 2322    0]
+ [   0    0 1259]]
+                Cluster Previsto=0  Cluster Previsto=1  Cluster Previsto=2
+Cluster Real=0                1172                   0                   0
+Cluster Real=1                   0                2322                   0
+Cluster Real=2                   0                   0                1259
+```
+### Quantos dados foram treinados em cada cluster
+```python
+# 7. Mostrar quantos dados em cada grupo
+print(df_encoded["Cluster"].value_counts().sort_index())
+```
+### A média de cada coluna em cada cluster
+```python
+df_encoded.groupby("Cluster").mean()
+```
+![image](https://github.com/user-attachments/assets/2a5724a3-8c50-4985-9acf-6a10fbd1aa0b)
+### Exibição do gráfico
+```python
+from sklearn.decomposition import PCA
+import seaborn as sns
+
+# Supondo que df_encoded já tem os dados padronizados e com 'Cluster'
+
+# Remover a coluna "Cluster" antes do PCA
+X = df_encoded.drop("Cluster", axis=1)
+
+# Padronizar
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Aplicar PCA para reduzir de n dimensões para 2
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X)
+
+# Criar um DataFrame com os componentes e o cluster
+pca_df = pd.DataFrame(X_pca, columns=["Componente 1", "Componente 2"])
+pca_df["Cluster"] = df_encoded["Cluster"].values
+
+# Plot
+plt.figure(figsize=(8,6))
+sns.scatterplot(data=pca_df, x="Componente 1", y="Componente 2", hue="Cluster", palette="Set2", s=60)
+plt.title("Visualização dos Clusters com PCA")
+plt.legend(title="Cluster")
+plt.grid(True)
+plt.show()
+```
+![download (1)](https://github.com/user-attachments/assets/a8054b67-f63a-40d3-acbd-e7142772d8be)
 
 ## Resultados
 
