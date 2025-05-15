@@ -1,13 +1,13 @@
 # Regime de Trabalho na Área de Dados: Preferências Entre Remoto, Híbrido e Presencial
 
-O sistema inteligente será capaz de identificar padrões de comportamento na escolha do regime de trabalho (remoto, híbrido ou presencial) em diferentes áreas profissionais. Para isso, analisará fatores como produtividade, flexibilidade, tempo de deslocamento e cargo, gerando insights valiosos sobre as preferências dos trabalhadores e os impactos dessas escolhas no ambiente corporativo.
+O sistema inteligente será capaz de identificar padrões de comportamento na escolha do regime de trabalho (remoto, híbrido ou presencial) em diferentes áreas profissionais. Para isso, analisará fatores como produtividade e cargo, gerando insights valiosos sobre as preferências dos trabalhadores de ciências de dados e os impactos dessas escolhas no ambiente corporativo.
 
 ## Integrantes
 
 * Luiz Felipe Assis Cavalcante
 * João Vitor de Lima
 * Márcio Douglas Cassemiro Junior
-* Gustavo Horta
+* Gustavo Vasconcellos Horta
 
 ## Professor
 
