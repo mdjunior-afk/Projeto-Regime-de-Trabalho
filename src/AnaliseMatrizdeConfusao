@@ -1,4 +1,4 @@
-Resumo das Classes:
+ Resumo das Classes:
 | Código | Classe                                                    |
 |--------|-----------------------------------------------------------|
 |   0    | Modelo 100% presencial                                    |
@@ -21,11 +21,8 @@ Relatório de Classificação:
 Análise da Matriz de Confusão:
 
 Modelo 100% presencial (classe 0): Nenhum dos 30 exemplos foi corretamente classificado. A maioria foi confundida com o modelo híbrido flexível (26 casos) e alguns com o modelo 100% remoto (4 casos).
-
 Modelo 100% remoto (classe 1): 468 de 617 exemplos foram classificados corretamente. Houve 144 confusões com o híbrido flexível, 5 com o híbrido fixo e nenhum com o presencial.
-
 Modelo híbrido com dias fixos (classe 2): Apenas 5 de 110 exemplos foram corretamente classificados. A maioria foi confundida com o híbrido flexível (92 casos) e alguns com o remoto (13 casos).
-
 Modelo híbrido flexível (classe 3): 458 de 669 exemplos foram classificados corretamente. Houve 199 confusões com o remoto, 12 com o híbrido fixo e nenhum com o presencial.
 
 Matriz em forma de tabela/grafico:
@@ -39,9 +36,6 @@ Matriz em forma de tabela/grafico:
 Interpretação final:
 
 O modelo apresenta desempenho razoável para as classes "100% remoto" e "híbrido flexível", mas tem desempenho muito baixo para "100% presencial" e "híbrido fixo", que são frequentemente confundidas com as demais.
-
 Os maiores erros ocorrem entre as classes "remoto" e "híbrido flexível", indicando sobreposição de características e possível dificuldade do modelo em distinguir nuances entre esses grupos.
-
 A classe "100% presencial" não é reconhecida pelo modelo, sugerindo desbalanceamento ou falta de variáveis discriminantes para esse perfil.
-
 O resultado sugere a necessidade de ajustes no modelo, coleta de mais dados para as classes minoritárias ou revisão das variáveis preditoras para melhorar a capacidade de distinção entre as categorias.
