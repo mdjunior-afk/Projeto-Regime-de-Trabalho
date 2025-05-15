@@ -12,6 +12,7 @@ O sistema inteligente será capaz de identificar padrões de comportamento na es
 ## Professor
 
 * Prof. Hugo Bastos de Paula
+* Prof. Hayala Nepomuceno Curto
 
 ## Instruções de utilização
 
