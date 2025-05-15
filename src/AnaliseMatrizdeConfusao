@@ -7,36 +7,41 @@ Resumo das Classes:
 |   3    | Modelo híbrido flexível (o funcionário tem autonomia)     |
 
 Acurácia geral:
-99,73%
-O modelo acerta quase todas as classificações.
+65,3%
+O modelo acerta aproximadamente dois terços das classificações.
 
 Relatório de Classificação:
 | Classe  | Precision | Recall | F1-Score | Support |
 |---------|-----------|--------|----------|---------|
-| 0       | 1.00      | 1.00   | 1.00     | 96      |
-| 1       | 0.99      | 1.00   | 1.00     | 2124    |
-| 2       | 1.00      | 0.99   | 1.00     | 389     |
-| 3       | 1.00      | 1.00   | 1.00     | 2144    |
+| 0       | 0.00      | 0.00   | 0.00     | 30      |
+| 1       | 0.68      | 0.76   | 0.72     | 617     |
+| 2       | 0.23      | 0.05   | 0.08     | 110     |
+| 3       | 0.64      | 0.68   | 0.66     | 669     |
 
 Análise da Matriz de Confusão:
-Todos os 96 exemplos do modelo 100% presencial foram classificados corretamente.
-Para o modelo 100% remoto: houve alguns erros pequenos — 3 casos foram confundidos com o modelo híbrido fixo e 10 com o híbrido flexível.
-Para o modelo híbrido com dias fixos: a maioria foi corretamente classificada, mas alguns poucos exemplos foram confundidos com o modelo remoto e com o flexível.
-Para o modelo híbrido flexível: praticamente todos foram corretamente classificados.
 
-Interpretação final:
-O modelo tem desempenho altíssimo. A leve confusão entre os modelos remoto e os híbridos é natural, pois há sobreposição de características (ex: trabalho remoto com certa flexibilidade pode parecer um híbrido flexível).
-O modelo 100% presencial se destacou com 100% de acerto, o que mostra que ele tem características bem distintas das demais classes.
-As métricas indicam que o modelo não está sofrendo de overfitting grave, já que o conjunto de treino é grande e o desempenho é consistente.
+Modelo 100% presencial (classe 0): Nenhum dos 30 exemplos foi corretamente classificado. A maioria foi confundida com o modelo híbrido flexível (26 casos) e alguns com o modelo 100% remoto (4 casos).
+
+Modelo 100% remoto (classe 1): 468 de 617 exemplos foram classificados corretamente. Houve 144 confusões com o híbrido flexível, 5 com o híbrido fixo e nenhum com o presencial.
+
+Modelo híbrido com dias fixos (classe 2): Apenas 5 de 110 exemplos foram corretamente classificados. A maioria foi confundida com o híbrido flexível (92 casos) e alguns com o remoto (13 casos).
+
+Modelo híbrido flexível (classe 3): 458 de 669 exemplos foram classificados corretamente. Houve 199 confusões com o remoto, 12 com o híbrido fixo e nenhum com o presencial.
 
 Matriz em forma de tabela/grafico:
 | **Classe Real / Prevista**  | **Modelo 100% presencial** | **Modelo 100% remoto** | **Modelo híbrido fixo** | **Modelo híbrido flexível** |
 | --------------------------- | -------------------------- | ---------------------- | ----------------------- | --------------------------- |
-| **Modelo 100% presencial**  | 96                         | 0                      | 0                       | 0                           |
-| **Modelo 100% remoto**      | 0                          | 2124                   | 3                       | 10                          |
-| **Modelo híbrido fixo**     | 0                          | 2                      | 385                     | 2                           |
-| **Modelo híbrido flexível** | 0                          | 0                      | 10                      | 2134                        |
+| **Modelo 100% presencial**  | 0                          | 4                      | 0                       | 26                          |
+| **Modelo 100% remoto**      | 0                          | 468                    | 5                       | 144                         |
+| **Modelo híbrido fixo**     | 0                          | 13                     | 5                       | 92                          |
+| **Modelo híbrido flexível** | 0                          | 199                    | 12                      | 458                         |
 
-A diagonal principal está praticamente completa, o que confirma os altos índices de acerto.
-Pequenos erros ocorrem principalmente entre as classes remoto e os híbridos, o que é esperado por sua semelhança.
-O modelo 100% presencial é perfeitamente separado das demais.
+Interpretação final:
+
+O modelo apresenta desempenho razoável para as classes "100% remoto" e "híbrido flexível", mas tem desempenho muito baixo para "100% presencial" e "híbrido fixo", que são frequentemente confundidas com as demais.
+
+Os maiores erros ocorrem entre as classes "remoto" e "híbrido flexível", indicando sobreposição de características e possível dificuldade do modelo em distinguir nuances entre esses grupos.
+
+A classe "100% presencial" não é reconhecida pelo modelo, sugerindo desbalanceamento ou falta de variáveis discriminantes para esse perfil.
+
+O resultado sugere a necessidade de ajustes no modelo, coleta de mais dados para as classes minoritárias ou revisão das variáveis preditoras para melhorar a capacidade de distinção entre as categorias.
