@@ -5,7 +5,6 @@ O sistema inteligente será capaz de identificar padrões de comportamento na es
 ## Integrantes
 
 * Luiz Felipe Assis Cavalcante
-* Arthur Viana Silva
 * João Vitor de Lima
 * Márcio Douglas Cassemiro Junior
 * Gustavo Horta
