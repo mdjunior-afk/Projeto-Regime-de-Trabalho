@@ -939,7 +939,7 @@ Repita os passos anteriores para o segundo modelo.
 
 ### Análise da Matriz de Confusão
 
-Resumo das Classes:
+ Resumo das Classes:
 | Código | Classe                                                    |
 |--------|-----------------------------------------------------------|
 |   0    | Modelo 100% presencial                                    |
