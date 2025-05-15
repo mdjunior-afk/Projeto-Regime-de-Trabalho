@@ -17,7 +17,7 @@
 Professores:
 
 ** Prof. Hugo de Paula **
-** Prof. Sandro Jerônimo **
+** Prof. Hayala Curto**
 
 ---
 
