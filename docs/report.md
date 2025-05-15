@@ -1173,17 +1173,57 @@ Matriz em forma de tabela/gráfico:
 | **Remoto / Flexível**       | 0                | 2322                          | 0                           |
 | **100% remoto vulnerável**  | 0                | 0                             | 1259                        |
 
-Interpretação final:
 O modelo teve desempenho perfeito na separação dos clusters, o que demonstra que os grupos definidos apresentam características bem distintas.  
 A ausência total de erros na matriz de confusão indica que o KMeans encontrou padrões claros nas variáveis usadas.  
 A consistência entre os clusters pode refletir divisões socioeconômicas e de estilo de trabalho relevantes no contexto atual.  
 O cluster 2, que representa trabalhadores remotos em situação de maior vulnerabilidade, foi identificado com alta precisão, o que pode ser útil para políticas públicas ou estratégias específicas de gestão.  
 A qualidade da clusterização sugere que os dados estão bem estruturados e que as variáveis escolhidas são altamente informativas para segmentação de perfis profissionais.
 
-
 ### Interpretação do modelo 2
 
-Repita o passo anterior com os parâmetros do modelo 2.
+### Análise de Clusters - Perfil de Profissionais da Área de Dados
+
+Este relatório resume a análise de três clusters formados com base em variáveis demográficas, profissionais e preferências de trabalho de profissionais da área de dados.
+
+#### Cluster 0: Profissionais de Negócios no Norte/Sudeste
+
+- **Gênero:** Predominantemente masculino.
+- **Raça/Cor:** Maioria parda ou que preferiu não informar.
+- **Região:** Norte e Sudeste.
+- **Formação:** Mestrado, área de negócios (ADM, Economia, Contabilidade).
+- **Situação de trabalho:** CLT, cargo técnico (Cientista de Dados, DBA).
+- **Nível:** Pleno ou sênior.
+- **Salário:** R$ 25.001 a R$ 30.000.
+- **Modelo de trabalho atual:** Remoto ou híbrido fixo.
+- **Modelo ideal:** Híbrido flexível.
+
+#### Cluster 1: Técnicos Quantitativos do Sul
+
+- **Gênero:** Predominantemente masculino.
+- **Raça/Cor:** Majoritariamente branca.
+- **Região:** Sul e Sudeste.
+- **Formação:** Mestrado em Estatística ou Matemática.
+- **Situação de trabalho:** CLT, cargos como DBA ou Product Manager.
+- **Nível:** Pleno ou sênior.
+- **Salário:** R$ 25.001 a R$ 30.000.
+- **Modelo de trabalho atual:** Híbrido fixo.
+- **Modelo ideal:** Híbrido flexível.
+
+#### Cluster 2: Profissionais Técnicos de Alta Renda
+
+- **Gênero:** Predominantemente masculino.
+- **Raça/Cor:** Diversidade maior (média indica presença de indígenas ou outros).
+- **Região:** Sudeste/Sul.
+- **Formação:** Mestrado, com variação entre negócios e tecnologia.
+- **Situação de trabalho:** CLT e maior presença de estagiários/freelancers.
+- **Nível:** Pleno/sênior.
+- **Salário:** R$ 30.001 a R$ 40.000.
+- **Modelo de trabalho atual:** Mais remoto.
+- **Modelo ideal:** Híbrido flexível.
+
+### Conclusão
+
+Os três clusters são compostos por profissionais altamente qualificados, predominantemente masculinos, e com renda elevada. Apesar das diferenças regionais e de formação, há uma preferência unânime pelo modelo de trabalho híbrido flexível.
 
 ## Análise comparativa dos modelos
 
