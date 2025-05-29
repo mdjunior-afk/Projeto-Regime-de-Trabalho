@@ -1233,11 +1233,18 @@ Matriz em forma de tabela/grafico:
 | **Modelo híbrido fixo**     | 0                          | 13                     | 5                       | 92                          |
 | **Modelo híbrido flexível** | 0                          | 199                    | 12                      | 458                         |
 
-Interpretação final:
-O modelo apresenta desempenho razoável para as classes "100% remoto" e "híbrido flexível", mas tem desempenho muito baixo para "100% presencial" e "híbrido fixo", que são frequentemente confundidas com as demais.
-Os maiores erros ocorrem entre as classes "remoto" e "híbrido flexível", indicando sobreposição de características e possível dificuldade do modelo em distinguir nuances entre esses grupos.
-A classe "100% presencial" não é reconhecida pelo modelo, sugerindo desbalanceamento ou falta de variáveis discriminantes para esse perfil.
-O resultado sugere a necessidade de ajustes no modelo, coleta de mais dados para as classes minoritárias ou revisão das variáveis preditoras para melhorar a capacidade de distinção entre as categorias.
+### Interpretação Final
+
+O modelo apresenta desempenho razoável para as classes **"100% remoto"** e **"híbrido flexível"**, mas tem desempenho muito baixo para **"100% presencial"** e **"híbrido fixo"**, que são frequentemente confundidas com as demais.
+
+- Os **maiores erros** ocorrem entre as classes *"remoto"* e *"híbrido flexível"*, indicando **sobreposição de características** e possível dificuldade do modelo em distinguir nuances entre esses grupos.
+
+- A classe **"100% presencial"** não é reconhecida pelo modelo, sugerindo **desbalanceamento** ou **falta de variáveis discriminantes** para esse perfil.
+
+- O resultado sugere a necessidade de:
+  - Ajustes no modelo,
+  - Coleta de mais dados para as **classes minoritárias**, ou
+  - Revisão das **variáveis preditoras** para melhorar a capacidade de distinção entre as categorias.
 
 ### Resultados obtidos com o modelo 2.
 
@@ -1287,49 +1294,23 @@ A variação dramática entre melhor (79.8%) e pior árvore (56.7%) revela que o
 
 ### Interpretação do modelo 2
 
-### Análise de Clusters - Perfil de Profissionais da Área de Dados
+O Modelo 2 utiliza um classificador Random Forest para prever a forma de trabalho ideal dos profissionais. Esse modelo combina diversas árvores de decisão, reduzindo overfitting e aumentando a robustez preditiva.
 
-Este relatório resume a análise de três clusters formados com base em variáveis demográficas, profissionais e preferências de trabalho de profissionais da área de dados.
+#### Atributos Mais Relevantes (Feature Importance)
+- `P2_r` (Forma de trabalho atual) — maior influência
+- `P2_o_4` (Flexibilidade percebida) — importante para distinguir entre remoto e híbrido
+- `P2_f` (Cargo atual) — influencia a preferência por modelos mais flexíveis
+- `P2_h` (Faixa salarial) — impacto médio
 
-#### Cluster 0: Profissionais de Negócios no Norte/Sudeste
+#### Padrões Observados
+- Boa performance para prever "Remoto" e "Híbrido flexível".
+- A classe "Modelo 100% presencial" teve 0% de acerto, refletindo seu baixo volume no dataset.
+- Forte confusão entre "Remoto" e "Híbrido flexível", indicando sobreposição nas características coletadas.
 
-- **Gênero:** Predominantemente masculino.
-- **Raça/Cor:** Maioria parda ou que preferiu não informar.
-- **Região:** Norte e Sudeste.
-- **Formação:** Mestrado, área de negócios (ADM, Economia, Contabilidade).
-- **Situação de trabalho:** CLT, cargo técnico (Cientista de Dados, DBA).
-- **Nível:** Pleno ou sênior.
-- **Salário:** R$ 25.001 a R$ 30.000.
-- **Modelo de trabalho atual:** Remoto ou híbrido fixo.
-- **Modelo ideal:** Híbrido flexível.
+#### Limitações Identificadas
+- **Desbalanceamento de classes**: a predominância da classe "Híbrido flexível" afetou negativamente a acurácia nas demais.
+- **Similaridade semântica** entre categorias híbridas e remotas dificulta a distinção, mesmo para modelos robustos como o Random Forest.
 
-#### Cluster 1: Técnicos Quantitativos do Sul
-
-- **Gênero:** Predominantemente masculino.
-- **Raça/Cor:** Majoritariamente branca.
-- **Região:** Sul e Sudeste.
-- **Formação:** Mestrado em Estatística ou Matemática.
-- **Situação de trabalho:** CLT, cargos como DBA ou Product Manager.
-- **Nível:** Pleno ou sênior.
-- **Salário:** R$ 25.001 a R$ 30.000.
-- **Modelo de trabalho atual:** Híbrido fixo.
-- **Modelo ideal:** Híbrido flexível.
-
-#### Cluster 2: Profissionais Técnicos de Alta Renda
-
-- **Gênero:** Predominantemente masculino.
-- **Raça/Cor:** Diversidade maior (média indica presença de indígenas ou outros).
-- **Região:** Sudeste/Sul.
-- **Formação:** Mestrado, com variação entre negócios e tecnologia.
-- **Situação de trabalho:** CLT e maior presença de estagiários/freelancers.
-- **Nível:** Pleno/sênior.
-- **Salário:** R$ 30.001 a R$ 40.000.
-- **Modelo de trabalho atual:** Mais remoto.
-- **Modelo ideal:** Híbrido flexível.
-
-### Conclusão
-
-Os três clusters são compostos por profissionais altamente qualificados, predominantemente masculinos, e com renda elevada. Apesar das diferenças regionais e de formação, há uma preferência unânime pelo modelo de trabalho híbrido flexível.
 
 ## Análise comparativa dos modelos
 
