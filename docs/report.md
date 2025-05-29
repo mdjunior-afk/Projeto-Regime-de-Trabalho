@@ -32,6 +32,26 @@ mostrar algum resultado relevante do trabalho (até 10 linhas)._
 
 ---
 
+## 📑 Índice
+
+- [Introdução](#introdução)
+  - [Contextualização](#contextualização)
+  - [Problema](#problema)
+  - [Objetivo Geral](#objetivo-geral)
+  - [Objetivos Específicos](#objetivos-específicos)
+  - [Justificativas](#justificativas)
+- [Público-alvo](#público-alvo)
+- [Análise Exploratória dos Dados](#análise-exploratória-dos-dados)
+  - [Dicionário de Dados](#dicionário-de-dados)
+    - [`State_of_data_BR_2023_Kaggle - df_survey_2023`](#state_of_data_br_2023_kaggle---df_survey_2023)
+    - [`PNAD_Roubos_Furtos_Brasil_2023`](#pnad_roubos_furtos_brasil_2023)
+    - [`PNAD Média Horas Semanais de Trabalho Doméstico por Cor ou Raça - Brasil`](#pnad-média-horas-semanais-de-trabalho-doméstico-por-cor-ou-raça---brasil)
+  - [`Análise Exploratória dos Dados - State_of_data_BR_2023_Kaggle`](#análise-exploratória-dos-dados---state_of_data_br_2023_kaggle---df_survey_2023)
+  - [`Análise Exploratória dos Dados - PNAD Roubos e Furtos (Brasil)`](#análise-exploratória-dos-dados---pnad-roubos-e-furtos-brasil)
+
+
+---
+
 
 ##	Introdução
 
