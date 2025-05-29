@@ -1241,43 +1241,49 @@ O resultado sugere a necessidade de ajustes no modelo, coleta de mais dados para
 
 ### Resultados obtidos com o modelo 2.
 
-#### Análise da Matriz de Confusão
+Matriz de Confusão - Melhor Árvore
 
-Resumo das Classes:
-| Código | Classe                                                                 |
-|--------|------------------------------------------------------------------------|
-|   0    | Modelo híbrido com estrutura fixa e baixa vulnerabilidade social       |
-|   1    | Modelo remoto ou híbrido flexível com perfil misto                     |
-|   2    | Modelo 100% remoto com alta vulnerabilidade e atuação em regiões de risco |
+| **Classe Real / Prevista** | **Híbrido fixo** | **Híbrido flexível** | **Modelo 100% presencial** | **Modelo 100% remoto** |
+| -------------------------- | ---------------- | -------------------- | -------------------------- | ---------------------- |
+| **Híbrido fixo**           | 7                | 53                   | 0                          | 9                      |
+| **Híbrido flexível**       | 6                | 317                  | 0                          | 122                    |
+| **Modelo 100% presencial** | 1                | 15                   | 0                          | 5                      |
+| **Modelo 100% remoto**     | 1                | 103                  | 0                          | 312                    |
 
-Acurácia geral: 
-100%  
-O modelo acerta todas as classificações.
+Matriz de Confusão - Pior Árvore
 
-Relatório de Classificação:
-| Classe  | Precision | Recall | F1-Score | Support |
-|---------|-----------|--------|----------|---------|
-| 0       | 1.00      | 1.00   | 1.00     | 1172    |
-| 1       | 1.00      | 1.00   | 1.00     | 2322    |
-| 2       | 1.00      | 1.00   | 1.00     | 1259    |
+| **Classe Real / Prevista** | **Híbrido fixo** | **Híbrido flexível** | **Modelo 100% presencial** | **Modelo 100% remoto** |
+| -------------------------- | ---------------- | -------------------- | -------------------------- | ---------------------- |
+| **Híbrido fixo**           | 0                | 21                   | 0                          | 48                     |
+| **Híbrido flexível**       | 2                | 172                  | 0                          | 271                    |
+| **Modelo 100% presencial** | 0                | 7                    | 0                          | 14                     |
+| **Modelo 100% remoto**     | 1                | 132                  | 0                          | 283                    |
 
-Análise da Matriz de Confusão:
-Modelo híbrido com estrutura fixa (classe 0): Todos os 1172 exemplos foram classificados corretamente.  
-Modelo remoto ou híbrido flexível (classe 1): Todos os 2322 exemplos foram classificados corretamente, sem confusões com outras classes.  
-Modelo 100% remoto com alta vulnerabilidade (classe 2): Os 1259 exemplos dessa classe também foram perfeitamente identificados.
+Análise Detalhada das Métricas por Classe
+Classe "Híbrido fixo" (69 casos totais):
+Melhor árvore: Apenas 10.1% de precisão (7/69), com 76.8% dos casos incorretamente classificados como "Híbrido flexível" (53/69). Isso sugere que o modelo não consegue distinguir adequadamente entre os dois tipos de modelo híbrido.
+Pior árvore: Colapso total com 0% de acertos. A confusão se divide entre "Híbrido flexível" (30.4%) e "Modelo 100% remoto" (69.6%), indicando que quando a árvore falha, ela tende a classificar erroneamente como trabalho remoto.
 
-Matriz em forma de tabela/gráfico:
-| **Classe Real / Prevista**  | **Híbrido fixo** | **Remoto / Híbrido flexível** | **100% remoto vulnerável** |
-|-----------------------------|------------------|-------------------------------|-----------------------------|
-| **Híbrido fixo**            | 1172             | 0                             | 0                           |
-| **Remoto / Flexível**       | 0                | 2322                          | 0                           |
-| **100% remoto vulnerável**  | 0                | 0                             | 1259                        |
+Classe "Híbrido flexível" (445 casos totais - classe majoritária):
+Melhor árvore: Performance sólida com 71.2% de acertos (317/445). Os erros principais concentram-se em 27.4% classificados como "Modelo 100% remoto" (122/445), sugerindo sobreposição conceitual entre flexibilidade híbrida e trabalho remoto.
+Pior árvore: Degradação significativa para 38.7% (172/445), com 60.9% dos casos incorretamente categorizados como "Modelo 100% remoto" (271/445). Isso revela instabilidade extrema na distinção entre modelos flexíveis.
 
-O modelo teve desempenho perfeito na separação dos clusters, o que demonstra que os grupos definidos apresentam características bem distintas.  
-A ausência total de erros na matriz de confusão indica que o KMeans encontrou padrões claros nas variáveis usadas.  
-A consistência entre os clusters pode refletir divisões socioeconômicas e de estilo de trabalho relevantes no contexto atual.  
-O cluster 2, que representa trabalhadores remotos em situação de maior vulnerabilidade, foi identificado com alta precisão, o que pode ser útil para políticas públicas ou estratégias específicas de gestão.  
-A qualidade da clusterização sugere que os dados estão bem estruturados e que as variáveis escolhidas são altamente informativas para segmentação de perfis profissionais.
+Classe "Modelo 100% presencial" (21 casos totais - classe minoritária crítica):
+Ambas as árvores: Falha completa com 0% de acertos, representando o maior problema do modelo. Na melhor árvore, 71.4% são confundidos com "Híbrido flexível" (15/21), enquanto na pior árvore a confusão se distribui mais uniformemente. Esta classe está sendo completamente absorvida pelas outras categorias.
+
+Classe "Modelo 100% remoto" (416 casos totais - segunda maior classe):
+Melhor árvore: Excelente performance com 75.0% de acertos (312/416). A confusão principal (24.8%) ocorre com "Híbrido flexível" (103/416), reforçando a sobreposição conceitual entre trabalho remoto e modelos híbridos flexíveis.
+Pior árvore: Mantém relativa estabilidade com 68.0% (283/416), perdendo principalmente para "Híbrido flexível" (31.7%). É a classe mais resiliente à degradação da árvore.
+
+Padrões Críticos Identificados
+Desbalanceamento extremo de dataset:
+A distribuição desproporcional (445 casos de "Híbrido flexível" vs. apenas 21 de "Presencial") cria viés sistemático. O modelo tende a favorecer classes majoritárias, especialmente quando incerto.
+
+Sobreposição conceitual problemática:
+A forte confusão entre "Híbrido flexível" e "Modelo 100% remoto" (122 e 271 erros respectivamente) indica que as features coletadas não capturam diferenças fundamentais entre flexibilidade híbrida e trabalho completamente remoto.
+
+Instabilidade arquitetural:
+A variação dramática entre melhor (79.8%) e pior árvore (56.7%) revela que o modelo está no limiar da capacidade de generalização. Árvores individuais capturam padrões muito específicos e frágeis dos dados de treino.
 
 ### Interpretação do modelo 2
 
