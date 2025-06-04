@@ -952,6 +952,7 @@ plt.show()
 ### Modelo 2: Random Forest
 
 ### Importação das bibliotecas e do dataset
+Importa a biblioteca pandas, carrega a base de dados CSV a partir do Google Drive e exibe as primeiras 5 linhas da tabela para visualização.
 ```python
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -960,37 +961,33 @@ from sklearn.metrics import accuracy_score, confusion_matrix, classification_rep
 from sklearn.preprocessing import LabelEncoder
 from sklearn.feature_extraction import DictVectorizer
 
-data = pd.read_csv('data_tratada.csv')
+data = pd.read_csv('dataset_tratado.csv')
 
-data.dropna(inplace=True)
-
-data['Forma de trabalho atual'] = data['Forma de trabalho atual'].replace('Modelo híbrido flexível (o funcionário tem liberdade para escolher quando estar no escritório presencialmente)', 'Híbrido flexível')
-data['Forma de trabalho atual'] = data['Forma de trabalho atual'].replace('Modelo híbrido com dias fixos de trabalho presencial', 'Híbrido fixo')
-
-data['Forma de trabalho ideal'] = data['Forma de trabalho ideal'].replace('Modelo híbrido flexível (o funcionário tem liberdade para escolher quando estar no escritório presencialmente)', 'Híbrido flexível')
-data['Forma de trabalho ideal'] = data['Forma de trabalho ideal'].replace('Modelo híbrido com dias fixos de trabalho presencial', 'Híbrido fixo')
+pd.set_option('display.max_columns', None)
 
 print(f'Dimensões: {data.shape}')
 print(f'Colunas: {data.columns}')
 
-data.head()
+data.head(5)
 ```
 ### Gerando base de treinamento e teste
+Seleciona os dados de teste e o alvo e codifica os valores categóricos para numéricos e divide a base de dados em treino (70%) e teste (30%)
 ```python
-X_dict = data.iloc[:, 0:(data.shape[1]-1)].T.to_dict().values()
+X_dict = data.drop(columns=['Roubos de veículo', 'Roubos de carro', 'Roubos de moto', 'Roubos de bicicleta', 'Roubos fora do domicílio', 'Total de roubos', 'Forma de trabalho ideal'], axis=1).T.to_dict().values()
 vect = DictVectorizer(sparse=False)
 X = vect.fit_transform(X_dict)
 
 le = LabelEncoder()
 y = le.fit_transform(data.iloc[:, data.shape[1]-1])
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 ```
 ### Treinando o Random Forest
+Treina o RandomForest e guarda todas as acurácias em um array, foi separado duas árvores para fins de comparação. Uma com melhor desempenho de acurácia e outra com o pior desempenho
 ```python
-forest = RandomForestClassifier(random_state=42, criterion='entropy', max_depth=5)
+forest = RandomForestClassifier(random_state=42, criterion='entropy', max_depth=7)
 forest.fit(X_train, y_train)
-print(f'Acurácia: {forest.score(X_train, y_train)}')
+print(f'Acurácia do treinamento: {forest.score(X_train, y_train)}')
 
 accuracies = {}
 
@@ -1002,42 +999,47 @@ for i, tree_model in enumerate(forest.estimators_):
 best_tree = max(accuracies, key=accuracies.get)
 worst_tree = min(accuracies, key=accuracies.get)
 
-print(f'Maior acurácia: {accuracies[best_tree]}')
-print(f'Menor acurácia: {accuracies[worst_tree]}')
+print(f'Acurácia da melhor árvore: {accuracies[best_tree]}')
+print(f'Acurácia da pior árvore: {accuracies[worst_tree]}')
 
 best_y_pred = forest.estimators_[best_tree].predict(X_test)
 worst_y_pred = forest.estimators_[worst_tree].predict(X_test)
 
+print('\nClassification Report da melhor árvore:')
 print(classification_report(y_test, best_y_pred))
+print('\nClassification Report da pior árvore:')
 print(classification_report(y_test, worst_y_pred))
 ```
 ```
-Acurácia: 0.6641241451867438
-Maior acurácia: 0.668769716088328
-Menor acurácia: 0.4784437434279706
+Acurácia do treinamento: 0.8260869565217391
+Acurácia da melhor árvore: 0.7630161579892281
+Acurácia da pior árvore: 0.5915619389587073
+
+Classification Report da melhor árvore:
               precision    recall  f1-score   support
 
-           0       0.47      0.10      0.17        69
-           1       0.65      0.71      0.68       445
-           2       0.00      0.00      0.00        21
-           3       0.70      0.75      0.72       416
+           0       0.00      0.00      0.00        19
+           1       0.82      0.68      0.74       524
+           2       0.73      0.87      0.79       571
 
-    accuracy                           0.67       951
-   macro avg       0.45      0.39      0.39       951
-weighted avg       0.64      0.67      0.65       951
+    accuracy                           0.76      1114
+   macro avg       0.52      0.51      0.51      1114
+weighted avg       0.76      0.76      0.76      1114
 
+
+Classification Report da pior árvore:
               precision    recall  f1-score   support
 
-           0       0.00      0.00      0.00        69
-           1       0.52      0.39      0.44       445
-           2       0.00      0.00      0.00        21
-           3       0.46      0.68      0.55       416
+           0       0.00      0.00      0.00        19
+           1       0.59      0.55      0.57       524
+           2       0.60      0.65      0.62       571
 
-    accuracy                           0.48       951
-   macro avg       0.24      0.27      0.25       951
-weighted avg       0.44      0.48      0.45       951
+    accuracy                           0.59      1114
+   macro avg       0.40      0.40      0.40      1114
+weighted avg       0.58      0.59      0.59      1114
 ```
 ### Matriz de confusão da melhor árvore
+Aqui foi feita a visualização da matriz de confusão da árvore com melhor desempenho, sendo mostrado uma pequena confusão entre remoto e hibrído. O modelo presencial foi completamente desconsiderado em função de ter poucos dados relacionados a esse modelo
 ```python
 from sklearn.metrics import ConfusionMatrixDisplay
 from matplotlib import pyplot as plt
@@ -1055,25 +1057,24 @@ plt.xticks(rotation=90)
 plt.show()
 ```
 ```
-[[  7  53   0   9]
- [  6 317   0 122]
- [  1  15   0   5]
- [  1 103   0 312]]
+Matriz de confusão: 
+[[  0   1  18]
+ [  2 356 166]
+ [  1  76 494]]
 Matriz de confusão formatada: 
-                        Híbrido fixo  Híbrido flexível  \
-Híbrido fixo                       7                53   
-Híbrido flexível                   6               317   
-Modelo 100% presencial             1                15   
-Modelo 100% remoto                 1               103   
+                        Modelo 100% presencial  Modelo 100% remoto  \
+Modelo 100% presencial                       0                   1   
+Modelo 100% remoto                           2                 356   
+Modelo híbrido                               1                  76   
 
-                        Modelo 100% presencial  Modelo 100% remoto  
-Híbrido fixo                                 0                   9  
-Híbrido flexível                             0                 122  
-Modelo 100% presencial                       0                   5  
-Modelo 100% remoto                           0                 312  
+                        Modelo híbrido  
+Modelo 100% presencial              18  
+Modelo 100% remoto                 166  
+Modelo híbrido                     494  
 ```
-![image](https://github.com/user-attachments/assets/937a12da-954e-4047-9667-7acde7c8e8ce)
+![image](https://github.com/user-attachments/assets/7a692d74-e83f-41c1-87fd-4353d81c79f6)
 ### Matriz de confusão da pior árvore
+Enquanto aqui, é descrito a matriz de confusão da da árvore com menor desempenho. Aqui a confusão entre hibrido e remoto é mais generalizada
 ```python
 from sklearn.metrics import ConfusionMatrixDisplay
 from matplotlib import pyplot as plt
@@ -1092,26 +1093,23 @@ plt.show()
 ```
 ```
 Matriz de confusão: 
-[[  7  53   0   9]
- [  6 317   0 122]
- [  1  15   0   5]
- [  1 103   0 312]]
+[[  0   1  18]
+ [  2 356 166]
+ [  1  76 494]]
 Matriz de confusão formatada: 
-                        Híbrido fixo  Híbrido flexível  \
-Híbrido fixo                       0                21   
-Híbrido flexível                   2               172   
-Modelo 100% presencial             0                 7   
-Modelo 100% remoto                 1               132   
+                        Modelo 100% presencial  Modelo 100% remoto  \
+Modelo 100% presencial                       0                   1   
+Modelo 100% remoto                           1                 290   
+Modelo híbrido                               4                 198   
 
-                        Modelo 100% presencial  Modelo 100% remoto  
-Híbrido fixo                                 0                  48  
-Híbrido flexível                             0                 271  
-Modelo 100% presencial                       0                  14  
-Modelo 100% remoto                           0                 283  
+                        Modelo híbrido  
+Modelo 100% presencial              18  
+Modelo 100% remoto                 233  
+Modelo híbrido                     369  
 ```
-![image](https://github.com/user-attachments/assets/9baebd90-3726-41a3-b559-c67f77fc1140)
-
+![image](https://github.com/user-attachments/assets/e6bd93ce-b71d-4b2b-a944-9ae2a6525fc6)
 ### Visualização de um gráfico de importância da melhor árvore
+Foi feito uma vizualização dos valores mais importantes na construção da melhor árvore. Os atributos mais importantes levam em consideração a forma de trabalho atual do profissional e a atitude do profissional caso a empresa adote o modelo 100% presencial
 ```python
 best_importance = forest.estimators_[best_tree].feature_importances_
 
@@ -1127,21 +1125,21 @@ plt.gca().invert_yaxis()
 ```
 ```
 Importância das variáveis: 
-Forma de trabalho atual=Híbrido flexível                                           0.371220
-Forma de trabalho atual=Modelo 100% presencial                                     0.327551
-Forma de trabalho atual=Híbrido fixo                                               0.100228
-Situação atual de trabalho=Empregado (CLT)                                         0.039191
-Cargo atual=Engenheiro de Dados/Arquiteto de Dados/Data Engineer/Data Architect    0.021958
-Roubos de veículo                                                                  0.018321
-Tempo de experiencia=Mais de 10 anos                                               0.015263
-Cargo atual=Analista de BI/BI Analyst                                              0.013826
-Nivel de ensino=Pós-graduação                                                      0.010544
-Nivel de ensino=Doutorado ou Phd                                                   0.009981
+Decisão da empresa para modelo 100% presencial=Vou aceitar e retornar ao modelo 100% presencial               0.311739
+Forma de trabalho atual=Modelo híbrido                                                                        0.212135
+Decisão da empresa para modelo 100% presencial=Vou procurar outra oportunidade no modelo híbrido ou remoto    0.096771
+Decisão da empresa para modelo 100% presencial=Vou procurar outra oportunidade no modelo 100% remoto          0.085514
+Forma de trabalho atual=Modelo 100% remoto                                                                    0.064423
+Área de formação=Outra opção                                                                                  0.014356
+Faixa salarial=de R$ 4.001/mês a R$ 6.000/mês                                                                 0.013847
+Nível=Sênior                                                                                                  0.011894
+Estado onde mora=Rio Grande do Sul (RS)                                                                       0.010316
+Cor/Raça=Branca                                                                                               0.010064
 dtype: float64
 ```
-![image](https://github.com/user-attachments/assets/dafdc9de-d9f6-46ef-9de4-dafc360de92c)
-
+![image](https://github.com/user-attachments/assets/d961aa11-bab1-402c-ace4-7ff416af7935)
 ### Visualização do gráfico de importância da pior árvore
+Entretanto, aqui a visualização dos atributos mais importantes deu mais ênfase em aspectos demográficos do que a atitude do profissional em caso da empresa adotar 100% presencial e o modelo de trabalho atual
 ```python
 worst_importance = forest.estimators_[worst_tree].feature_importances_
 
@@ -1157,24 +1155,22 @@ plt.gca().invert_yaxis()
 ```
 ```
 Importância das variáveis: 
-Estado onde mora=Bahia (BA)                         0.159811
-Estado onde mora=São Paulo (SP)                     0.098085
-Genero=Masculino                                    0.095718
-Cargo atual=Outra Opção                             0.071089
-Forma de trabalho atual=Modelo 100% presencial      0.069734
-Cargo atual=Analista de Suporte/Analista Técnico    0.069437
-Região onde mora=Norte                              0.061659
-Cor/Raca=Parda                                      0.053307
-Cargo atual=Analytics Engineer                      0.050324
-Faixa salarial=de R$ 8.001/mês a R$ 12.000/mês      0.041223
-dtype: float64
+Decisão da empresa para modelo 100% presencial=Vou aceitar e retornar ao modelo 100% presencial    0.352205
+Forma de trabalho atual=Modelo 100% remoto                                                         0.093790
+Região onde mora=Nordeste                                                                          0.044124
+Faixa salarial=de R$ 6.001/mês a R$ 8.000/mês                                                      0.035272
+Cargo atual=Analista de Dados/Data Analyst                                                         0.027648
+Forma de trabalho atual=Modelo 100% presencial                                                     0.027511
+Gênero=Masculino                                                                                   0.023162
+Idade                                                                                              0.023008
+Faixa salarial=de R$ 20.001/mês a R$ 25.000/mês                                                    0.022522
+Nivel de segurança=Moderado                                                                        0.022458
 ```
-![image](https://github.com/user-attachments/assets/a42a181e-105c-4a40-b5c4-daa66b5addfd)
-
+![image](https://github.com/user-attachments/assets/06480712-f8e0-4364-8740-1adceb3c5b9a)
 ### Visualização do RandomForest
+Uma vizualização de todas as 100 árvores com suas respectivas acurácias
 ```python
 import matplotlib.pyplot as plt
-
 
 plt.figure(figsize=(10, 5))
 plt.plot(range(len(accuracies.items())), accuracies.values(), marker='o', linestyle='-', color='blue')
@@ -1185,8 +1181,7 @@ plt.ylim(0, 1)
 plt.grid(True)
 plt.show()
 ```
-![image](https://github.com/user-attachments/assets/8f37a268-352b-4493-ab27-e9116dfb45ff)
-
+![image](https://github.com/user-attachments/assets/213544e1-4510-448b-8c87-ea7af2081315)
 ### Visualização da Árvore com melhor desempenho
 ```python
 import pydotplus
@@ -1198,8 +1193,7 @@ dot_data = tree.export_graphviz(forest.estimators_[best_tree], out_file=None, fe
 graph = pydotplus.graph_from_dot_data(dot_data)
 Image(graph.create_png())
 ```
-![image](https://github.com/user-attachments/assets/cfa0a22f-7863-4441-b16d-ae0ea051d0c9)
-
+![image](https://github.com/user-attachments/assets/96c40ac2-74c9-4699-8826-e9fada9535d8)
 ### Visualização da Árvore com pior desempenho
 ```python
 import pydotplus
@@ -1211,8 +1205,7 @@ dot_data = tree.export_graphviz(forest.estimators_[worst_tree], out_file=None, f
 graph = pydotplus.graph_from_dot_data(dot_data)
 Image(graph.create_png())
 ```
-![image](https://github.com/user-attachments/assets/3c4581c2-c877-483c-ad19-4548c238340f)
-
+![image](https://github.com/user-attachments/assets/575f77b2-a16a-48d2-8eb3-6eb5a5c4b6dc)
 ## Resultados
 
 ### Resultados obtidos com o modelo 1.
