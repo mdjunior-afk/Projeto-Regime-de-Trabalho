@@ -1352,7 +1352,7 @@ O modelo apresenta desempenho razoável para as classes **"100% remoto"** e **"h
 
 ### Resultados obtidos com o modelo 2.
 
-#### Análise da Matriz de Confusão do modelo 1
+#### Análise da Matriz de Confusão do modelo 2
 
 Melhor árvore
 
