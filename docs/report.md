@@ -1282,7 +1282,7 @@ Pior árvore
 ![image](https://github.com/user-attachments/assets/e6bd93ce-b71d-4b2b-a944-9ae2a6525fc6)
 
 Análise Detalhada das Métricas por Classe
-Classe "Modelo 100% presencial" (19 casos totais - classe extremamente minoritária):
+Classe "Modelo 100% presencial":
 
 Melhor árvore: Apenas 0% de precisão (0/19), com 94.7% dos casos incorretamente classificados como "Modelo híbrido" (18/19) e 5.3% como "Modelo 100% remoto" (1/19). Isso sugere que o modelo não consegue distinguir adequadamente o trabalho presencial das demais modalidades.
 
