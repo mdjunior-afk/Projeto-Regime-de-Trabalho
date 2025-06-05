@@ -3,8 +3,6 @@
 
 **Luiz Felipe Assis Cavalcante, lfacavalcante@sga.pucminas.br**
 
-**Arthur Viana Silva, arthur.silva.1564925@sga.pucminas.br**
-
 **João Vitor de Lima, joao.lima.1594303@sga.pucminas.br**
 
 **Márcio Douglas Cassemiro Junior, marcio.cassemiro@sga.pucminas.br**
@@ -863,8 +861,6 @@ A preparação dos dados consiste dos seguintes passos:
 
 ### Importção de Bibliotecas
 ```python
-!pip install pandas scikit-learn matplotlib pydotplus dtreeviz
-
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
@@ -873,19 +869,61 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 ```
-### Transformação de Dados
+### Importação do dataset
 ```python
-df = pd.read_csv("data_tratada.csv")
+df = pd.read_csv("dataset_tratado.csv")
 
 print("\nDimensões:", df.shape)
 print("\nCampos:", df.columns)
 print(df.describe())
+```
+```
+Dimensões: (3713, 24)
 
-# Remover registros com alvo ausente
-df = df.dropna(subset=['Forma de trabalho ideal'])
+Campos: Index(['Idade', 'Gênero', 'Cor/Raça', 'Horas com trabalho doméstico e cuidado',
+       'PCD', 'Estado onde mora', 'Região onde mora', 'Roubos de veículo',
+       'Roubos de carro', 'Roubos de moto', 'Roubos de bicicleta',
+       'Roubos fora do domicílio', 'Total de roubos', 'Nivel de segurança',
+       'Nível de ensino', 'Área de formação', 'Situação atual de trabalho',
+       'Cargo atual', 'Nível', 'Faixa salarial', 'Tempo de experiência',
+       'Forma de trabalho atual',
+       'Decisão da empresa para modelo 100% presencial',
+       'Forma de trabalho ideal'],
+      dtype='object')
+             Idade  Horas com trabalho doméstico e cuidado  Roubos de veículo  \
+count  3713.000000                             3713.000000        3713.000000   
+mean     30.887692                               16.787988          68.710477   
+std       6.843938                                0.394420          34.970815   
+min      18.000000                               16.500000          12.000000   
+25%      26.000000                               16.500000          12.000000   
+50%      29.000000                               16.500000          92.000000   
+75%      34.000000                               17.400000          92.000000   
+max      70.000000                               17.400000          92.000000   
 
+       Roubos de carro  Roubos de moto  Roubos de bicicleta  \
+count      3713.000000     3713.000000          3713.000000   
+mean         45.747374       22.914894            16.683275   
+std          26.831917       15.235800             8.925420   
+min           8.000000        3.000000             2.000000   
+25%          10.000000        4.000000             3.000000   
+50%          67.000000       25.000000            23.000000   
+75%          67.000000       25.000000            23.000000   
+max          67.000000       57.000000            23.000000   
+
+       Roubos fora do domicílio  Total de roubos  
+count               3713.000000      3713.000000  
+mean                 422.008080       559.380824  
+std                  212.668114       282.446508  
+min                   74.000000        98.000000  
+25%                   82.000000       107.000000  
+50%                  565.000000       749.000000  
+75%                  565.000000       749.000000  
+max                  565.000000       749.000000 
+```
+### Transformando os dados
+```python
 # Separar variáveis independentes e alvo
-X_dict = df.drop(columns=['Forma de trabalho ideal', 'Cargo atual']).to_dict(orient='records')
+X_dict = df.drop(columns=['Roubos de veículo', 'Roubos de carro', 'Roubos de moto', 'Roubos de bicicleta', 'Roubos fora do domicílio', 'Total de roubos', 'Forma de trabalho ideal']).to_dict(orient='records')
 vect = DictVectorizer(sparse=False)
 X = vect.fit_transform(X_dict)
 
@@ -898,13 +936,19 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_
 print("Shape dos dados de treino:", X_train.shape)
 print("Shape dos dados de teste:", X_test.shape)
 ```
-![Transformação de Dados](https://github.com/user-attachments/assets/b6c22b4d-c529-4099-9024-bd8a5e9db735)
-
+```
+Shape dos dados de treino: (2599, 117)
+Shape dos dados de teste: (1114, 117)
+```
 ### Indução do Modelo
 ```python
+from sklearn.metrics import ConfusionMatrixDisplay
+from matplotlib import pyplot as plt
+
 # Definir modelo com limitação de profundidade e folhas mínimas
-treeForma = DecisionTreeClassifier(random_state=0, criterion='entropy', max_depth=5, min_samples_leaf=4)
+treeForma = DecisionTreeClassifier(random_state=42, criterion='entropy', max_depth=7)
 treeForma.fit(X_train, y_train)
+print("Acurácia no treino:", treeForma.score(X_train, y_train))
 
 # Avaliação no conjunto de teste
 y_pred = treeForma.predict(X_test)
@@ -914,14 +958,40 @@ cnf_matrix = confusion_matrix(y_test, y_pred)
 cnf_table = pd.DataFrame(cnf_matrix, index=[f"Real={c}" for c in le.classes_], columns=[f"Prev={c}" for c in le.classes_])
 print(cnf_table)
 
-```
-![Indução do Modelo](https://github.com/user-attachments/assets/ffb88ccd-1682-4f3f-a75c-17b1f18e9d0c)
+display = ConfusionMatrixDisplay.from_estimator(treeForma, X_test, y_test, display_labels=le.classes_, cmap=plt.cm.Blues)
 
-### Exibição das Importancias dos Atributos 
+plt.xticks(rotation=90)
+plt.show()
+```
+```
+Acurácia no treino: 0.7933820700269334
+Acurácia no teste: 0.7459605026929982
+              precision    recall  f1-score   support
+
+           0       0.14      0.05      0.08        19
+           1       0.74      0.77      0.75       524
+           2       0.76      0.75      0.76       571
+
+    accuracy                           0.75      1114
+   macro avg       0.55      0.52      0.53      1114
+weighted avg       0.74      0.75      0.74      1114
+
+                             Prev=Modelo 100% presencial  \
+Real=Modelo 100% presencial                            1   
+Real=Modelo 100% remoto                                4   
+Real=Modelo híbrido                                    2   
+
+                             Prev=Modelo 100% remoto  Prev=Modelo híbrido  
+Real=Modelo 100% presencial                        3                   15  
+Real=Modelo 100% remoto                          401                  119  
+Real=Modelo híbrido                              140                  429 
+```
+![image](https://github.com/user-attachments/assets/40653726-2954-4eae-9eb9-f171b6958a2e)
+### Exibição da Importância dos Atributos 
 ```python
 # Exibir importâncias dos atributos
 importances = pd.Series(treeForma.feature_importances_, index=vect.feature_names_)
-importances = importances[importances > 0].sort_values(ascending=False)
+importances = importances[importances > 0].sort_values(ascending=False).head(10)
 print("\nImportância dos atributos:")
 print(importances)
 
@@ -930,25 +1000,33 @@ importances.plot(kind='barh', figsize=(10, 6), title='Importância dos Atributos
 plt.gca().invert_yaxis()
 plt.show()
 ```
-![Exibicão Importancia Atributos](https://github.com/user-attachments/assets/5790bd38-25dc-4d93-b137-a0413ee32bf4)
-
-![Exibicão Importancia Atributos Graficamente](https://github.com/user-attachments/assets/5bcbfd4a-e76e-44b8-9633-5d0eadcd1f31)
-
-### Exibição da Arvore de Decisão
-```python
-# Visualizar a árvore com profundidade limitada
-from sklearn import tree
-
-plt.figure(figsize=(20, 10))
-tree.plot_tree(treeForma,
-               feature_names=vect.get_feature_names_out(),  # alternativo mais robusto
-               class_names=[str(c) for c in le.classes_],    # garantir strings
-               filled=True,
-               rounded=True)
-plt.show()
 ```
-![Exibição da Árvore de Decisão](https://github.com/user-attachments/assets/4eeb09b2-e703-45dd-8f9a-68201ed24ed2)
+Importância dos atributos:
+Decisão da empresa para modelo 100% presencial=Vou procurar outra oportunidade no modelo 100% remoto    0.542008
+Forma de trabalho atual=Modelo 100% remoto                                                              0.138466
+Idade                                                                                                   0.044985
+Tempo de experiência=de 7 a 10 anos                                                                     0.015375
+Estado onde mora=Rio Grande do Sul (RS)                                                                 0.014193
+Nível=Pleno                                                                                             0.011914
+Situação atual de trabalho=Empregado (CLT)                                                              0.011717
+Decisão da empresa para modelo 100% presencial=Vou aceitar e retornar ao modelo 100% presencial         0.010651
+Estado onde mora=Distrito Federal (DF)                                                                  0.010012
+Cargo atual=Analista de Negócios/Business Analyst                                                       0.009890
+dtype: float64
+```
+![image](https://github.com/user-attachments/assets/3a1a1457-6de5-44cc-bd80-16940ce4c4a0)
+### Exibição da Árvore de Decisão
+```python
+import pydotplus
+from sklearn import tree
+from IPython.display import Image
 
+dot_data = tree.export_graphviz(treeForma, out_file=None, feature_names=vect.get_feature_names_out(), class_names=le.classes_, filled=True, rounded=True, special_characters=True)
+
+graph = pydotplus.graph_from_dot_data(dot_data)
+Image(graph.create_png())
+```
+![image](https://github.com/user-attachments/assets/2c49d63e-32e1-451b-80ce-e9e0275cb7cb)
 ### Modelo 2: Random Forest
 
 ### Importação das bibliotecas e do dataset
