@@ -1282,37 +1282,40 @@ Pior árvore
 ![image](https://github.com/user-attachments/assets/e6bd93ce-b71d-4b2b-a944-9ae2a6525fc6)
 
 Análise Detalhada das Métricas por Classe
-Classe "Modelo 100% presencial":
 
-Melhor árvore: Apenas 0% de precisão (0/19), com 94.7% dos casos incorretamente classificados como "Modelo híbrido" (18/19) e 5.3% como "Modelo 100% remoto" (1/19). Isso sugere que o modelo não consegue distinguir adequadamente o trabalho presencial das demais modalidades.
+Classe "Modelo híbrido"
 
-Pior árvore: Colapso total com 0% de acertos. A confusão se mantém similar, com 94.7% classificados como "Modelo híbrido" (18/19), indicando que quando a árvore falha, ela tende a classificar erroneamente como trabalho híbrido.
+Melhor árvore:
+Desempenho razoável com 59.6% de acertos (324/544). Os principais erros concentram-se em 36.7% dos casos classificados incorretamente como "Modelo 100% remoto" (200/544). A precisão é de 64.8% (324/500), indicando que, entre as previsões como "híbrido", a maioria estava correta.
 
-Classe "Modelo 100% remoto":
+Pior árvore:
+Queda expressiva no desempenho, com recall de apenas 35.5% (193/544). A confusão com a classe "remoto" aumenta significativamente, com 60.8% dos casos (331/544) sendo erroneamente classificados como "Modelo 100% remoto". Isso evidencia alta sensibilidade do modelo a variações nos dados.
 
-Melhor árvore: Performance sólida com 67.9% de acertos (356/524). Os erros principais concentram-se em 31.7% classificados como "Modelo híbrido" (166/524) e apenas 0.4% como "Presencial" (2/524), sugerindo sobreposição conceitual entre trabalho remoto e modelos híbridos.
+Classe "Modelo 100% presencial"
 
-Pior árvore: Degradação significativa para 55.3% (290/524), com 44.5% dos casos incorretamente categorizados como "Modelo híbrido" (233/524). Isso revela instabilidade extrema na distinção entre modelos remotos e híbridos.
+Melhor árvore:
+Falha completa na identificação da classe, com 0% de acertos. A maioria dos casos (94.7% – 18/19) foi classificada incorretamente como "Modelo híbrido", e 5.3% como "Modelo 100% remoto".
 
-Classe "Modelo híbrido":
+Pior árvore:
+Resultado ainda mais crítico: 100% dos casos (19/19) classificados como "Modelo híbrido". Isso reforça a completa negligência da classe minoritária, independentemente da configuração do modelo.
 
-Melhor árvore: Excelente performance com 86.5% de acertos (494/571). Os erros principais concentram-se em 13.3% classificados como "Modelo 100% remoto" (76/571), com apenas 0.2% confundidos com "Presencial" (1/571). Esta é claramente a classe melhor reconhecida pelo modelo.
+Classe "Modelo 100% remoto"
 
-Pior árvore: Queda para 64.6% (369/571), perdendo principalmente para "Modelo 100% remoto" (34.7% - 198/571) e um ligeiro aumento na confusão com "Presencial" (0.7% - 4/571). Mesmo com degradação, mantém-se como a classe mais estável.
+Melhor árvore:
+Bom desempenho com 69.0% de acertos (394/571). Os principais erros se dão pela confusão com o "Modelo híbrido", responsável por 31.0% dos erros (177/571).
+
+Pior árvore:
+Queda relevante para 53.6% de acertos (306/571). A taxa de confusão com "Modelo híbrido" aumenta para 46.4% (265/571), demonstrando instabilidade no reconhecimento da classe.
 
 Padrões Críticos Identificados
+Colapso da classe minoritária:
+A classe "Modelo 100% presencial" é completamente ignorada pelo modelo em ambas as árvores, sugerindo priorização excessiva das classes majoritárias em detrimento de representações críticas.
 
-Desbalanceamento extremo de dataset:
-A distribuição desproporcional (571 casos de "Híbrido" vs. apenas 19 de "Presencial") cria viés sistemático. O modelo tende a favorecer classes majoritárias, especialmente quando incerto, resultando na completa negligência da classe minoritária.
+Sobreposição entre Híbrido e Remoto:
+Confusões significativas entre "Modelo híbrido" e "Modelo 100% remoto" ocorrem em ambas as direções: 36.7% dos híbridos são confundidos com remoto, e 31.0% dos remotos com híbrido. Isso indica que as variáveis disponíveis não capturam adequadamente as distinções práticas entre os dois modelos.
 
-Sobreposição conceitual problemática:
-A forte confusão entre "Modelo 100% remoto" e "Modelo híbrido" (166 e 233 erros respectivamente) indica que as features coletadas não capturam diferenças fundamentais entre trabalho completamente remoto e modelos híbridos de trabalho.
-
-Instabilidade arquitetural:
-A variação dramática entre melhor (76.3%) e pior árvore (59.2%) revela que o modelo está no limiar da capacidade de generalização. Árvores individuais capturam padrões muito específicos e frágeis dos dados de treino, com particular vulnerabilidade na distinção remoto-híbrido.
-
-Classe crítica ignorada:
-A falha completa em identificar trabalho presencial (0% de acertos em ambas as árvores) representa um problema crítico, pois essa modalidade pode ter implicações importantes para políticas organizacionais e não pode ser detectada pelo modelo atual.
+Instabilidade extrema:
+A variação de 24.1 pontos percentuais no recall da classe "Modelo híbrido" (de 59.6% para 35.5%) entre árvores sugere que o modelo é altamente sensível a pequenas variações nos dados de treinamento.
 
 ### Interpretação do modelo 2
 
