@@ -55,10 +55,10 @@ mostrar algum resultado relevante do trabalho (até 10 linhas)._
  	- [Modelo 2: Random Forest](#modelo-2-random-forest)
 - [Resultados](#resultados)
      - [Resultados obtidos com o modelo 1](#resultados-obtidos-com-o-modelo-1)
- 		- [Análise da Matriz de Confusão](#análise-da-matriz-de-confusão)
+ 		- [Análise da Matriz de Confusão](#análise-da-matriz-de-confusão-do-modelo-1)
    		- [Interpretação Final](#interpretação-final)
      - [Resultados obtidos com o modelo 2](#resultados-obtidos-com-o-modelo-2)
- 		- [Análise da Matriz de Confusão](#análise-da-matriz-de-confusão)
+ 		- [Análise da Matriz de Confusão](#análise-da-matriz-de-confusão-do-modelo-2)
    		- [Interpretação do modelo 2](#interpretação-do-modelo-2)
 - [Análise comparativa dos modelos](#análise-comparativa-dos-modelos)
 ---
@@ -1301,7 +1301,7 @@ Image(graph.create_png())
 
 ### Resultados obtidos com o modelo 1.
 
-#### Análise da Matriz de Confusão
+#### Análise da Matriz de Confusão do modelo 1
 
  Resumo das Classes:
 | Código | Classe                                                    |
@@ -1351,6 +1351,8 @@ O modelo apresenta desempenho razoável para as classes **"100% remoto"** e **"h
   - Revisão das **variáveis preditoras** para melhorar a capacidade de distinção entre as categorias.
 
 ### Resultados obtidos com o modelo 2.
+
+#### Análise da Matriz de Confusão do modelo 1
 
 Melhor árvore
 
