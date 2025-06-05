@@ -1261,49 +1261,57 @@ O modelo apresenta desempenho razoável para as classes **"100% remoto"** e **"h
 
 ### Resultados obtidos com o modelo 2.
 
-Matriz de Confusão - Melhor Árvore
+Melhor árvore
 
-| **Classe Real / Prevista** | **Híbrido fixo** | **Híbrido flexível** | **Modelo 100% presencial** | **Modelo 100% remoto** |
-| -------------------------- | ---------------- | -------------------- | -------------------------- | ---------------------- |
-| **Híbrido fixo**           | 7                | 53                   | 0                          | 9                      |
-| **Híbrido flexível**       | 6                | 317                  | 0                          | 122                    |
-| **Modelo 100% presencial** | 1                | 15                   | 0                          | 5                      |
-| **Modelo 100% remoto**     | 1                | 103                  | 0                          | 312                    |
+| Classe Real / Prevista | Modelo 100% presencial | Modelo 100% remoto | Modelo híbrido |
+| ---------------------- | ---------------------- | ------------------ | -------------- |
+| Modelo 100% presencial | 0                      | 1                  | 18             |
+| Modelo 100% remoto     | 2                      | 356                | 166            |
+| Modelo híbrido         | 1                      | 76                 | 494            |
 
-Matriz de Confusão - Pior Árvore
+![image](https://github.com/user-attachments/assets/7a692d74-e83f-41c1-87fd-4353d81c79f6)
 
-| **Classe Real / Prevista** | **Híbrido fixo** | **Híbrido flexível** | **Modelo 100% presencial** | **Modelo 100% remoto** |
-| -------------------------- | ---------------- | -------------------- | -------------------------- | ---------------------- |
-| **Híbrido fixo**           | 0                | 21                   | 0                          | 48                     |
-| **Híbrido flexível**       | 2                | 172                  | 0                          | 271                    |
-| **Modelo 100% presencial** | 0                | 7                    | 0                          | 14                     |
-| **Modelo 100% remoto**     | 1                | 132                  | 0                          | 283                    |
+Pior árvore
+
+| Classe Real / Prevista | Modelo 100% presencial | Modelo 100% remoto | Modelo híbrido |
+| ---------------------- | ---------------------- | ------------------ | -------------- |
+| Modelo 100% presencial | 0                      | 1                  | 18             |
+| Modelo 100% remoto     | 1                      | 290                | 233            |
+| Modelo híbrido         | 4                      | 198                | 369            |
+
+![image](https://github.com/user-attachments/assets/e6bd93ce-b71d-4b2b-a944-9ae2a6525fc6)
 
 Análise Detalhada das Métricas por Classe
-Classe "Híbrido fixo" (69 casos totais):
-Melhor árvore: Apenas 10.1% de precisão (7/69), com 76.8% dos casos incorretamente classificados como "Híbrido flexível" (53/69). Isso sugere que o modelo não consegue distinguir adequadamente entre os dois tipos de modelo híbrido.
-Pior árvore: Colapso total com 0% de acertos. A confusão se divide entre "Híbrido flexível" (30.4%) e "Modelo 100% remoto" (69.6%), indicando que quando a árvore falha, ela tende a classificar erroneamente como trabalho remoto.
+Classe "Modelo 100% presencial" (19 casos totais - classe extremamente minoritária):
 
-Classe "Híbrido flexível" (445 casos totais - classe majoritária):
-Melhor árvore: Performance sólida com 71.2% de acertos (317/445). Os erros principais concentram-se em 27.4% classificados como "Modelo 100% remoto" (122/445), sugerindo sobreposição conceitual entre flexibilidade híbrida e trabalho remoto.
-Pior árvore: Degradação significativa para 38.7% (172/445), com 60.9% dos casos incorretamente categorizados como "Modelo 100% remoto" (271/445). Isso revela instabilidade extrema na distinção entre modelos flexíveis.
+Melhor árvore: Apenas 0% de precisão (0/19), com 94.7% dos casos incorretamente classificados como "Modelo híbrido" (18/19) e 5.3% como "Modelo 100% remoto" (1/19). Isso sugere que o modelo não consegue distinguir adequadamente o trabalho presencial das demais modalidades.
 
-Classe "Modelo 100% presencial" (21 casos totais - classe minoritária crítica):
-Ambas as árvores: Falha completa com 0% de acertos, representando o maior problema do modelo. Na melhor árvore, 71.4% são confundidos com "Híbrido flexível" (15/21), enquanto na pior árvore a confusão se distribui mais uniformemente. Esta classe está sendo completamente absorvida pelas outras categorias.
+Pior árvore: Colapso total com 0% de acertos. A confusão se mantém similar, com 94.7% classificados como "Modelo híbrido" (18/19), indicando que quando a árvore falha, ela tende a classificar erroneamente como trabalho híbrido.
 
-Classe "Modelo 100% remoto" (416 casos totais - segunda maior classe):
-Melhor árvore: Excelente performance com 75.0% de acertos (312/416). A confusão principal (24.8%) ocorre com "Híbrido flexível" (103/416), reforçando a sobreposição conceitual entre trabalho remoto e modelos híbridos flexíveis.
-Pior árvore: Mantém relativa estabilidade com 68.0% (283/416), perdendo principalmente para "Híbrido flexível" (31.7%). É a classe mais resiliente à degradação da árvore.
+Classe "Modelo 100% remoto" (524 casos totais):
+
+Melhor árvore: Performance sólida com 67.9% de acertos (356/524). Os erros principais concentram-se em 31.7% classificados como "Modelo híbrido" (166/524) e apenas 0.4% como "Presencial" (2/524), sugerindo sobreposição conceitual entre trabalho remoto e modelos híbridos.
+
+Pior árvore: Degradação significativa para 55.3% (290/524), com 44.5% dos casos incorretamente categorizados como "Modelo híbrido" (233/524). Isso revela instabilidade extrema na distinção entre modelos remotos e híbridos.
+
+Classe "Modelo híbrido" (571 casos totais - classe majoritária):
+
+Melhor árvore: Excelente performance com 86.5% de acertos (494/571). Os erros principais concentram-se em 13.3% classificados como "Modelo 100% remoto" (76/571), com apenas 0.2% confundidos com "Presencial" (1/571). Esta é claramente a classe melhor reconhecida pelo modelo.
+
+Pior árvore: Queda para 64.6% (369/571), perdendo principalmente para "Modelo 100% remoto" (34.7% - 198/571) e um ligeiro aumento na confusão com "Presencial" (0.7% - 4/571). Mesmo com degradação, mantém-se como a classe mais estável.
 
 Padrões Críticos Identificados
 Desbalanceamento extremo de dataset:
-A distribuição desproporcional (445 casos de "Híbrido flexível" vs. apenas 21 de "Presencial") cria viés sistemático. O modelo tende a favorecer classes majoritárias, especialmente quando incerto.
+A distribuição desproporcional (571 casos de "Híbrido" vs. apenas 19 de "Presencial") cria viés sistemático. O modelo tende a favorecer classes majoritárias, especialmente quando incerto, resultando na completa negligência da classe minoritária.
 
 Sobreposição conceitual problemática:
-A forte confusão entre "Híbrido flexível" e "Modelo 100% remoto" (122 e 271 erros respectivamente) indica que as features coletadas não capturam diferenças fundamentais entre flexibilidade híbrida e trabalho completamente remoto.
+A forte confusão entre "Modelo 100% remoto" e "Modelo híbrido" (166 e 233 erros respectivamente) indica que as features coletadas não capturam diferenças fundamentais entre trabalho completamente remoto e modelos híbridos de trabalho.
 
 Instabilidade arquitetural:
-A variação dramática entre melhor (79.8%) e pior árvore (56.7%) revela que o modelo está no limiar da capacidade de generalização. Árvores individuais capturam padrões muito específicos e frágeis dos dados de treino.
+A variação dramática entre melhor (76.3%) e pior árvore (59.2%) revela que o modelo está no limiar da capacidade de generalização. Árvores individuais capturam padrões muito específicos e frágeis dos dados de treino, com particular vulnerabilidade na distinção remoto-híbrido.
+
+Classe crítica ignorada:
+A falha completa em identificar trabalho presencial (0% de acertos em ambas as árvores) representa um problema crítico, pois essa modalidade pode ter implicações importantes para políticas organizacionais e não pode ser detectada pelo modelo atual.
 
 ### Interpretação do modelo 2
 
