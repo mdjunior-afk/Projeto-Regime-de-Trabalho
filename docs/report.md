@@ -1288,19 +1288,20 @@ Melhor árvore: Apenas 0% de precisão (0/19), com 94.7% dos casos incorretament
 
 Pior árvore: Colapso total com 0% de acertos. A confusão se mantém similar, com 94.7% classificados como "Modelo híbrido" (18/19), indicando que quando a árvore falha, ela tende a classificar erroneamente como trabalho híbrido.
 
-Classe "Modelo 100% remoto" (524 casos totais):
+Classe "Modelo 100% remoto":
 
 Melhor árvore: Performance sólida com 67.9% de acertos (356/524). Os erros principais concentram-se em 31.7% classificados como "Modelo híbrido" (166/524) e apenas 0.4% como "Presencial" (2/524), sugerindo sobreposição conceitual entre trabalho remoto e modelos híbridos.
 
 Pior árvore: Degradação significativa para 55.3% (290/524), com 44.5% dos casos incorretamente categorizados como "Modelo híbrido" (233/524). Isso revela instabilidade extrema na distinção entre modelos remotos e híbridos.
 
-Classe "Modelo híbrido" (571 casos totais - classe majoritária):
+Classe "Modelo híbrido":
 
 Melhor árvore: Excelente performance com 86.5% de acertos (494/571). Os erros principais concentram-se em 13.3% classificados como "Modelo 100% remoto" (76/571), com apenas 0.2% confundidos com "Presencial" (1/571). Esta é claramente a classe melhor reconhecida pelo modelo.
 
 Pior árvore: Queda para 64.6% (369/571), perdendo principalmente para "Modelo 100% remoto" (34.7% - 198/571) e um ligeiro aumento na confusão com "Presencial" (0.7% - 4/571). Mesmo com degradação, mantém-se como a classe mais estável.
 
 Padrões Críticos Identificados
+
 Desbalanceamento extremo de dataset:
 A distribuição desproporcional (571 casos de "Híbrido" vs. apenas 19 de "Presencial") cria viés sistemático. O modelo tende a favorecer classes majoritárias, especialmente quando incerto, resultando na completa negligência da classe minoritária.
 
