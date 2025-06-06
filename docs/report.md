@@ -1502,8 +1502,19 @@ O Modelo 2 utilizou random forest para prever a forma de trabalho ideal entre tr
 Ambos os modelos apresentaram bom desempenho na previsão das classes "modelo 100% remoto" e "modelo híbrido", ainda que com confusões recorrentes entre essas duas categorias, possivelmente pela proximidade conceitual. A Árvore de Decisão (Modelo 1) se destaca pela simplicidade e facilidade de interpretação, enquanto a Random Forest (Modelo 2) oferece maior robustez, mas com variações mais sensíveis entre execuções.
 A escolha entre os modelos depende do objetivo: o Modelo 1 é preferível quando a transparência do processo decisório é essencial, enquanto o Modelo 2 pode ser mais indicado quando se busca maior capacidade de generalização, desde que se tome cuidado com a instabilidade observada.
 
-
 ## 8. Conclusão
+
+O trabalho buscou identificar quais fatores mais influenciam na escolha do modelo de trabalho entre profissionais da área de Dados.
+
+**Márcio Douglas Cassemiro Junior**
+
+Os modelos utilizados, como Decision Tree e Random Forest, apresentaram desempenhos semelhantes. Ambos tiveram dificuldades em prever corretamente os casos do modelo presencial, principalmente devido à baixa quantidade de registros dessa categoria na base de dados. Por outro lado, os modelos obtiveram bons resultados na classificação dos modelos remoto e híbrido, embora tenha havido certa confusão entre essas duas classes — confusão que, até o momento, não consegui identificar com clareza.
+
+Em relação às bases auxiliares utilizadas, percebi que os modelos atribuíram pouca importância a elas. Acredito que dados mais específicos e concretos sobre os trabalhadores poderiam ajudar a melhorar a acurácia dos modelos, como por exemplo: tipo de transporte utilizado para ir ao trabalho, tempo médio de deslocamento, presença de filhos, gastos mensais, entre outros. No entanto, por se tratarem de informações pessoais, não foi possível obtê-los para esta pesquisa.
+
+Além disso, seria importante também incluir mais registros de pessoas que preferem o modelo presencial, o que poderia ajudar a reduzir a confusão entre as classes e melhorar o desempenho geral do modelo.
+
+Apesar das limitações e possíveis erros, acredito que os modelos desenvolvidos são sim capazes de identificar o modelo de trabalho mais adequado para profissionais da área de Dados, especialmente considerando que a maioria demonstrou preferência pelos modelos remoto e híbrido.
 
 Apresente aqui a conclusão do seu trabalho. Discussão dos resultados obtidos no trabalho, 
 onde se verifica as observações pessoais de cada aluno.
