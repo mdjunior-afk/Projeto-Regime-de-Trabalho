@@ -1516,6 +1516,22 @@ Além disso, seria importante também incluir mais registros de pessoas que pref
 
 Apesar das limitações e possíveis erros, acredito que os modelos desenvolvidos são sim capazes de identificar o modelo de trabalho mais adequado para profissionais da área de Dados, especialmente considerando que a maioria demonstrou preferência pelos modelos remoto e híbrido.
 
+**Gustavo Vasconcellos Horta**
+
+Apesar dos desafios enfrentados ao longo da análise, os modelos implementados conseguiram oferecer respostas interessantes sobre os padrões de preferência entre diferentes regimes de trabalho. As técnicas aplicadas, como Decision Tree e Random Forest, até esbarraram em certas limitações — especialmente no caso dos trabalhadores presenciais, cuja quantidade reduzida de registros comprometeu a precisão nas previsões.
+
+Ainda assim, os algoritmos tiveram um desempenho sólido nas categorias remoto e híbrido. Houve, é verdade, certa dificuldade em distinguir essas duas opções, com sobreposição nos resultados. Essa confusão ainda não foi completamente compreendida, e permanece como um ponto aberto para estudos futuros.
+
+Algo que me chamou atenção foi o impacto discreto das bases complementares. Ao que tudo indica, elas não ofereceram um diferencial significativo. Talvez, se fosse possível contar com dados mais íntimos da rotina dos profissionais — como tempo de deslocamento, estrutura familiar ou até custos mensais — o panorama fosse outro. No entanto, por envolverem informações pessoais, esses dados acabaram ficando de fora.
+
+O grupo conseguiu superar os desafios juntos, ajustando rotas conforme os obstáculos surgiam. A experiência mostrou que, mesmo com um volume de dados limitado, é possível alcançar resultados relevantes quando há colaboração e persistência.
+
+Se um dia houver a oportunidade de refinar ainda mais esse trabalho, tenho vontade de explorar novas variáveis, testar outros algoritmos e, principalmente, equilibrar melhor a representação entre os perfis analisados — com destaque para o regime presencial, que hoje se mostra sub-representado.
+
+No fim das contas, mesmo com as lacunas e incertezas, o estudo aponta para um caminho promissor. Os modelos, apesar de simples, já são capazes de captar tendências reais entre profissionais da área de Dados, evidenciando a preferência majoritária por modelos flexíveis, como o remoto e o híbrido.
+
+...
+
 Apresente aqui a conclusão do seu trabalho. Discussão dos resultados obtidos no trabalho, 
 onde se verifica as observações pessoais de cada aluno.
 
