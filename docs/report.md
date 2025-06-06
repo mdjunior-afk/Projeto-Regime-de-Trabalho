@@ -1518,17 +1518,15 @@ Apesar das limitações e possíveis erros, acredito que os modelos desenvolvido
 
 **Gustavo Vasconcellos Horta**
 
-Apesar dos desafios enfrentados ao longo da análise, os modelos implementados conseguiram oferecer respostas interessantes sobre os padrões de preferência entre diferentes regimes de trabalho. As técnicas aplicadas, como Decision Tree e Random Forest, até esbarraram em certas limitações — especialmente no caso dos trabalhadores presenciais, cuja quantidade reduzida de registros comprometeu a precisão nas previsões.
+Apesar dos desafios enfrentados no início, a análise foi ganhando corpo à medida que nos aprofundamos nas bases de dados e compreendemos melhor a lógica por trás dos resultados. A princípio, interpretar as informações e cruzá-las de forma significativa não foi tarefa simples — especialmente na hora de relacionar variáveis e entender como cada uma influenciava na categorização dos regimes de trabalho.
 
-Ainda assim, os algoritmos tiveram um desempenho sólido nas categorias remoto e híbrido. Houve, é verdade, certa dificuldade em distinguir essas duas opções, com sobreposição nos resultados. Essa confusão ainda não foi completamente compreendida, e permanece como um ponto aberto para estudos futuros.
+A matriz de confusão, por exemplo, se mostrou uma ferramenta central nesse processo. No começo, parecia apenas um conjunto de números difíceis de interpretar. Mas, com o tempo, ela se revelou essencial para entender onde os modelos estavam acertando e, principalmente, onde estavam errando. Foi por meio dela que identificamos a dificuldade persistente dos algoritmos em distinguir entre os regimes remoto e híbrido. A sobreposição entre essas duas categorias, evidenciada pelos falsos positivos e negativos, levantou questionamentos importantes sobre os limites dos dados disponíveis.
 
-Algo que me chamou atenção foi o impacto discreto das bases complementares. Ao que tudo indica, elas não ofereceram um diferencial significativo. Talvez, se fosse possível contar com dados mais íntimos da rotina dos profissionais — como tempo de deslocamento, estrutura familiar ou até custos mensais — o panorama fosse outro. No entanto, por envolverem informações pessoais, esses dados acabaram ficando de fora.
+A exploração das bases complementares também teve um papel relevante, ainda que seus impactos tenham sido mais discretos do que esperávamos. A expectativa era que elas trouxessem nuances novas à análise, mas, ao fim, percebeu-se que sua contribuição foi limitada. Provavelmente, a ausência de variáveis mais contextuais — como tempo de deslocamento, rotina familiar ou mesmo custos relacionados ao trabalho — acabou restringindo o poder preditivo dos modelos. Entendemos que, por envolverem informações pessoais, esses dados são mais difíceis de obter, mas sua inclusão poderia fazer uma grande diferença.
 
-O grupo conseguiu superar os desafios juntos, ajustando rotas conforme os obstáculos surgiam. A experiência mostrou que, mesmo com um volume de dados limitado, é possível alcançar resultados relevantes quando há colaboração e persistência.
+Apesar das limitações, a experiência como um todo foi bastante enriquecedora. Com o grupo trabalhando em conjunto, fomos aprendendo a ajustar as rotas à medida que os obstáculos surgiam. A compreensão da matriz de confusão, a reinterpretação das variáveis e a forma como exploramos as bases foram se aperfeiçoando ao longo do processo.
 
-Se um dia houver a oportunidade de refinar ainda mais esse trabalho, tenho vontade de explorar novas variáveis, testar outros algoritmos e, principalmente, equilibrar melhor a representação entre os perfis analisados — com destaque para o regime presencial, que hoje se mostra sub-representado.
-
-No fim das contas, mesmo com as lacunas e incertezas, o estudo aponta para um caminho promissor. Os modelos, apesar de simples, já são capazes de captar tendências reais entre profissionais da área de Dados, evidenciando a preferência majoritária por modelos flexíveis, como o remoto e o híbrido.
+Se um dia houver a chance de refinar ainda mais esse estudo, gostaria de testar a inclusão de novas variáveis mais qualitativas e, especialmente, reequilibrar melhor a amostra — com atenção especial ao regime presencial, que hoje ainda aparece de forma tímida na base.
 
 ...
 
