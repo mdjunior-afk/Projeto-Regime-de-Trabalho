@@ -1304,54 +1304,56 @@ Image(graph.create_png())
 
 ### Resultados obtidos com o modelo 1.
 
-#### Análise da Matriz de Confusão do modelo 1
+Análise da Matriz de Confusão
+Resumo das Classes:
 
- Resumo das Classes:
-| Código | Classe                                                    |
-|--------|-----------------------------------------------------------|
-|   0    | Modelo 100% presencial                                    |
-|   1    | Modelo 100% remoto                                        |
-|   2    | Modelo híbrido com dias fixos de trabalho presencial      |
-|   3    | Modelo híbrido flexível (o funcionário tem autonomia)     |
+## Código das Classes
 
-Acurácia geral:
-65,3%
-O modelo acerta aproximadamente dois terços das classificações.
+| Código | Classe                 |
+|--------|------------------------|
+| 0      | Modelo 100% presencial |
+| 1      | Modelo 100% remoto     |
+| 2      | Modelo híbrido         |
 
-Relatório de Classificação:
-| Classe  | Precision | Recall | F1-Score | Support |
-|---------|-----------|--------|----------|---------|
-| 0       | 0.00      | 0.00   | 0.00     | 30      |
-| 1       | 0.68      | 0.76   | 0.72     | 617     |
-| 2       | 0.23      | 0.05   | 0.08     | 110     |
-| 3       | 0.64      | 0.68   | 0.66     | 669     |
+## Acurácia Geral
+
+**Acurácia geral:** 74,6%  
+O modelo acerta aproximadamente três quartos das classificações.
+
+## Relatório de Classificação
+
+| Classe | Precision | Recall | F1-Score | Suporte |
+|--------|-----------|--------|----------|---------|
+| 0      | 0.14      | 0.05   | 0.08     | 19      |
+| 1      | 0.74      | 0.77   | 0.75     | 524     |
+| 2      | 0.76      | 0.75   | 0.76     | 571     |
 
 Análise da Matriz de Confusão:
-Modelo 100% presencial (classe 0): Nenhum dos 30 exemplos foi corretamente classificado. A maioria foi confundida com o modelo híbrido flexível (26 casos) e alguns com o modelo 100% remoto (4 casos).
-Modelo 100% remoto (classe 1): 468 de 617 exemplos foram classificados corretamente. Houve 144 confusões com o híbrido flexível, 5 com o híbrido fixo e nenhum com o presencial.
-Modelo híbrido com dias fixos (classe 2): Apenas 5 de 110 exemplos foram corretamente classificados. A maioria foi confundida com o híbrido flexível (92 casos) e alguns com o remoto (13 casos).
-Modelo híbrido flexível (classe 3): 458 de 669 exemplos foram classificados corretamente. Houve 199 confusões com o remoto, 12 com o híbrido fixo e nenhum com o presencial.
+Modelo 100% presencial (classe 0): Apenas 1 dos 19 exemplos foi corretamente classificado. A maioria foi confundida com o modelo híbrido (15 casos) e alguns com o modelo 100% remoto (3 casos). O desempenho é extremamente baixo devido ao severo desbalanceamento de classes.
+Modelo 100% remoto (classe 1): 401 de 524 exemplos foram classificados corretamente. Houve 119 confusões com o híbrido, 4 com o presencial e nenhuma classificação incorreta significativa adicional. Apresenta desempenho satisfatório.
+Modelo híbrido (classe 2): 429 de 571 exemplos foram classificados corretamente. Houve 140 confusões com o remoto, 2 com o presencial. Demonstra o melhor desempenho entre as três classes.
 
-Matriz em forma de tabela/grafico:
-| **Classe Real / Prevista**  | **Modelo 100% presencial** | **Modelo 100% remoto** | **Modelo híbrido fixo** | **Modelo híbrido flexível** |
-| --------------------------- | -------------------------- | ---------------------- | ----------------------- | --------------------------- |
-| **Modelo 100% presencial**  | 0                          | 4                      | 0                       | 26                          |
-| **Modelo 100% remoto**      | 0                          | 468                    | 5                       | 144                         |
-| **Modelo híbrido fixo**     | 0                          | 13                     | 5                       | 92                          |
-| **Modelo híbrido flexível** | 0                          | 199                    | 12                      | 458                         |
+Matriz em forma de tabela:
 
-### Interpretação Final
+| Classe Real \ Prevista | Modelo 100% presencial | Modelo 100% remoto | Modelo híbrido |
+|------------------------|------------------------|--------------------|----------------|
+| Modelo 100% presencial | 1                      | 3                  | 15             |
+| Modelo 100% remoto     | 4                      | 401                | 119            |
+| Modelo híbrido         | 2                      | 140                | 429            |
 
-O modelo apresenta desempenho razoável para as classes **"100% remoto"** e **"híbrido flexível"**, mas tem desempenho muito baixo para **"100% presencial"** e **"híbrido fixo"**, que são frequentemente confundidas com as demais.
+![image](https://github.com/user-attachments/assets/40653726-2954-4eae-9eb9-f171b6958a2e)
 
-- Os **maiores erros** ocorrem entre as classes *"remoto"* e *"híbrido flexível"*, indicando **sobreposição de características** e possível dificuldade do modelo em distinguir nuances entre esses grupos.
+Interpretação Final
+O modelo apresenta desempenho satisfatório para as classes "100% remoto" e "híbrido", mas desempenho muito baixo para "100% presencial", que é frequentemente confundida com as demais classes.
+Os maiores erros ocorrem entre as classes "remoto" e "híbrido", com 119 amostras remotas classificadas como híbridas e 140 amostras híbridas classificadas como remotas. Isso indica sobreposição de características e possível dificuldade do modelo em distinguir nuances entre esses grupos.
+A classe "100% presencial" praticamente não é reconhecida pelo modelo, com apenas 5.3% de recall, sugerindo severo desbalanceamento (representa apenas 1.7% dos dados) ou falta de variáveis discriminantes para esse perfil.
 
-- A classe **"100% presencial"** não é reconhecida pelo modelo, sugerindo **desbalanceamento** ou **falta de variáveis discriminantes** para esse perfil.
+O resultado sugere a necessidade de:
 
-- O resultado sugere a necessidade de:
-  - Ajustes no modelo,
-  - Coleta de mais dados para as **classes minoritárias**, ou
-  - Revisão das **variáveis preditoras** para melhorar a capacidade de distinção entre as categorias.
+Balanceamento de dados através de oversampling da classe minoritária
+Coleta de mais dados para a classe "100% presencial"
+Revisão das variáveis preditoras para melhorar a distinção entre modelos remoto e híbrido
+Consideração de técnicas de ajuste de threshold para classes desbalanceadas
 
 ### Resultados obtidos com o modelo 2.
 
