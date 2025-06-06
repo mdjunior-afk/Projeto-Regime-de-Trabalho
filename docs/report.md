@@ -1454,17 +1454,53 @@ O Modelo 2 utilizou random forest para prever a forma de trabalho ideal entre tr
 - **Instabilidade estrutural**: a Random Forest sofre variações expressivas entre árvores individuais, o que pode afetar a confiabilidade geral do modelo.
 
 
-## Análise comparativa dos modelos
+### Análise Comparativa dos Modelos
 
-Discuta sobre as forças e fragilidades de cada modelo. Exemplifique casos em que um
-modelo se sairia melhor que o outro. Nesta seção é possível utilizar a sua imaginação
-e extrapolar um pouco o que os dados sugerem.
+#### Modelo 1 — Árvore de Decisão Única
+- **Acurácia no teste:** 74,6%
+- **Pontos fortes:**
+  - Simples de interpretar.
+  - Desempenho sólido para as classes **remoto** e **híbrido**, com F1-scores em torno de 0.75 e 0.76.
+- **Pontos fracos:**
+  - Desempenho extremamente baixo para a classe **100% presencial** (F1-score: 0.08), com apenas 1 acerto em 19.
+  - Confusões recorrentes entre **remoto** e **híbrido**, refletindo sobreposição entre as duas categorias.
 
+#### Modelo 2 — Random Forest
+- **Acurácia geral da melhor árvore:** não especificada, mas análise detalhada por classe disponível.
+- **Pontos fortes:**
+  - Melhor capacidade de generalização e robustez a ruído por ser um ensemble de árvores.
+  - Desempenho semelhante ao Modelo 1 nas classes **remoto** e **híbrido**.
+- **Pontos fracos:**
+  - A classe **100% presencial** continuou com 0% de acerto em todas as árvores.
+  - Alta **instabilidade** nas previsões da classe híbrida: o recall caiu de 59,6% para 35,5% entre a melhor e pior árvore.
+  - Confusão significativa entre **remoto** e **híbrido** persistiu, com até 60,8% dos híbridos sendo classificados como remotos.
 
-### Distribuição do modelo (opcional)
+#### Comparação Direta
 
-Tende criar um pacote de distribuição para o modelo construído, para ser aplicado 
-em um sistema inteligente.
+| Critério                        | Modelo 1 (Árvore Única) | Modelo 2 (Random Forest) |
+|--------------------------------|--------------------------|---------------------------|
+| Facilidade de interpretação    | Alta                     | Baixa/moderada            |
+| Robustez e estabilidade        | Baixa                    | Moderada (mas instável)   |
+| Desempenho geral               | Bom                      | Bom (mas com variação)    |
+| Classe "Remoto"                | Ótimo                    | Ótimo a razoável          |
+| Classe "Híbrido"               | Ótimo                    | Variável (dependendo da árvore) |
+| Classe "Presencial"           | Ruim (quase ignorada)    | Ruim (completamente ignorada) |
+
+#### Quando um modelo se sairia melhor?
+
+- **Modelo 1 (Árvore Única)** é mais adequado quando:
+  - A interpretação do processo de decisão é importante (por exemplo, explicar previsões a gestores).
+  - O contexto exige um modelo leve, rápido de treinar e aplicar.
+
+- **Modelo 2 (Random Forest)** se sairia melhor quando:
+  - O objetivo é maior **robustez geral**, mesmo com alguma perda de interpretabilidade.
+  - Há necessidade de lidar com variações nos dados de entrada.
+  - Deseja-se mitigar o risco de overfitting de uma única árvore, apesar da instabilidade observada.
+
+**Conclusão**
+
+Ambos os modelos apresentaram bom desempenho na previsão das classes "modelo 100% remoto" e "modelo híbrido", ainda que com confusões recorrentes entre essas duas categorias, possivelmente pela proximidade conceitual. A Árvore de Decisão (Modelo 1) se destaca pela simplicidade e facilidade de interpretação, enquanto a Random Forest (Modelo 2) oferece maior robustez, mas com variações mais sensíveis entre execuções.
+A escolha entre os modelos depende do objetivo: o Modelo 1 é preferível quando a transparência do processo decisório é essencial, enquanto o Modelo 2 pode ser mais indicado quando se busca maior capacidade de generalização, desde que se tome cuidado com a instabilidade observada.
 
 
 ## 8. Conclusão
