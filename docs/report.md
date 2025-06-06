@@ -1425,22 +1425,33 @@ A variação de 24.1 pontos percentuais no recall da classe "Modelo híbrido" (d
 
 ### Interpretação do modelo 2
 
-O Modelo 2 utiliza um classificador Random Forest para prever a forma de trabalho ideal dos profissionais. Esse modelo combina diversas árvores de decisão, reduzindo overfitting e aumentando a robustez preditiva.
+O Modelo 2 utilizou random forest para prever a forma de trabalho ideal entre três categorias: **modelo 100% presencial**, **modelo 100% remoto** e **modelo híbrido**. A performance foi avaliada considerando a **melhor** e a **pior árvore** resultantes da Random Forest, a fim de identificar estabilidade e padrões de erro.
 
-#### Atributos Mais Relevantes (Feature Importance)
-- `P2_r` (Forma de trabalho atual) — maior influência
-- `P2_o_4` (Flexibilidade percebida) — importante para distinguir entre remoto e híbrido
-- `P2_f` (Cargo atual) — influencia a preferência por modelos mais flexíveis
-- `P2_h` (Faixa salarial) — impacto médio
+#### Métricas por Classe
+
+- **"Modelo 100% remoto"**
+  - Melhor árvore: 69,0% de acertos (Recall)
+  - Pior árvore: Queda para 53,6%, com aumento da confusão para "modelo híbrido"
+- **"Modelo híbrido"**
+  - Melhor árvore: 59,6% de acertos; Precision: 64,8%
+  - Pior árvore: Forte queda para 35,5% de acertos
+- **"Modelo 100% presencial"**
+  - Ambas as árvores: 0% de acerto; totalmente confundida com a classe "modelo híbrido"
 
 #### Padrões Observados
-- Boa performance para prever "Remoto" e "Híbrido flexível".
-- A classe "Modelo 100% presencial" teve 0% de acerto, refletindo seu baixo volume no dataset.
-- Forte confusão entre "Remoto" e "Híbrido flexível", indicando sobreposição nas características coletadas.
+
+- O modelo mostra **razoável capacidade de previsão** para as classes "remoto" e "híbrido", mas apresenta **forte instabilidade** entre execuções.
+- A classe **"100% presencial"** é completamente ignorada pelo modelo, sendo sempre classificada como "híbrido". Isso evidencia um **colapso da classe minoritária**.
+- Existe **sobreposição significativa** entre as classes "remoto" e "híbrido", com erros em ambas as direções:
+  - 36,7% dos híbridos foram classificados como remoto
+  - 31,0% dos remotos foram classificados como híbrido
+- A variação no desempenho da classe híbrida entre melhor e pior árvore (**24,1 pontos percentuais de diferença no recall**) demonstra **alta sensibilidade do modelo aos dados de treino**.
 
 #### Limitações Identificadas
-- **Desbalanceamento de classes**: a predominância da classe "Híbrido flexível" afetou negativamente a acurácia nas demais.
-- **Similaridade semântica** entre categorias híbridas e remotas dificulta a distinção, mesmo para modelos robustos como o Random Forest.
+
+- **Desbalanceamento de classes**: a classe "100% presencial" representa apenas 19 instâncias, o que contribui para sua não identificação.
+- **Falta de variáveis discriminantes** entre híbrido e remoto: as features utilizadas parecem não capturar bem as diferenças conceituais entre os dois.
+- **Instabilidade estrutural**: a Random Forest sofre variações expressivas entre árvores individuais, o que pode afetar a confiabilidade geral do modelo.
 
 
 ## Análise comparativa dos modelos
