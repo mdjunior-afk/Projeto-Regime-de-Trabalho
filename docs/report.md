@@ -1528,16 +1528,15 @@ Apesar das limitações, a experiência como um todo foi bastante enriquecedora.
 
 Se um dia houver a chance de refinar ainda mais esse estudo, gostaria de testar a inclusão de novas variáveis mais qualitativas e, especialmente, reequilibrar melhor a amostra — com atenção especial ao regime presencial, que hoje ainda aparece de forma tímida na base.
 
+**Luiz Felipe Assis Cavalcante**
+
+Neste trabalho, desenvolvemos dois modelos preditivos: uma Árvore de Decisão e uma Random Forest. Ambos foram construídos para responder à pergunta orientada a dados: quais fatores influenciam na forma de trabalho ideal dos profissionais da área de ciência de dados. Inicialmente, a tentativa foi prever quatro categorias: híbrido fixo, híbrido flexível, remoto e presencial. No entanto, para melhorar a performance dos modelos, optamos por agrupar os dois tipos de modelo híbrido em uma única categoria, resultando nas classes: híbrido, remoto e presencial.
+
+Durante a análise dos resultados, observamos que ambos os modelos apresentaram desempenho razoável, com acurácia em torno de 70%. As previsões para as classes "remoto" e "híbrido" foram satisfatórias. No entanto, houve falha na identificação correta da classe "presencial", o que acredito estar relacionado ao número reduzido de registros dessa categoria na base de dados. Essa limitação compromete os resultados, considerando que a distinção entre presencial e outras formas de trabalho é essencial para o objetivo da análise. Além disso, enfrentamos dificuldades para encontrar bases de dados válidas que se relacionassem diretamente com o tema e, principalmente, que pudessem ser cruzadas com a base principal "State of Data", que era obrigatória no projeto.
+
+Concluo que, se tivesse a oportunidade de refazer o projeto, escolheria com mais cuidado a pergunta orientada a dados, levando em consideração a disponibilidade, qualidade e compatibilidade das bases de dados desde o início. Isso permitiria estruturar uma solução mais consistente e representativa, com melhores condições para interpretar os resultados obtidos.
+
 ...
-
-Apresente aqui a conclusão do seu trabalho. Discussão dos resultados obtidos no trabalho, 
-onde se verifica as observações pessoais de cada aluno.
-
-Uma conclusão deve ter 3 partes:
-
-   * Breve resumo do que foi desenvolvido
-	 * Apresenação geral dos resultados obtidos com discussão das vantagens e desvantagens do sistema inteligente
-	 * Limitações e possibilidades de melhoria
 
 # REFERÊNCIAS
 
