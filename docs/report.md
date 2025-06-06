@@ -1525,34 +1525,34 @@ Uma conclusão deve ter 3 partes:
 	 * Apresenação geral dos resultados obtidos com discussão das vantagens e desvantagens do sistema inteligente
 	 * Limitações e possibilidades de melhoria
 
-
-
-
 # REFERÊNCIAS
 
-Como um projeto de sistema inteligente não requer revisão bibliográfica, 
-a inclusão das referências não é obrigatória. No entanto, caso você 
-tenha utilizado referências na introdução ou deseje 
-incluir referências relacionadas às tecnologias, padrões, ou metodologias 
-que serão usadas no seu trabalho, relacione-as de acordo com a ABNT.
+**[1]** IBGE – Instituto Brasileiro de Geografia e Estatística.
+Roubos e furtos por região. Tabela 8756. Disponível em: https://sidra.ibge.gov.br/tabela/8756.
 
-Verifique no link abaixo como devem ser as referências no padrão ABNT:
+**[2]** IBGE – Instituto Brasileiro de Geografia e Estatística.
+Média de horas de trabalho doméstico e tarefas de cuidado. Tabela 9379. Disponível em: https://sidra.ibge.gov.br/tabela/9379.
 
-http://www.pucminas.br/imagedb/documento/DOC\_DSC\_NOME\_ARQUI20160217102425.pdf
+**[3]** OPENAI.
+ChatGPT. Disponível em: https://chatgpt.com/.
 
-Por exemplo:
+**[4]** PERPLEXITY AI.
+Perplexity. Disponível em: https://www.perplexity.ai/.
 
-**[1]** - _ELMASRI, Ramez; NAVATHE, Sham. **Sistemas de banco de dados**. 7. ed. São Paulo: Pearson, c2019. E-book. ISBN 9788543025001._
+**[5]** DATA HACKERS.
+State of Data 2023 – Brasil. Kaggle, 2023. Disponível em: https://www.kaggle.com/datasets/datahackers/state-of-data-brazil-2023.
 
-**[2]** - _COPPIN, Ben. **Inteligência artificial**. Rio de Janeiro, RJ: LTC, c2010. E-book. ISBN 978-85-216-2936-8._
+**[6]** GOOGLE.
+Google Colab. Disponível em: https://colab.google/.
 
-**[3]** - _CORMEN, Thomas H. et al. **Algoritmos: teoria e prática**. Rio de Janeiro, RJ: Elsevier, Campus, c2012. xvi, 926 p. ISBN 9788535236996._
+**[7]** SCIKIT-LEARN.
+Random Forest – sklearn.ensemble.RandomForestClassifier. Disponível em: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html.
 
-**[4]** - _SUTHERLAND, Jeffrey Victor. **Scrum: a arte de fazer o dobro do trabalho na metade do tempo**. 2. ed. rev. São Paulo, SP: Leya, 2016. 236, [4] p. ISBN 9788544104514._
+**[8]** SCIKIT-LEARN.
+Decision Tree – sklearn.tree. Disponível em: https://scikit-learn.org/stable/modules/tree.html.
 
-**[5]** - _RUSSELL, Stuart J.; NORVIG, Peter. **Inteligência artificial**. Rio de Janeiro: Elsevier, c2013. xxi, 988 p. ISBN 9788535237016._
-
-
+**[9]** PUC MINAS – Pontifícia Universidade Católica de Minas Gerais.
+Arquivos de modelos. Disponível em: https://pucminas.instructure.com/courses/226410/files.
 
 # APÊNDICES
 
