@@ -56,7 +56,7 @@ mostrar algum resultado relevante do trabalho (até 10 linhas)._
 - [Resultados](#resultados)
      - [Resultados obtidos com o modelo 1](#resultados-obtidos-com-o-modelo-1)
  		- [Análise da Matriz de Confusão](#análise-da-matriz-de-confusão-do-modelo-1)
-   		- [Interpretação do modelo 1](#interpretação-final)
+   		- [Interpretação do modelo 1](#interpreta%C3%A7%C3%A3o-do-modelo-1)
      - [Resultados obtidos com o modelo 2](#resultados-obtidos-com-o-modelo-2)
  		- [Análise da Matriz de Confusão](#análise-da-matriz-de-confusão-do-modelo-2)
    		- [Interpretação do modelo 2](#interpretação-do-modelo-2)
@@ -1343,17 +1343,25 @@ Matriz em forma de tabela:
 
 ![image](https://github.com/user-attachments/assets/40653726-2954-4eae-9eb9-f171b6958a2e)
 
-Interpretação Final
-O modelo apresenta desempenho satisfatório para as classes "100% remoto" e "híbrido", mas desempenho muito baixo para "100% presencial", que é frequentemente confundida com as demais classes.
-Os maiores erros ocorrem entre as classes "remoto" e "híbrido", com 119 amostras remotas classificadas como híbridas e 140 amostras híbridas classificadas como remotas. Isso indica sobreposição de características e possível dificuldade do modelo em distinguir nuances entre esses grupos.
-A classe "100% presencial" praticamente não é reconhecida pelo modelo, com apenas 5.3% de recall, sugerindo severo desbalanceamento (representa apenas 1.7% dos dados) ou falta de variáveis discriminantes para esse perfil.
+### Interpretação do Modelo 1
 
-O resultado sugere a necessidade de:
+O Modelo 1 foi treinado para prever a forma de trabalho ideal entre três categorias: **modelo 100% presencial**, **modelo 100% remoto** e **modelo híbrido**. O algoritmo apresenta **acurácia de 74,6% no conjunto de teste** e **79,3% no treino**, o que sugere bom desempenho geral, mas com possíveis indícios de overfitting leve.
 
-Balanceamento de dados através de oversampling da classe minoritária
-Coleta de mais dados para a classe "100% presencial"
-Revisão das variáveis preditoras para melhorar a distinção entre modelos remoto e híbrido
-Consideração de técnicas de ajuste de threshold para classes desbalanceadas
+#### Métricas Gerais por Classe
+- **"Modelo 100% remoto"**: melhor desempenho entre as classes (Precision: 0.74, Recall: 0.77, F1-Score: 0.75)
+- **"Modelo híbrido"**: desempenho consistente (F1-Score: 0.76), com leve confusão com "remoto"
+- **"Modelo 100% presencial"**: desempenho extremamente baixo (F1-Score: 0.08), com apenas 1 acerto em 19 exemplos
+
+#### Padrões Observados
+- A maior parte dos **erros ocorre entre as classes "remoto" e "híbrido"**, com 140 exemplos originalmente híbridos sendo classificados como remoto, e 119 exemplos remotos sendo classificados como híbrido.
+- A classe **"100% presencial"** é praticamente ignorada pelo modelo, sendo confundida principalmente com o modelo híbrido (15 de 19 casos).
+- O modelo apresenta **bom equilíbrio entre precisão e recall** nas classes mais numerosas (remoto e híbrido), mas falha com a classe minoritária (presencial).
+
+#### Limitações Identificadas
+- **Desbalanceamento de classes**: a baixa representatividade da classe "100% presencial" prejudica a capacidade do modelo de reconhecê-la.
+- **Semelhança entre categorias híbrido e remoto**: os dados disponíveis não parecem capturar bem as diferenças conceituais entre essas duas formas de trabalho.
+- A **macro média** das métricas (Precision: 0.55, Recall: 0.52, F1: 0.53) está abaixo do ideal, reforçando o impacto negativo da classe minoritária.
+
 
 ### Resultados obtidos com o modelo 2.
 
