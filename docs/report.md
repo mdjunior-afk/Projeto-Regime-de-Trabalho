@@ -1387,9 +1387,9 @@ Pior árvore
 
 ![image](https://github.com/user-attachments/assets/e6bd93ce-b71d-4b2b-a944-9ae2a6525fc6)
 
-Análise Detalhada das Métricas por Classe
+#### Análise Detalhada das Métricas por Classe
 
-Classe "Modelo híbrido"
+**Classe "Modelo híbrido"**
 
 Melhor árvore:
 Desempenho razoável com 59.6% de acertos (324/544). Os principais erros concentram-se em 36.7% dos casos classificados incorretamente como "Modelo 100% remoto" (200/544). A precisão é de 64.8% (324/500), indicando que, entre as previsões como "híbrido", a maioria estava correta.
@@ -1397,7 +1397,7 @@ Desempenho razoável com 59.6% de acertos (324/544). Os principais erros concent
 Pior árvore:
 Queda expressiva no desempenho, com recall de apenas 35.5% (193/544). A confusão com a classe "remoto" aumenta significativamente, com 60.8% dos casos (331/544) sendo erroneamente classificados como "Modelo 100% remoto". Isso evidencia alta sensibilidade do modelo a variações nos dados.
 
-Classe "Modelo 100% presencial"
+**Classe "Modelo 100% presencial"**
 
 Melhor árvore:
 Falha completa na identificação da classe, com 0% de acertos. A maioria dos casos (94.7% – 18/19) foi classificada incorretamente como "Modelo híbrido", e 5.3% como "Modelo 100% remoto".
@@ -1405,7 +1405,7 @@ Falha completa na identificação da classe, com 0% de acertos. A maioria dos ca
 Pior árvore:
 Resultado ainda mais crítico: 100% dos casos (19/19) classificados como "Modelo híbrido". Isso reforça a completa negligência da classe minoritária, independentemente da configuração do modelo.
 
-Classe "Modelo 100% remoto"
+**Classe "Modelo 100% remoto"**
 
 Melhor árvore:
 Bom desempenho com 69.0% de acertos (394/571). Os principais erros se dão pela confusão com o "Modelo híbrido", responsável por 31.0% dos erros (177/571).
@@ -1413,14 +1413,14 @@ Bom desempenho com 69.0% de acertos (394/571). Os principais erros se dão pela 
 Pior árvore:
 Queda relevante para 53.6% de acertos (306/571). A taxa de confusão com "Modelo híbrido" aumenta para 46.4% (265/571), demonstrando instabilidade no reconhecimento da classe.
 
-Padrões Críticos Identificados
-Colapso da classe minoritária:
+#### Padrões Críticos Identificados
+**Colapso da classe minoritária:**
 A classe "Modelo 100% presencial" é completamente ignorada pelo modelo em ambas as árvores, sugerindo priorização excessiva das classes majoritárias em detrimento de representações críticas.
 
-Sobreposição entre Híbrido e Remoto:
+**Sobreposição entre Híbrido e Remoto:**
 Confusões significativas entre "Modelo híbrido" e "Modelo 100% remoto" ocorrem em ambas as direções: 36.7% dos híbridos são confundidos com remoto, e 31.0% dos remotos com híbrido. Isso indica que as variáveis disponíveis não capturam adequadamente as distinções práticas entre os dois modelos.
 
-Instabilidade extrema:
+**Instabilidade extrema:**
 A variação de 24.1 pontos percentuais no recall da classe "Modelo híbrido" (de 59.6% para 35.5%) entre árvores sugere que o modelo é altamente sensível a pequenas variações nos dados de treinamento.
 
 ### Interpretação do modelo 2
@@ -1452,7 +1452,6 @@ O Modelo 2 utilizou random forest para prever a forma de trabalho ideal entre tr
 - **Desbalanceamento de classes**: a classe "100% presencial" representa apenas 19 instâncias, o que contribui para sua não identificação.
 - **Falta de variáveis discriminantes** entre híbrido e remoto: as features utilizadas parecem não capturar bem as diferenças conceituais entre os dois.
 - **Instabilidade estrutural**: a Random Forest sofre variações expressivas entre árvores individuais, o que pode afetar a confiabilidade geral do modelo.
-
 
 ### Análise Comparativa dos Modelos
 
