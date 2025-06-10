@@ -1044,6 +1044,7 @@ Image(graph.create_png())
 ```
 ![image](https://github.com/user-attachments/assets/2c49d63e-32e1-451b-80ce-e9e0275cb7cb)
 ### Modelo 2: Random Forest
+Optamos por utilizar o algoritmo Random Forest neste trabalho por se tratar de um modelo robusto, eficiente e amplamente utilizado em tarefas de classificação com variáveis categóricas e numéricas. Como nosso objetivo é identificar os fatores que influenciam a escolha do regime de trabalho (presencial, híbrido ou remoto), o Random Forest se mostrou adequado por sua capacidade de lidar com dados heterogêneos, evitar overfitting por meio da combinação de múltiplas árvores de decisão e oferecer métricas de importância das variáveis. Essa última característica é especialmente útil para nosso estudo, pois permite interpretar o peso de cada fator na decisão do regime de trabalho, contribuindo para uma análise mais transparente e fundamentada.
 
 ### Gerando base de treinamento e teste
 Nesta etapa, devido à presença de muitas variáveis categóricas no dataset, foi necessário convertê-las para o formato numérico, tornando-as adequadas para o treinamento do modelo Random Forest. Algumas colunas foram removidas antes da transformação, pois serviram como base para a criação de uma nova variável. Especificamente, utilizamos a soma total de roubos registrados para gerar uma nova coluna chamada "Nível de Segurança", que classifica os dados em três categorias: baixo, moderado e alto. Essa classificação foi realizada com o auxílio da função `qcut` do pandas, que divide os valores em faixas com base em quantis.
