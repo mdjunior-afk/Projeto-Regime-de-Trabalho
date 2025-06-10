@@ -1045,36 +1045,27 @@ Image(graph.create_png())
 ![image](https://github.com/user-attachments/assets/2c49d63e-32e1-451b-80ce-e9e0275cb7cb)
 ### Modelo 2: Random Forest
 
-### Importação das bibliotecas e do dataset
-Importa a biblioteca pandas, carrega a base de dados CSV a partir do Google Drive e exibe as primeiras 5 linhas da tabela para visualização.
-```python
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
-from sklearn.preprocessing import LabelEncoder
-from sklearn.feature_extraction import DictVectorizer
-
-data = pd.read_csv('dataset_tratado.csv')
-
-pd.set_option('display.max_columns', None)
-
-print(f'Dimensões: {data.shape}')
-print(f'Colunas: {data.columns}')
-
-data.head(5)
-```
 ### Gerando base de treinamento e teste
-Seleciona os dados de teste e o alvo e codifica os valores categóricos para numéricos e divide a base de dados em treino (70%) e teste (30%)
+Nesta etapa, devido à presença de muitas variáveis categóricas no dataset, foi necessário convertê-las para o formato numérico, tornando-as adequadas para o treinamento do modelo Random Forest. Algumas colunas foram removidas antes da transformação, pois serviram como base para a criação de uma nova variável. Especificamente, utilizamos a soma total de roubos registrados para gerar uma nova coluna chamada "Nível de Segurança", que classifica os dados em três categorias: baixo, moderado e alto. Essa classificação foi realizada com o auxílio da função `qcut` do pandas, que divide os valores em faixas com base em quantis.
+
+Além das colunas utilizadas na criação do "Nível de Segurança", também foi removida a coluna TARGET, que representa a variável "forma de trabalho ideal", por se tratar da variável a ser prevista.
+
+Após a exclusão dessas colunas, os dados categóricos restantes foram transformados em dados numéricos com o uso do `DictVectorizer`, ferramenta que converte dicionários de variáveis categóricas em arrays numéricos, mantendo a estrutura necessária para o modelo de machine learning.
 ```python
 X_dict = data.drop(columns=['Roubos de veículo', 'Roubos de carro', 'Roubos de moto', 'Roubos de bicicleta', 'Roubos fora do domicílio', 'Total de roubos', 'Forma de trabalho ideal'], axis=1).T.to_dict().values()
 vect = DictVectorizer(sparse=False)
 X = vect.fit_transform(X_dict)
-
+```
+Após a transformação das variáveis categóricas, também foi realizada a codificação da variável alvo utilizando o `LabelEncoder`, que converte os rótulos em valores numéricos, tornando-os compatíveis com o modelo de machine learning.
+```python
 le = LabelEncoder()
 y = le.fit_transform(data.iloc[:, data.shape[1]-1])
+```
+Em seguida, os dados foram divididos em conjuntos de treino e teste utilizando a função train_test_split, com 80% dos dados destinados ao treinamento e 20% ao teste. Essa proporção foi escolhida com base em experimentos realizados ao longo do desenvolvimento, nos quais essa configuração apresentou os melhores resultados em termos de acurácia.
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+Além disso, manter essa divisão permite uma comparação justa e consistente com o primeiro modelo desenvolvido. A seguir, são apresentados alguns exemplos de outras proporções testadas durante o processo:
+```python
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 ```
 ### Treinando o Random Forest
 Treina o RandomForest e guarda todas as acurácias em um array, foi separado duas árvores para fins de comparação. Uma com melhor desempenho de acurácia e outra com o pior desempenho
