@@ -1077,7 +1077,7 @@ forest = RandomForestClassifier(n_estimators=100, random_state=42, criterion='en
 forest.fit(X_train, y_train)
 print(f'Acurácia do treinamento: {forest.score(X_train, y_train)}')
 ```
-Após o treinamento do modelo, realizamos a etapa de teste utilizando o método predict sobre os dados reservados para validação. O modelo obteve uma acurácia de **82% nos dados de treinamento** e **78% nos dados de teste**, indicando um bom desempenho e generalização. Esses resultados demonstram que o modelo é capaz de identificar, com consistência, os fatores que influenciam a escolha do regime de trabalho, fornecendo assim uma resposta relevante e fundamentada à nossa pergunta de pesquisa orientada por dados.
+Após o treinamento do modelo, realizamos a etapa de teste utilizando o método predict nos dados reservados para validação. O modelo alcançou uma acurácia de 82% nos dados de treinamento e 78% nos dados de teste, indicando um bom desempenho geral e certa capacidade de generalização. No entanto, apesar desses números sugerirem um modelo eficaz, a análise da matriz de confusão, que será apresentada mais adiante, revela uma limitação importante: o modelo teve um bom desempenho na identificação das classes majoritárias, mas ignorou completamente as classes com menor representatividade. Isso indica um viés em favor das classes dominantes, o que compromete parcialmente a capacidade do modelo de capturar a diversidade real nos regimes de trabalho. Ainda assim, os resultados fornecem uma base relevante e orientada por dados para responder à nossa pergunta de pesquisa, especialmente no que diz respeito às tendências predominantes.
 ```python
 y_pred = forest.predict(X_test)
 print(f'Acurácia do teste: {accuracy_score(y_test, y_pred)}')
@@ -1102,19 +1102,7 @@ Acurácia do teste: 0.7692847124824684
 Acurácia do treinamento: 0.8211467648605997
 Acurácia do teste: 0.7760252365930599
 ```
-best_tree = max(accuracies, key=accuracies.get)
-worst_tree = min(accuracies, key=accuracies.get)
 
-print(f'Acurácia da melhor árvore: {accuracies[best_tree]}')
-print(f'Acurácia da pior árvore: {accuracies[worst_tree]}')
-
-best_y_pred = forest.estimators_[best_tree].predict(X_test)
-worst_y_pred = forest.estimators_[worst_tree].predict(X_test)
-
-print('\nClassification Report da melhor árvore:')
-print(classification_report(y_test, best_y_pred))
-print('\nClassification Report da pior árvore:')
-print(classification_report(y_test, worst_y_pred))
 ```
 ```
 Acurácia do treinamento: 0.8260869565217391
