@@ -1166,7 +1166,7 @@ plt.title('Importância das variáveis')
 plt.gca().invert_yaxis()
 ```
 ![image](https://github.com/user-attachments/assets/f5e6821f-1ca7-4a1c-9977-39ea6a1b5990)
-### Visualização com Shap
+### Visualização com SHAP
 No trecho de código a seguir, aplicamos a biblioteca SHAP para interpretar o modelo Random Forest e entender a influência de cada variável nas previsões de forma mais transparente. Primeiramente, utilizamos o `LabelEncoder` previamente ajustado para recuperar os nomes reais das classes da variável alvo, armazenando-os na variável `class_names`.
 
 Em seguida, criamos um objeto explainer a partir de `shap.TreeExplainer(forest)`, que é uma ferramenta otimizada para interpretar modelos baseados em árvores de decisão, como o Random Forest. Com o explainer, calculamos os valores de SHAP para os dados de teste (`X_test`) por meio da função `shap_values = explainer.shap_values(X_test)`. Esses valores representam, para cada amostra, quanto cada variável contribuiu positiva ou negativamente para a previsão de cada classe.
@@ -1178,6 +1178,24 @@ shap_values = explainer.shap_values(X_test) # Pass the numpy array to shap_value
 shap.summary_plot(shap_values, X_test, feature_names=vect.get_feature_names_out(), plot_type='bar')
 ```
 ![image](https://github.com/user-attachments/assets/88425af9-d316-49a5-94d3-554b9e82ec09)
+### Visualização de uma Árvore
+Como uma Random Forest é composta por dezenas ou até centenas de árvores de decisão — neste caso, 100 — não é viável exibir todas elas em uma única visualização, pois isso tornaria a análise extremamente complexa e pouco informativa. Para fins didáticos e de interpretação, optamos por exibir apenas a primeira árvore gerada pelo modelo. Essa abordagem permite visualizar de forma clara e simplificada como o algoritmo realiza as divisões de decisão, oferecendo uma amostra representativa da lógica usada pela floresta para realizar previsões, sem comprometer a legibilidade.
+
+Para isso, utilizamos a função `export_graphviz` da biblioteca `sklearn.tree`, que transforma a estrutura da árvore em um código no formato DOT — uma linguagem de descrição de grafos. Esse código é então processado pela biblioteca pydotplus, que converte o DOT em um gráfico visual. O resultado final é exibido como imagem por meio do `IPython.display.Image`, gerando uma representação clara da primeira árvore da floresta, com os atributos de decisão, valores de divisão, classes previstas e coloração de nós indicando a predominância das classes.
+
+Essa visualização torna mais compreensível o funcionamento interno do modelo e contribui para a interpretação dos critérios adotados nas decisões, mesmo que represente apenas uma fração do comportamento global da Random Forest.
+```python
+import pydotplus
+from sklearn import tree
+from IPython.display import Image
+
+dot_data = tree.export_graphviz(forest.estimators_[0], out_file=None, feature_names=vect.get_feature_names_out(), class_names=le.classes_, filled=True, rounded=True, special_characters=True)
+
+graph = pydotplus.graph_from_dot_data(dot_data)
+Image(graph.create_png())
+```
+![image](https://github.com/user-attachments/assets/f29958fc-345e-4870-8b44-0adc3ccf8962)
+
 ## Resultados
 
 ### Resultados obtidos com o modelo 1.
