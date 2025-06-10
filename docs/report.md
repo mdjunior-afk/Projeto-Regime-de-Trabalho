@@ -1077,7 +1077,7 @@ forest = RandomForestClassifier(n_estimators=100, random_state=42, criterion='en
 forest.fit(X_train, y_train)
 print(f'Acurácia do treinamento: {forest.score(X_train, y_train)}')
 ```
-Após o treinamento do modelo, realizamos a etapa de teste utilizando o método predict nos dados reservados para validação. O modelo obteve uma acurácia de 82% nos dados de treinamento e 78% nos dados de teste, indicando um bom desempenho geral e uma razoável capacidade de generalização. No entanto, embora esses resultados sejam promissores, a análise da matriz de confusão, que será detalhada mais adiante nesta documentação, revela limitações importantes relacionadas à forma como o modelo trata classes menos representadas. Ainda assim, os resultados oferecem uma base relevante e orientada por dados para responder à nossa pergunta de pesquisa, especialmente no que se refere às tendências predominantes.
+Após o treinamento do modelo, realizamos a etapa de teste utilizando o método `predict` nos dados reservados para validação. O modelo obteve uma acurácia de **82% nos dados de treinamento** e **78% nos dados de teste**, indicando um bom desempenho geral e uma razoável capacidade de generalização. No entanto, embora esses resultados sejam promissores, a análise da matriz de confusão, que será detalhada mais adiante nesta documentação, revela limitações importantes relacionadas à forma como o modelo trata classes menos representadas. Ainda assim, os resultados oferecem uma base relevante e orientada por dados para responder à nossa pergunta de pesquisa, especialmente no que se refere às tendências predominantes.
 ```python
 y_pred = forest.predict(X_test)
 print(f'Acurácia do teste: {accuracy_score(y_test, y_pred)}')
@@ -1102,106 +1102,70 @@ Acurácia do teste: 0.7692847124824684
 Acurácia do treinamento: 0.8211467648605997
 Acurácia do teste: 0.7760252365930599
 ```
-
-```
-```
-Acurácia do treinamento: 0.8260869565217391
-Acurácia da melhor árvore: 0.7630161579892281
-Acurácia da pior árvore: 0.5915619389587073
-
-Classification Report da melhor árvore:
-              precision    recall  f1-score   support
-
-           0       0.00      0.00      0.00        19
-           1       0.82      0.68      0.74       524
-           2       0.73      0.87      0.79       571
-
-    accuracy                           0.76      1114
-   macro avg       0.52      0.51      0.51      1114
-weighted avg       0.76      0.76      0.76      1114
-
-
-Classification Report da pior árvore:
-              precision    recall  f1-score   support
-
-           0       0.00      0.00      0.00        19
-           1       0.59      0.55      0.57       524
-           2       0.60      0.65      0.62       571
-
-    accuracy                           0.59      1114
-   macro avg       0.40      0.40      0.40      1114
-weighted avg       0.58      0.59      0.59      1114
-```
-### Matriz de confusão da melhor árvore
-Aqui foi feita a visualização da matriz de confusão da árvore com melhor desempenho, sendo mostrado uma pequena confusão entre remoto e hibrído. O modelo presencial foi completamente desconsiderado em função de ter poucos dados relacionados a esse modelo
+### Resultados com Classification Report
+Nesta etapa, foi incluída uma tabela com o `classification_report`, que fornece métricas detalhadas de desempenho para cada classe do atributo alvo. Esse relatório apresenta valores de **precisão (precision)**, **revocação (recall)**, **f1-score** e **suporte (support)**, permitindo uma análise mais aprofundada de como o modelo está se comportando individualmente em relação a cada classe — especialmente útil para avaliar o impacto do desbalanceamento entre elas.
 ```python
-from sklearn.metrics import ConfusionMatrixDisplay
-from matplotlib import pyplot as plt
+# Visualização do classification_report
+print(classification_report(y_test, y_pred))
+```
+```
+ precision    recall  f1-score   support
 
-# Melhor arvore
-best_cnf_matrix = confusion_matrix(y_test, best_y_pred)
-print(f'Matriz de confusão: \n{best_cnf_matrix}')
+           0       0.00      0.00      0.00        21
+           1       0.81      0.72      0.76       416
+           2       0.77      0.87      0.82       514
 
-df_cnf_matrix = pd.DataFrame(best_cnf_matrix, index=le.classes_, columns=le.classes_)
+    accuracy                           0.78       951
+   macro avg       0.53      0.53      0.53       951
+weighted avg       0.77      0.78      0.77       951
+```
+### Desenvolvimento da Matriz de Confusão
+No trecho de código abaixo, a matriz de confusão foi gerada com base nos dados de teste do modelo, utilizando três abordagens: primeiro, a matriz foi exibida em sua forma crua (valores numéricos); em seguida, foi formatada com os nomes das classes da variável alvo para facilitar a interpretação; por fim, utilizamos a função `ConfusionMatrixDisplay` para apresentar a matriz de forma visual, por meio de um gráfico que torna mais intuitiva a identificação dos acertos e erros do modelo.
+```python
+# Matriz de confusão
+cnf_matrix = confusion_matrix(y_test, y_pred)
+print(f'Matriz de confusão: \n{cnf_matrix}')
+```
+```
+Matriz de confusão: 
+[[  0   3  18]
+ [  0 299 117]
+ [  0  67 447]]
+```
+```python
+# Matriz de confusão formatada
+df_cnf_matrix = pd.DataFrame(cnf_matrix, index=le.classes_, columns=le.classes_)
 print(f'Matriz de confusão formatada: \n{df_cnf_matrix}')
-
-display = ConfusionMatrixDisplay.from_estimator(forest.estimators_[best_tree], X_test, y_test, display_labels=le.classes_, cmap=plt.cm.Greens)
+```
+```
+Matriz de confusão formatada: 
+                        Modelo 100% presencial  Modelo 100% remoto  Modelo híbrido
+Modelo 100% presencial                       0                   3   		18
+Modelo 100% remoto                           0                 299  	       117 
+Modelo híbrido                               0                  67   	       447
+```
+```python
+# Gerando a matriz como uma imagem
+display = ConfusionMatrixDisplay.from_estimator(forest, X_test, y_test, display_labels=le.classes_, cmap=plt.cm.Greens)
 
 plt.xticks(rotation=90)
 plt.show()
 ```
-```
-Matriz de confusão: 
-[[  0   1  18]
- [  2 356 166]
- [  1  76 494]]
-Matriz de confusão formatada: 
-                        Modelo 100% presencial  Modelo 100% remoto  \
-Modelo 100% presencial                       0                   1   
-Modelo 100% remoto                           2                 356   
-Modelo híbrido                               1                  76   
-
-                        Modelo híbrido  
-Modelo 100% presencial              18  
-Modelo 100% remoto                 166  
-Modelo híbrido                     494  
-```
-![image](https://github.com/user-attachments/assets/7a692d74-e83f-41c1-87fd-4353d81c79f6)
-### Matriz de confusão da pior árvore
-Enquanto aqui, é descrito a matriz de confusão da da árvore com menor desempenho. Aqui a confusão entre hibrido e remoto é mais generalizada
+![image](https://github.com/user-attachments/assets/4b793695-dd1b-45a6-b400-dd8f09e1aeb0)
+### Importância das variáveis
+No código a seguir, utilizamos o atributo `feature_importances_` do modelo Random Forest para visualizar quais variáveis tiveram maior influência na previsão da variável alvo. Para isso, os valores de importância foram organizados em um objeto `pd.Series`, que é uma estrutura de dados unidimensional do pandas, semelhante a uma lista rotulada, onde cada valor está associado a um índice — neste caso, os nomes das variáveis do conjunto de dados. Em seguida, criamos um gráfico de barras utilizando a biblioteca matplotlib, com o objetivo de facilitar a interpretação visual das importâncias atribuídas a cada atributo pelo modelo.
 ```python
-from sklearn.metrics import ConfusionMatrixDisplay
-from matplotlib import pyplot as plt
+importances = forest.feature_importances_
 
-# Melhor arvore
-worst_cnf_matrix = confusion_matrix(y_test, worst_y_pred)
-print(f'Matriz de confusão: \n{best_cnf_matrix}')
+series = pd.Series(importances, index=vect.get_feature_names_out())
+series = series.sort_values(ascending=False).head(10)
 
-df_cnf_matrix = pd.DataFrame(worst_cnf_matrix, index=le.classes_, columns=le.classes_)
-print(f'Matriz de confusão formatada: \n{df_cnf_matrix}')
-
-display = ConfusionMatrixDisplay.from_estimator(forest.estimators_[worst_tree], X_test, y_test, display_labels=le.classes_, cmap=plt.cm.Greens)
-
-plt.xticks(rotation=90)
-plt.show()
+plt.figure(figsize=(5, 5))
+series.plot(kind='barh', legend=False)
+plt.title('Importância das variáveis')
+plt.gca().invert_yaxis()
 ```
-```
-Matriz de confusão: 
-[[  0   1  18]
- [  2 356 166]
- [  1  76 494]]
-Matriz de confusão formatada: 
-                        Modelo 100% presencial  Modelo 100% remoto  \
-Modelo 100% presencial                       0                   1   
-Modelo 100% remoto                           1                 290   
-Modelo híbrido                               4                 198   
-
-                        Modelo híbrido  
-Modelo 100% presencial              18  
-Modelo 100% remoto                 233  
-Modelo híbrido                     369  
-```
-![image](https://github.com/user-attachments/assets/e6bd93ce-b71d-4b2b-a944-9ae2a6525fc6)
+![image](https://github.com/user-attachments/assets/f5e6821f-1ca7-4a1c-9977-39ea6a1b5990)
 ### Visualização de um gráfico de importância da melhor árvore
 Foi feito uma vizualização dos valores mais importantes na construção da melhor árvore. Os atributos mais importantes levam em consideração a forma de trabalho atual do profissional e a atitude do profissional caso a empresa adote o modelo 100% presencial
 ```python
