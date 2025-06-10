@@ -1069,18 +1069,19 @@ Além disso, manter essa divisão permite uma comparação justa e consistente c
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 ```
 ### Treinando o Random Forest
-Treina o RandomForest e guarda todas as acurácias em um array, foi separado duas árvores para fins de comparação. Uma com melhor desempenho de acurácia e outra com o pior desempenho
+Na etapa de treinamento, o primeiro passo foi a criação do modelo Random Forest com parâmetros definidos. Utilizamos o número padrão de 100 árvores (`n_estimators=100`) e adotamos o critério de entropia para a divisão dos nós. A entropia mede o grau de impureza das amostras em um nó, buscando maximizar o ganho de informação a cada divisão. Apesar de as classes no nosso conjunto de dados estarem desbalanceadas, optamos pela entropia por sua maior sensibilidade na separação de classes minoritárias, o que é relevante para nosso objetivo de compreender os fatores que influenciam todas as formas de trabalho — inclusive aquelas com menor representação.
+
+Além disso, definimos uma profundidade máxima de árvore (`max_depth=7`) para evitar overfitting. Testamos também os valores 5 e 10, mas observamos que profundidades maiores aumentaram a complexidade do modelo e reduziram o desempenho na base de teste. O valor 7 apresentou o melhor equilíbrio entre acurácia e generalização.
 ```python
-forest = RandomForestClassifier(random_state=42, criterion='entropy', max_depth=7)
+forest = RandomForestClassifier(n_estimators=100, random_state=42, criterion='entropy', max_depth=8)
 forest.fit(X_train, y_train)
 print(f'Acurácia do treinamento: {forest.score(X_train, y_train)}')
-
-accuracies = {}
-
-for i, tree_model in enumerate(forest.estimators_):
-  y_pred = tree_model.predict(X_test)
-  acc_score = accuracy_score(y_test, y_pred)
-  accuracies[i] = acc_score
+```
+Após o treinamento do modelo, realizamos a etapa de teste utilizando o método predict sobre os dados reservados para validação. O modelo obteve uma acurácia de 82% nos dados de treinamento e 78% nos dados de teste, indicando um bom desempenho e generalização. Esses resultados demonstram que o modelo é capaz de identificar, com consistência, os fatores que influenciam a escolha do regime de trabalho, fornecendo assim uma resposta relevante e fundamentada à nossa pergunta de pesquisa orientada por dados.
+```python
+y_pred = forest.predict(X_test)
+print(f'Acurácia do teste: {accuracy_score(y_test, y_pred)}')
+```
 
 best_tree = max(accuracies, key=accuracies.get)
 worst_tree = min(accuracies, key=accuracies.get)
