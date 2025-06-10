@@ -1166,104 +1166,18 @@ plt.title('Importância das variáveis')
 plt.gca().invert_yaxis()
 ```
 ![image](https://github.com/user-attachments/assets/f5e6821f-1ca7-4a1c-9977-39ea6a1b5990)
-### Visualização de um gráfico de importância da melhor árvore
-Foi feito uma vizualização dos valores mais importantes na construção da melhor árvore. Os atributos mais importantes levam em consideração a forma de trabalho atual do profissional e a atitude do profissional caso a empresa adote o modelo 100% presencial
+### Visualização com Shap
+No trecho de código a seguir, aplicamos a biblioteca SHAP para interpretar o modelo Random Forest e entender a influência de cada variável nas previsões de forma mais transparente. Primeiramente, utilizamos o `LabelEncoder` previamente ajustado para recuperar os nomes reais das classes da variável alvo, armazenando-os na variável `class_names`.
+
+Em seguida, criamos um objeto explainer a partir de `shap.TreeExplainer(forest)`, que é uma ferramenta otimizada para interpretar modelos baseados em árvores de decisão, como o Random Forest. Com o explainer, calculamos os valores de SHAP para os dados de teste (`X_test`) por meio da função `shap_values = explainer.shap_values(X_test)`. Esses valores representam, para cada amostra, quanto cada variável contribuiu positiva ou negativamente para a previsão de cada classe.
+
+Por fim, o gráfico gerado com `shap.summary_plot()` apresenta uma visualização em barras `(plot_type='bar')` das variáveis mais importantes para o modelo. O parâmetro `feature_names` insere os nomes originais das variáveis, obtidos do `DictVectorizer`, e o argumento `class_names=class_names` substitui os rótulos genéricos como “Class 0” por nomes reais, tornando a visualização mais legível e interpretável no contexto da pesquisa.
 ```python
-best_importance = forest.estimators_[best_tree].feature_importances_
-
-best_importance_series = pd.Series(best_importance, index=vect.get_feature_names_out())
-best_importance_series = best_importance_series.sort_values(ascending=False).head(10)
-
-print(f'Importância das variáveis: \n{best_importance_series}')
-
-plt.figure(figsize=(5, 5))
-best_importance_series.plot(kind='barh', legend=False)
-plt.title('Importância das variáveis (Melhor árvore)')
-plt.gca().invert_yaxis()
+explainer = shap.TreeExplainer(forest)
+shap_values = explainer.shap_values(X_test) # Pass the numpy array to shap_values
+shap.summary_plot(shap_values, X_test, feature_names=vect.get_feature_names_out(), plot_type='bar')
 ```
-```
-Importância das variáveis: 
-Decisão da empresa para modelo 100% presencial=Vou aceitar e retornar ao modelo 100% presencial               0.311739
-Forma de trabalho atual=Modelo híbrido                                                                        0.212135
-Decisão da empresa para modelo 100% presencial=Vou procurar outra oportunidade no modelo híbrido ou remoto    0.096771
-Decisão da empresa para modelo 100% presencial=Vou procurar outra oportunidade no modelo 100% remoto          0.085514
-Forma de trabalho atual=Modelo 100% remoto                                                                    0.064423
-Área de formação=Outra opção                                                                                  0.014356
-Faixa salarial=de R$ 4.001/mês a R$ 6.000/mês                                                                 0.013847
-Nível=Sênior                                                                                                  0.011894
-Estado onde mora=Rio Grande do Sul (RS)                                                                       0.010316
-Cor/Raça=Branca                                                                                               0.010064
-dtype: float64
-```
-![image](https://github.com/user-attachments/assets/d961aa11-bab1-402c-ace4-7ff416af7935)
-### Visualização do gráfico de importância da pior árvore
-Entretanto, aqui a visualização dos atributos mais importantes deu mais ênfase em aspectos demográficos do que a atitude do profissional em caso da empresa adotar 100% presencial e o modelo de trabalho atual
-```python
-worst_importance = forest.estimators_[worst_tree].feature_importances_
-
-worst_importance_series = pd.Series(worst_importance, index=vect.get_feature_names_out())
-worst_importance_series = worst_importance_series.sort_values(ascending=False).head(10)
-
-print(f'\nImportância das variáveis: \n{worst_importance_series}')
-
-plt.figure(figsize=(5, 5))
-worst_importance_series.plot(kind='barh', legend=False)
-plt.title('Importância das variáveis (Pior árvore)')
-plt.gca().invert_yaxis()
-```
-```
-Importância das variáveis: 
-Decisão da empresa para modelo 100% presencial=Vou aceitar e retornar ao modelo 100% presencial    0.352205
-Forma de trabalho atual=Modelo 100% remoto                                                         0.093790
-Região onde mora=Nordeste                                                                          0.044124
-Faixa salarial=de R$ 6.001/mês a R$ 8.000/mês                                                      0.035272
-Cargo atual=Analista de Dados/Data Analyst                                                         0.027648
-Forma de trabalho atual=Modelo 100% presencial                                                     0.027511
-Gênero=Masculino                                                                                   0.023162
-Idade                                                                                              0.023008
-Faixa salarial=de R$ 20.001/mês a R$ 25.000/mês                                                    0.022522
-Nivel de segurança=Moderado                                                                        0.022458
-```
-![image](https://github.com/user-attachments/assets/06480712-f8e0-4364-8740-1adceb3c5b9a)
-### Visualização do RandomForest
-Uma vizualização de todas as 100 árvores com suas respectivas acurácias
-```python
-import matplotlib.pyplot as plt
-
-plt.figure(figsize=(10, 5))
-plt.plot(range(len(accuracies.items())), accuracies.values(), marker='o', linestyle='-', color='blue')
-plt.title('Acurácia do Modelo Random Forest')
-plt.xlabel('Número de Árvores')
-plt.ylabel('Acurácia')
-plt.ylim(0, 1)
-plt.grid(True)
-plt.show()
-```
-![image](https://github.com/user-attachments/assets/213544e1-4510-448b-8c87-ea7af2081315)
-### Visualização da Árvore com melhor desempenho
-```python
-import pydotplus
-from sklearn import tree
-from IPython.display import Image
-
-dot_data = tree.export_graphviz(forest.estimators_[best_tree], out_file=None, feature_names=vect.get_feature_names_out(), class_names=le.classes_, filled=True, rounded=True, special_characters=True)
-
-graph = pydotplus.graph_from_dot_data(dot_data)
-Image(graph.create_png())
-```
-![image](https://github.com/user-attachments/assets/96c40ac2-74c9-4699-8826-e9fada9535d8)
-### Visualização da Árvore com pior desempenho
-```python
-import pydotplus
-from sklearn import tree
-from IPython.display import Image
-
-dot_data = tree.export_graphviz(forest.estimators_[worst_tree], out_file=None, feature_names=vect.get_feature_names_out(), class_names=le.classes_, filled=True, rounded=True, special_characters=True)
-
-graph = pydotplus.graph_from_dot_data(dot_data)
-Image(graph.create_png())
-```
-![image](https://github.com/user-attachments/assets/575f77b2-a16a-48d2-8eb3-6eb5a5c4b6dc)
+![image](https://github.com/user-attachments/assets/88425af9-d316-49a5-94d3-554b9e82ec09)
 ## Resultados
 
 ### Resultados obtidos com o modelo 1.
