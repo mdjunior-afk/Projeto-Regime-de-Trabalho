@@ -1028,6 +1028,63 @@ graph = pydotplus.graph_from_dot_data(dot_data)
 Image(graph.create_png())
 ```
 ![image](https://github.com/user-attachments/assets/66f9ee69-cf36-4b53-987d-da9514905be0)
+### Testando o modelo com SMOTE
+Com o objetivo de investigar como o modelo se comportaria em um cenário com dados mais balanceados, aplicamos a técnica SMOTE (Synthetic Minority Over-sampling Technique). Essa técnica é amplamente utilizada para lidar com desequilíbrios entre classes, criando novas amostras sintéticas para as classes minoritárias com base em seus vizinhos mais próximos, em vez de simplesmente replicar exemplos existentes.
+```python
+print("Antes do SMOTE:", Counter(y_train))
+smt = SMOTE(sampling_strategy='not majority', random_state=42)
+X_train, y_train = smt.fit_resample(X_train, y_train)
+print("Depois do SMOTE:", Counter(y_train))
+```
+No nosso caso, a classe correspondente ao modelo de trabalho presencial era expressivamente minoritária em comparação às demais. Antes da aplicação do SMOTE, a distribuição era:
+```
+Antes do SMOTE: Counter({np.int64(2): 2019, np.int64(1): 1708, np.int64(0): 75})
+```
+Utilizando o parâmetro `sampling_strategy='not majority'`, o SMOTE gerou novas amostras para as classes menos representadas (presencial e remoto), igualando ela ao número de amostras da classe majoritária (modelo híbrido). O resultado foi:
+```
+Depois do SMOTE: Counter({np.int64(2): 2019, np.int64(1): 2019, np.int64(0): 2019})
+```
+Esse balanceamento foi aplicado apenas sobre o conjunto de treino, mantendo o conjunto de teste original para garantir uma avaliação realista da capacidade de generalização do modelo.
+
+Após o reequilíbrio, o modelo foi treinado novamente seguindo a mesma configuração anterior. Observamos que a acurácia no **conjunto de treino subiu para 81%**, o que representa um ganho significativo. No entanto, a acurácia no **conjunto de teste caiu para 71%**, indicando uma possível perda de generalização, possivelmente causada pelo aumento de ruído introduzido pelas amostras sintéticas.
+```
+Acurácia no treino: 0.8104672280006604
+Acurácia no teste: 0.7108307045215563
+```
+#### Classification Report e SMOTE
+A análise do `classification_report` revelou que, apesar da tentativa de balanceamento, a classe minoritária (presencial) ainda apresentou desempenho insatisfatório. Embora tenha havido alguns acertos, os resultados continuam demonstrando forte confusão com a classe híbrida, dificultando a distinção entre esses dois regimes de trabalho.
+```
+              precision    recall  f1-score   support
+
+           0       0.10      0.43      0.17        21
+           1       0.76      0.74      0.75       416
+           2       0.78      0.70      0.74       514
+
+    accuracy                           0.71       951
+   macro avg       0.55      0.62      0.55       951
+weighted avg       0.76      0.71      0.73       951
+```
+#### Matriz de confusão e SMOTE
+Além disso, a matriz de confusão reforça esse comportamento, evidenciando que a redistribuição dos dados com SMOTE não foi suficiente para corrigir completamente o viés do modelo, embora tenha contribuído levemente para melhorar o reconhecimento da classe minoritária.
+```
+Matriz de confusão: 
+[[  9   2  10]
+ [ 16 309  91]
+ [ 61  95 358]]
+                             Prev=Modelo 100% presencial  Prev=Modelo 100% remoto  Prev=Modelo híbrido
+Real=Modelo 100% presencial                            9   			2		    10
+Real=Modelo 100% remoto                               16   		      309		    91
+Real=Modelo híbrido                                   61   		       95		   358
+```
+![image](https://github.com/user-attachments/assets/fdc42bd2-b7eb-40b7-ab9b-42deefebf201)
+#### Importância dos atributos
+Diferentemente do modelo treinado sem o uso do SMOTE, a análise da importância dos atributos mostrou uma distribuição mais diversificada entre as variáveis, indicando que o modelo passou a considerar um conjunto mais amplo de fatores na previsão da variável alvo. No entanto, apesar dessa maior diversidade, o desempenho do modelo em relação à classe presencial continuou insatisfatório.
+
+![image](https://github.com/user-attachments/assets/6f3bb8eb-f14a-4962-99ff-2fccdfc7f4fc)
+#### SHAP e SMOTE
+No entanto, um aspecto importante a ser destacado foi a distribuição dos valores SHAP, que indicou que algumas variáveis realmente assumiram relevância específica na distinção da classe presencial. Isso demonstra que o modelo conseguiu identificar certos padrões associados a esse regime de trabalho. Contudo, essa relevância atribuída pelos valores SHAP não se traduziu em uma melhora significativa nos resultados práticos, como evidenciado pelo `classification_report` e pela matriz de confusão. Mesmo com o aumento da importância de determinados atributos, a performance da classe presencial permaneceu limitada, com acertos pontuais e uma forte confusão com o modelo híbrido. Isso sugere que, embora o modelo perceba diferenças sutis, essas distinções não são robustas o suficiente para garantir previsões confiáveis para essa classe minoritária.
+
+![image](https://github.com/user-attachments/assets/7e861286-be5d-4112-b7ac-0c57232685b4)
 ### Modelo 2: Random Forest
 Para o segundo modelo, optamos por utilizar o Random Forest, que, diferentemente do DecisionTreeClassifier, não se baseia em uma única árvore de decisão, mas sim em um conjunto (ou "floresta") de múltiplas árvores. Enquanto o DecisionTreeClassifier constrói uma única árvore que aprende diretamente com os dados e pode sofrer com overfitting, o Random Forest cria várias árvores de decisão independentes e combina os resultados de todas elas para tomar uma decisão final (geralmente por votação, no caso de classificação). Essa abordagem reduz a variância do modelo, melhora a capacidade de generalização e tende a oferecer resultados mais robustos, especialmente em conjuntos de dados mais complexos ou com ruído.
 
