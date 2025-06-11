@@ -15,7 +15,7 @@
 Professores:
 
 ** Prof. Hugo de Paula **
-** Prof. Hayala Curto**
+** Prof. Hayala Curto** 
 
 ---
 
@@ -894,13 +894,13 @@ Após a transformação das variáveis categóricas, também foi realizada a cod
 le = LabelEncoder()
 y = le.fit_transform(df['Forma de trabalho ideal'])
 ```
-Em seguida, os dados foram divididos em conjuntos de treino e teste utilizando a função train_test_split, com **80% dos dados destinados ao treinamento** e **20% ao teste**. Essa proporção foi escolhida com base em experimentos realizados ao longo do desenvolvimento, nos quais essa configuração apresentou os melhores resultados em termos de acurácia.
+Em seguida, os dados foram divididos em conjuntos de treino e teste utilizando a função `train_test_split`, com **80% dos dados destinados ao treinamento** e **20% ao teste**. Essa proporção foi escolhida com base em experimentos realizados ao longo do desenvolvimento, nos quais essa configuração apresentou os melhores resultados em termos de acurácia.
 ```python
 # Dividir os dados corretamente
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 ```
 ### Indução do Modelo
-Na etapa de treinamento, o primeiro passo foi a criação do modelo Random Forest com parâmetros definidos. Adotamos o critério de entropia para a divisão dos nós. A entropia mede o grau de impureza das amostras em um nó, buscando maximizar o ganho de informação a cada divisão. Apesar de as classes no nosso conjunto de dados estarem desbalanceadas, optamos pela entropia por sua maior sensibilidade na separação de classes minoritárias, o que é relevante para nosso objetivo de compreender os fatores que influenciam todas as formas de trabalho — inclusive aquelas com menor representação.
+Na etapa de treinamento, o primeiro passo foi a criação do modelo `DecisionTreeClassifier` com parâmetros definidos. Adotamos o critério de entropia para a divisão dos nós. A entropia mede o grau de impureza das amostras em um nó, buscando maximizar o ganho de informação a cada divisão. Apesar de as classes no nosso conjunto de dados estarem desbalanceadas, optamos pela entropia por sua maior sensibilidade na separação de classes minoritárias, o que é relevante para nosso objetivo de compreender os fatores que influenciam todas as formas de trabalho — inclusive aquelas com menor representação.
 
 Além disso, definimos uma profundidade máxima de árvore (`max_depth=5`) para evitar overfitting. Testamos também os valores maiores que 5, mas observamos que profundidades maiores aumentaram a complexidade do modelo e reduziram o desempenho na base de teste. O valor 5 apresentou o melhor equilíbrio entre acurácia e generalização.
 ```python
@@ -909,7 +909,7 @@ treeForma = DecisionTreeClassifier(random_state=42, criterion='entropy', max_dep
 treeForma.fit(X_train, y_train)
 print("Acurácia no treino:", treeForma.score(X_train, y_train))
 ```
-Após o treinamento do modelo, realizamos a etapa de teste utilizando o método `predict` nos dados reservados para validação. O modelo obteve uma acurácia de **78% em ambos os casos, com pequenas diferenças, indicando um bom desempenho geral e uma razoável capacidade de generalização. No entanto, embora esses resultados sejam promissores, a análise da matriz de confusão, que será detalhada mais adiante nesta documentação, revela limitações importantes relacionadas à forma como o modelo trata classes menos representadas. Ainda assim, os resultados oferecem uma base relevante e orientada por dados para responder à nossa pergunta de pesquisa, especialmente no que se refere às tendências predominantes.
+Após o treinamento do modelo, realizamos a etapa de teste utilizando o método `predict` nos dados reservados para validação. O modelo obteve uma acurácia de **78% em ambos os casos**, com pequenas diferenças, indicando um bom desempenho geral e uma razoável capacidade de generalização. No entanto, embora esses resultados sejam promissores, a análise da matriz de confusão, que será detalhada mais adiante nesta documentação, revela limitações importantes relacionadas à forma como o modelo trata classes menos representadas. Ainda assim, os resultados oferecem uma base relevante e orientada por dados para responder à nossa pergunta de pesquisa, especialmente no que se refere às tendências predominantes.
 ```python
 # Avaliação no conjunto de teste
 y_pred = treeForma.predict(X_test)
@@ -919,7 +919,7 @@ print("Acurácia no teste:", accuracy_score(y_test, y_pred))
 Acurácia no treino: 0.7890583903208838
 Acurácia no teste: 0.7812828601472135
 ```
-**Outros valores testados**
+#### Outros valores testados
 *test_size=0.2 & max_depth=7*
 ```
 Acurácia no treino: 0.8037874802735402
@@ -956,16 +956,34 @@ print(classification_report(y_test, y_pred))
    macro avg       0.53      0.53      0.52       951
 weighted avg       0.77      0.78      0.77       951
 ```
+### Desenvolvimento da Matriz de confusão
+No trecho de código abaixo, a matriz de confusão foi gerada com base nos dados de teste do modelo, utilizando três abordagens: primeiro, a matriz foi exibida em sua forma crua (valores numéricos); em seguida, foi formatada com os nomes das classes da variável alvo para facilitar a interpretação; por fim, utilizamos a função `ConfusionMatrixDisplay` para apresentar a matriz de forma visual, por meio de um gráfico que torna mais intuitiva a identificação dos acertos e erros do modelo.
 ```python
 cnf_matrix = confusion_matrix(y_test, y_pred)
+print(cnf_matrix)
+```
+```
+[[  0   3  18]
+ [  0 292 124]
+ [  0  63 451]]
+```
+```python
 cnf_table = pd.DataFrame(cnf_matrix, index=[f"Real={c}" for c in le.classes_], columns=[f"Prev={c}" for c in le.classes_])
 print(cnf_table)
 ```
+```
+                            Prev=Modelo 100% presencial  Prev=Modelo 100% remoto Prev=Modelo híbrido
+Real=Modelo 100% presencial                           0   		       3		  18
+Real=Modelo 100% remoto                               0   		     292		 124
+Real=Modelo híbrido                                   0   		      63		 451
+```
+```python
 display = ConfusionMatrixDisplay.from_estimator(treeForma, X_test, y_test, display_labels=le.classes_, cmap=plt.cm.Blues)
 
 plt.xticks(rotation=90)
 plt.show()
-
+```
+![image](https://github.com/user-attachments/assets/fdd226ca-ed07-43f1-9006-57fec69149e1)
 ```
 ```python
 # Avaliação no conjunto de teste
