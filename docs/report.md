@@ -1239,7 +1239,11 @@ print(classification_report(y_test, y_pred))
 weighted avg       0.75      0.76      0.75       951
 ```
 
-**<Análise do Classification Report>**
+Da mesma forma que acontece com o primeiro modelo, aqui a classe presencial (0) apresenta um baixo desempenho, enquanto as outras duas (remoto e híbrido) possuem desempenho significativamente melhor por estarem mais representadas na base de dados. Isso evidencia novamente o impacto do desbalanceamento entre as classes.
+
+O desempenho geral do modelo Random Forest reforça esse desequilíbrio: a classe 0 (presencial) não é corretamente identificada em nenhuma instância — com precision, recall e f1-score iguais a 0 — mostrando que o modelo ignora completamente essa categoria. Já as classes 1 (remoto) e 2 (híbrido), mais frequentes, apresentam bons resultados, com destaque para a classe 2, que atinge recall de 0.85 e f1-score de 0.79.
+
+Embora o accuracy total seja 76%, esse número esconde o fato de que o modelo acerta quase exclusivamente as classes majoritárias. A média macro das métricas é de apenas 0.51, revelando o fraco desempenho médio entre todas as classes, independentemente de seu tamanho.
 
 #### Desenvolvimento da Matriz de Confusão
 Além disso, a matriz de confusão foi gerada em três formatos distintos:
@@ -1294,7 +1298,11 @@ plt.gca().invert_yaxis()
 ```
 ![image](https://github.com/user-attachments/assets/cf7921a7-dede-45f4-a410-2150fdb5426f)
 
-**<Análise da Importância dos atributos>**
+A análise da importância das variáveis do modelo Random Forest revela que os principais fatores que influenciam a predição da “forma de trabalho ideal” estão diretamente relacionados à atual forma de trabalho dos profissionais e à sua reação frente à decisão das empresas de retornarem ao modelo 100% presencial. A variável com maior impacto foi a decisão de procurar outra oportunidade caso a empresa adote um modelo totalmente presencial, especificamente para quem busca manter o trabalho 100% remoto. Isso indica que o modelo reconhece uma forte associação entre a preferência por trabalho remoto e a recusa a retornar presencialmente.
+
+Em seguida, a forma de trabalho atual — tanto no modelo remoto quanto no híbrido — também aparece como altamente relevante, sugerindo que a experiência atual do profissional influencia diretamente sua preferência futura. A aceitação ou não de retornar ao modelo 100% presencial também contribui significativamente, especialmente quando a resposta envolve procurar oportunidades híbridas ou remotas, demonstrando a importância da flexibilidade na decisão dos trabalhadores.
+
+Por outro lado, variáveis como idade, nível de escolaridade não informado e cargo atual não informado apresentaram impacto mínimo nas previsões. Isso reforça a ideia de que, nesse modelo sem balanceamento de classes, o comportamento frente à política de trabalho da empresa e o modelo de trabalho atual são os elementos mais decisivos. Essa distribuição da importância das variáveis também ajuda a explicar o fraco desempenho do modelo para a classe presencial, visto que as variáveis mais relevantes favorecem fortemente as classes relacionadas ao trabalho remoto ou híbrido.
 
 #### Visualização com SHAP
 Por fim, foi utilizado o SHAP (SHapley Additive exPlanations) para gerar uma visualização que destaca a relevância de cada atributo na tomada de decisão do modelo para cada classe. Essa análise fornece uma camada adicional de interpretabilidade, essencial para compreender o impacto de cada variável no comportamento do modelo.
@@ -1307,7 +1315,13 @@ shap.summary_plot(shap_values, X_test, feature_names=vect.get_feature_names_out(
 ```
 ![image](https://github.com/user-attachments/assets/6179e5e7-6646-48a9-b6d4-020a827493b2)
 
-**<Análise do SHAP>**
+A análise dos valores SHAP para o modelo Random Forest mostra, de forma mais detalhada, o impacto médio de cada variável na predição das três classes de forma de trabalho ideal (modelo 100% remoto, híbrido e 100% presencial). Assim como observado anteriormente com a importância das variáveis, os fatores que mais influenciam o modelo são comportamentais e relacionados diretamente à opinião do profissional sobre decisões da empresa quanto ao retorno presencial.
+
+As três variáveis de maior impacto para as predições — “Decisão da empresa para modelo 100% presencial = Vou procurar outra oportunidade no modelo 100% remoto”, “Forma de trabalho atual = Modelo 100% remoto” e “Forma de trabalho atual = Modelo híbrido” — exercem influência principalmente sobre as classes remota e híbrida, com destaque para a primeira, que tem grande peso na distinção entre quem prefere continuar em home office e quem aceita o modelo híbrido. Isso demonstra que o modelo reconhece que quem já trabalha remotamente e pretende sair caso haja retorno presencial tende fortemente a continuar preferindo o remoto.
+
+A classe presencial, por sua vez, praticamente não é influenciada de forma relevante por nenhuma variável, como indicado pela presença limitada da cor verde (referente ao modelo presencial) nos gráficos. Isso evidencia a baixa capacidade do modelo em aprender padrões consistentes para prever essa classe, o que está alinhado ao desempenho anterior, onde a classe 0 (presencial) obteve métricas praticamente nulas.
+
+Além disso, observa-se que variáveis como cargo, idade, gênero, região e faixa salarial possuem impacto muito pequeno, o que reforça a ideia de que a percepção individual frente ao modelo de trabalho é mais decisiva do que atributos demográficos ou profissionais. A ausência do uso de SMOTE neste modelo contribui para esse desequilíbrio, fazendo com que as classes mais representadas (remoto e híbrido) sejam priorizadas no processo de decisão.
 
 #### Testando o modelo com SMOTE
 Aplicamos a mesma sequência de códigos utilizada no primeiro modelo para avaliar o desempenho do modelo após o uso do SMOTE, com o objetivo de verificar se houve alguma melhora na identificação da classe minoritária. Essa abordagem permitiu uma comparação direta dos resultados, mantendo a consistência metodológica ao longo da análise.
@@ -1343,7 +1357,13 @@ A análise do `classification_report` revelou que, apesar da tentativa de balanc
    macro avg       0.54      0.62      0.54       951
 weighted avg       0.75      0.70      0.71       951
 ```
-**<Análise do Classification Report e SMOTE>**
+Com a aplicação do SMOTE (Synthetic Minority Over-sampling Technique), observamos uma melhora significativa no desempenho da classe minoritária (classe 0 – presencial), que anteriormente havia apresentado resultados praticamente nulos. Neste novo cenário, a classe 0 atinge um recall de 0.43, o que significa que o modelo passou a identificar corretamente uma quantidade considerável de exemplos dessa classe. No entanto, a precision ainda é bastante baixa (0.11), indicando que muitos exemplos previstos como "presencial" na verdade pertencem a outras classes. O f1-score da classe 0 ficou em 0.17, o que ainda é modesto, mas representa um avanço em relação ao modelo anterior sem SMOTE.
+
+As classes 1 (modelo híbrido) e 2 (modelo remoto), que são majoritárias, continuam apresentando bons desempenhos. A classe 1 possui precision de 0.71 e recall de 0.79, enquanto a classe 2 tem precision de 0.80 e recall de 0.63. Isso mostra um pequeno ajuste nas predições, com o modelo sacrificando parte da performance das classes majoritárias para compensar o maior equilíbrio na classificação da classe minoritária. O f1-score geral das classes 1 e 2 permanece robusto (0.75 e 0.71, respectivamente).
+
+O accuracy geral do modelo caiu ligeiramente para 70% (em comparação com 76% no modelo sem SMOTE), mas esse decréscimo é esperado e aceitável diante do ganho de equilíbrio entre as classes. As médias macro de precision e f1-score (0.54) também indicam que o modelo está lidando melhor com a distribuição desigual das classes, refletindo o impacto positivo do SMOTE na justiça do modelo.
+
+Em resumo, a introdução do SMOTE ajudou o modelo Random Forest a reconhecer e considerar melhor a classe "presencial", contribuindo para uma distribuição de erros mais equilibrada entre as classes. Ainda há espaço para melhorias — especialmente na precisão da classe 0 — mas o resultado representa um avanço em termos de representatividade e justiça na predição.
 
 #### Matriz de confusão e SMOTE
 Além disso, a matriz de confusão reforça esse comportamento, evidenciando que a redistribuição dos dados com SMOTE não foi suficiente para corrigir completamente o viés do modelo, embora tenha contribuído levemente para melhorar o reconhecimento da classe minoritária.
@@ -1367,14 +1387,32 @@ Assim como no primeiro modelo, a aplicação do SMOTE no Random Forest resultou 
 
 ![image](https://github.com/user-attachments/assets/526d81bc-0dfc-4b17-a404-4de34a7ec471)
 
-**<Análise da Importância dos atributos e SMOTE>**
+A variável mais influente é “Forma de trabalho atual = Modelo 100% remoto”, seguida por “Forma de trabalho atual = Modelo 100% presencial” e “Decisão da empresa para modelo 100% presencial = Vou procurar outra oportunidade no modelo 100% remoto”. Isso indica que a experiência recente da pessoa com o modelo de trabalho e sua disposição para continuar ou mudar de empresa diante de decisões unilaterais da organização são determinantes importantes no modelo.
+
+A presença da variável “Forma de trabalho atual = Modelo híbrido” também com peso considerável reforça esse padrão: o histórico de trabalho do profissional está diretamente ligado à sua forma de trabalho ideal.
+
+Além disso, variáveis como a decisão de procurar outra oportunidade caso a empresa imponha o retorno presencial e a disposição de aceitar retornar ao modelo presencial também aparecem com destaque, o que mostra que a flexibilidade ou resistência ao trabalho presencial está fortemente associada às preferências futuras.
+
+Entre os fatores sociodemográficos, temos “Cor/Raça = Branca”, “Nível de ensino = Pós-graduação”, “Faixa salarial de R$8.001 a R$12.000” e “Horas com trabalho doméstico e cuidado”, que embora com menor impacto, ainda contribuem para a decisão final do modelo. Isso sugere que características socioeconômicas e contextos pessoais também têm influência, embora secundária, nas preferências de forma de trabalho.
+
+O uso do SMOTE contribuiu para distribuir melhor o peso das variáveis entre as classes, permitindo que o modelo considerasse com mais equilíbrio diferentes perfis de trabalhadores — inclusive aqueles com menor representação na base original, como os que preferem o trabalho 100% presencial. A importância atribuída às variáveis se mostra coerente com os principais fatores que afetam a decisão sobre o modelo ideal de trabalho, destacando tanto aspectos subjetivos (preferência e experiência) quanto estruturais (nível de escolaridade, renda e carga de cuidados).
 
 #### SHAP e SMOTE
 Da mesma forma, a visualização com SHAP indicou que o modelo passou a atribuir maior importância a variáveis associadas à classe minoritária. No entanto, esse comportamento não se traduziu em uma melhoria concreta na performance, já que a matriz de confusão continuou apresentando dificuldades na correta classificação dos casos presenciais, demonstrando que o problema de confusão entre as classes persiste.
 
 ![image](https://github.com/user-attachments/assets/ca1562b0-f1e0-4f53-9142-318193141ad0)
 
-**<Análise do SHAPE e SMOTE>**
+A variável mais influente no modelo é a “Forma de trabalho atual = Modelo 100% remoto”. Ela exerce grande impacto especialmente nas previsões de preferência por modelo remoto e, em menor grau, por modelo híbrido. Isso indica que profissionais que atualmente trabalham de forma totalmente remota tendem a preferir continuar nesse formato ou migrar para um híbrido, demonstrando forte associação entre a experiência atual de trabalho e a preferência futura.
+
+A segunda variável mais importante é a “Decisão da empresa para modelo 100% presencial = Vou procurar outra oportunidade no modelo 100% remoto”. Essa variável representa uma postura de resistência ao retorno obrigatório ao presencial e está fortemente associada a predições de preferência por modelos mais flexíveis. Em outras palavras, o simples fato de uma pessoa indicar que buscaria outro emprego diante de um retorno forçado ao presencial já é um forte indicativo de que ela idealiza o trabalho remoto.
+
+A “Forma de trabalho atual = Modelo 100% presencial” também aparece entre as variáveis de maior importância, estando associada principalmente à previsão de preferência pelo mesmo modelo. Isso reforça a tendência de que muitos profissionais preferem manter a configuração atual de trabalho, talvez por hábito, adaptação ou identificação com o modelo vigente.
+
+Outras variáveis relacionadas às atitudes frente à imposição de retorno ao trabalho 100% presencial — como “vou procurar outra oportunidade no modelo híbrido ou remoto” e “vou aceitar e retornar” — também possuem papel importante. Isso sugere que mais do que o perfil sociodemográfico, o modelo valoriza fortemente a forma como os profissionais se posicionam diante de mudanças nas políticas de trabalho das empresas. A forma de trabalho atual e a reação a cenários hipotéticos são, assim, os elementos mais preditivos das preferências.
+
+Embora fatores como raça/cor, nível de ensino, faixa salarial, gênero, tempo de experiência e responsabilidades domésticas também estejam presentes no modelo, seu impacto é bem menor. Essas variáveis aparecem mais abaixo no ranking de importância, mostrando que, neste contexto, o comportamento e a experiência recente com o trabalho (especialmente a flexibilidade) são muito mais relevantes do que características pessoais.
+
+A análise geral indica que a preferência pela forma ideal de trabalho está fortemente associada à vivência atual e ao desejo de manter a autonomia sobre o modelo adotado. O modelo não se baseia tanto em atributos sociais, mas sim na forma como os indivíduos experienciam e reagem à flexibilização (ou falta dela) no ambiente profissional.
 
 ### Interpretação do modelo 2
 
