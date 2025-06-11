@@ -1046,7 +1046,11 @@ print(classification_report(y_test, y_pred))
 weighted avg       0.77      0.78      0.77       951
 ```
 
-**<Análise>**
+Ao observar o relatório de classificação do modelo treinado fica evidente que há um desempenho bastante desigual entre as classes. A classe 0, que representa o regime presencial, apresentou precision, recall e f1-score igual a 0.00. Isso indica que o modelo não conseguiu identificar corretamente nenhum exemplo real dessa classe no conjunto de teste, o que revela uma séria limitação em lidar com classes minoritárias.
+
+Por outro lado, o modelo teve desempenho mais robusto nas classes mais representadas nos dados. A classe 1 (remoto) alcançou 82% de precisão, ou seja, a maior parte das previsões feitas para essa classe estavam corretas. No entanto, o recall foi de 70%, o que indica que 30% dos exemplos realmente remotos foram classificados como outra classe, principalmente como híbrido. Já a classe 2 (híbrido) teve o melhor desempenho, com recall de 88% e precisão de 76%, demonstrando que o modelo identificou corretamente a maioria dos exemplos dessa classe, embora ainda com alguma confusão.
+
+A acurácia geral do modelo foi de 78%, o que à primeira vista pode parecer um bom resultado. No entanto, esse valor é enganoso, pois reflete principalmente o desempenho sobre as classes majoritárias. As métricas de macro average (média simples entre as classes) ficaram por volta de 0.53, um valor significativamente mais baixo, evidenciando que o modelo falhou em dar atenção equilibrada às três classes. Já as weighted averages (média ponderada pelo número de amostras) ficaram em torno de 0.77-0.78, puxadas para cima pelas classes mais frequentes.
 
 #### Desenvolvimento da Matriz de confusão
 No trecho de código abaixo, a matriz de confusão foi gerada com base nos dados de teste do modelo, utilizando três abordagens: primeiro, a matriz foi exibida em sua forma crua (valores numéricos); em seguida, foi formatada com os nomes das classes da variável alvo para facilitar a interpretação; por fim, utilizamos a função `ConfusionMatrixDisplay` para apresentar a matriz de forma visual, por meio de um gráfico que torna mais intuitiva a identificação dos acertos e erros do modelo.
@@ -1093,7 +1097,12 @@ plt.show()
 ```
 ![image](https://github.com/user-attachments/assets/079d0305-65c0-4295-b793-497df11f8c53)
 
-**<Análise>**
+#### Análise
+O gráfico de importância dos atributos mostra que o modelo de Decision Tree baseava suas decisões fortemente em uma única variável: **“Decisão da empresa para modelo 100% presencial = Vou procurar outra oportunidade no modelo 100% remoto”**, que sozinha responde por mais de 65% da importância atribuída às variáveis do modelo. Isso indica um viés muito forte do modelo em relação a essa informação específica.
+
+A segunda variável mais relevante foi **“Forma de trabalho atual = Modelo 100% remoto”**, mas com uma importância significativamente menor (por volta de 20%). As demais variáveis — como idade, situação contratual, cargo atual, condição de PCD e estado de residência — praticamente não tiveram impacto na construção da árvore, com valores de importância muito baixos.
+
+Esse comportamento sugere que o modelo, sem o balanceamento dos dados, encontrou padrões muito específicos ligados à preferência ou ao histórico de trabalho remoto, e se apoiou quase exclusivamente neles para classificar os dados. Como consequência, ele tende a ignorar outros aspectos relevantes, o que ajuda a explicar o mau desempenho na classificação da classe minoritária (trabalho 100% presencial), como também evidenciado pela matriz de confusão.
 
 #### Visualização com SHAP
 No trecho de código a seguir, aplicamos a biblioteca SHAP para interpretar o modelo de Árvore de decisão e entender a influência de cada variável nas previsões de forma mais transparente. Primeiramente, utilizamos o `LabelEncoder` previamente ajustado para recuperar os nomes reais das classes da variável alvo, armazenando-os na variável `class_names`.
@@ -1110,7 +1119,7 @@ shap.summary_plot(shap_values, X_test, feature_names=vect.get_feature_names_out(
 ```
 ![image](https://github.com/user-attachments/assets/1b0438bb-daca-4cd0-9566-666beb72fd6c)
 
-**<Análise>**
+A variável com maior impacto nos resultados foi a resposta à pergunta "Decisão da empresa para modelo 100% presencial", especificamente a opção "Vou procurar outra oportunidade no modelo 100% remoto". Esse atributo, isoladamente, teve uma influência significativamente superior às demais variáveis, sobretudo na previsão da preferência por modelo 100% remoto. Em segundo lugar em importância, aparece o atributo "Forma de trabalho atual = Modelo 100% remoto", que também teve forte impacto, especialmente para a mesma classe. As demais variáveis — como idade, cargo, situação CLT, gênero, estado onde mora, entre outras — tiveram influência muito reduzida, praticamente irrelevante para o modelo. Além disso, é possível notar que a classe "Modelo 100% presencial" teve participação mínima nas decisões do modelo, o que sugere que, por conta do desbalanceamento dos dados, a árvore teve dificuldade em aprender padrões que levassem a essa predição.
 
 ### Testando o modelo com SMOTE
 Com o objetivo de investigar como o modelo se comportaria em um cenário com dados mais balanceados, aplicamos a técnica SMOTE (Synthetic Minority Over-sampling Technique). Essa técnica é amplamente utilizada para lidar com desequilíbrios entre classes, criando novas amostras sintéticas para as classes minoritárias com base em seus vizinhos mais próximos, em vez de simplesmente replicar exemplos existentes.
