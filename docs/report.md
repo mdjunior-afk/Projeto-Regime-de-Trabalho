@@ -14,8 +14,8 @@
 
 Professores:
 
-** Prof. Hugo de Paula **
-** Prof. Hayala Curto** 
+**Prof. Hugo de Paula**</br>
+**Prof. Hayala Curto** 
 
 ---
 
@@ -1082,24 +1082,27 @@ Acurácia do treinamento: 0.8358881875563571
 Acurácia do teste: 0.7622720897615708
 ```
 ### Resultados com Classification Report
-Nesta etapa, foi incluída uma tabela com o `classification_report`, que fornece métricas detalhadas de desempenho para cada classe do atributo alvo. Esse relatório apresenta valores de **precisão (precision)**, **revocação (recall)**, **f1-score** e **suporte (support)**, permitindo uma análise mais aprofundada de como o modelo está se comportando individualmente em relação a cada classe — especialmente útil para avaliar o impacto do desbalanceamento entre elas.
+Assim como no primeiro modelo, foi aplicado novamente o classification_report com o objetivo de avaliar o desempenho do classificador em relação a cada uma das classes do atributo-alvo, fornecendo métricas como precisão, recall e F1-score.
 ```python
 # Visualização do classification_report
 print(classification_report(y_test, y_pred))
 ```
 ```
- precision    recall  f1-score   support
+            precision    recall  f1-score   support
 
            0       0.00      0.00      0.00        21
-           1       0.81      0.72      0.76       416
-           2       0.77      0.87      0.82       514
+           1       0.78      0.69      0.73       416
+           2       0.75      0.85      0.79       514
 
-    accuracy                           0.78       951
-   macro avg       0.53      0.53      0.53       951
-weighted avg       0.77      0.78      0.77       951
+    accuracy                           0.76       951
+   macro avg       0.51      0.51      0.51       951
+weighted avg       0.75      0.76      0.75       951
 ```
 ### Desenvolvimento da Matriz de Confusão
-No trecho de código abaixo, a matriz de confusão foi gerada com base nos dados de teste do modelo, utilizando três abordagens: primeiro, a matriz foi exibida em sua forma crua (valores numéricos); em seguida, foi formatada com os nomes das classes da variável alvo para facilitar a interpretação; por fim, utilizamos a função `ConfusionMatrixDisplay` para apresentar a matriz de forma visual, por meio de um gráfico que torna mais intuitiva a identificação dos acertos e erros do modelo.
+Além disso, a matriz de confusão foi gerada em três formatos distintos:
+- Como matriz numérica bruta
+- Formatada em um `DataFrame` com os nomes das classes para melhor compreensão,
+- E como uma imagem utilizando `ConfusionMatrixDisplay`, o que facilita ainda mais a interpretação visual dos acertos e erros do modelo.
 ```python
 # Matriz de confusão
 cnf_matrix = confusion_matrix(y_test, y_pred)
@@ -1107,9 +1110,9 @@ print(f'Matriz de confusão: \n{cnf_matrix}')
 ```
 ```
 Matriz de confusão: 
-[[  0   3  18]
- [  0 299 117]
- [  0  67 447]]
+[[  0   2  19]
+ [  0 288 128]
+ [  0  78 436]]
 ```
 ```python
 # Matriz de confusão formatada
@@ -1117,11 +1120,10 @@ df_cnf_matrix = pd.DataFrame(cnf_matrix, index=le.classes_, columns=le.classes_)
 print(f'Matriz de confusão formatada: \n{df_cnf_matrix}')
 ```
 ```
-Matriz de confusão formatada: 
                         Modelo 100% presencial  Modelo 100% remoto  Modelo híbrido
-Modelo 100% presencial                       0                   3   		18
-Modelo 100% remoto                           0                 299  	       117 
-Modelo híbrido                               0                  67   	       447
+Modelo 100% presencial                       0                   2   		19
+Modelo 100% remoto                           0                 288   	       128
+Modelo híbrido                               0                  78   	       436
 ```
 ```python
 # Gerando a matriz como uma imagem
@@ -1130,9 +1132,9 @@ display = ConfusionMatrixDisplay.from_estimator(forest, X_test, y_test, display_
 plt.xticks(rotation=90)
 plt.show()
 ```
-![image](https://github.com/user-attachments/assets/4b793695-dd1b-45a6-b400-dd8f09e1aeb0)
+![image](https://github.com/user-attachments/assets/a7dca242-a007-4b18-be91-63d3b6d0be27)
 ### Importância das variáveis
-No código a seguir, utilizamos o atributo `feature_importances_` do modelo Random Forest para visualizar quais variáveis tiveram maior influência na previsão da variável alvo. Para isso, os valores de importância foram organizados em um objeto `pd.Series`, que é uma estrutura de dados unidimensional do pandas, semelhante a uma lista rotulada, onde cada valor está associado a um índice — neste caso, os nomes das variáveis do conjunto de dados. Em seguida, criamos um gráfico de barras utilizando a biblioteca matplotlib, com o objetivo de facilitar a interpretação visual das importâncias atribuídas a cada atributo pelo modelo.
+Também foi exibida a importância das variáveis por meio do atributo `feature_importances_` do Random Forest. Para isso, utilizamos a função pd.Series para organizar as importâncias de forma ordenada e clara, seguida da plotagem de um gráfico de barras, permitindo visualizar quais atributos mais contribuíram para as decisões do modelo.
 ```python
 importances = forest.feature_importances_
 
@@ -1144,13 +1146,9 @@ series.plot(kind='barh', legend=False)
 plt.title('Importância das variáveis')
 plt.gca().invert_yaxis()
 ```
-![image](https://github.com/user-attachments/assets/f5e6821f-1ca7-4a1c-9977-39ea6a1b5990)
+![image](https://github.com/user-attachments/assets/cf7921a7-dede-45f4-a410-2150fdb5426f)
 ### Visualização com SHAP
-No trecho de código a seguir, aplicamos a biblioteca SHAP para interpretar o modelo Random Forest e entender a influência de cada variável nas previsões de forma mais transparente. Primeiramente, utilizamos o `LabelEncoder` previamente ajustado para recuperar os nomes reais das classes da variável alvo, armazenando-os na variável `class_names`.
-
-Em seguida, criamos um objeto explainer a partir de `shap.TreeExplainer(forest)`, que é uma ferramenta otimizada para interpretar modelos baseados em árvores de decisão, como o Random Forest. Com o explainer, calculamos os valores de SHAP para os dados de teste (`X_test`) por meio da função `shap_values = explainer.shap_values(X_test)`. Esses valores representam, para cada amostra, quanto cada variável contribuiu positiva ou negativamente para a previsão de cada classe.
-
-Por fim, o gráfico gerado com `shap.summary_plot()` apresenta uma visualização em barras `(plot_type='bar')` das variáveis mais importantes para o modelo. O parâmetro `feature_names` insere os nomes originais das variáveis, obtidos do `DictVectorizer`, e o argumento `class_names=class_names` substitui os rótulos genéricos como “Class 0” por nomes reais, tornando a visualização mais legível e interpretável no contexto da pesquisa.
+Por fim, foi utilizado o SHAP (SHapley Additive exPlanations) para gerar uma visualização que destaca a relevância de cada atributo na tomada de decisão do modelo para cada classe. Essa análise fornece uma camada adicional de interpretabilidade, essencial para compreender o impacto de cada variável no comportamento do modelo.
 ```python
 class_names = le.classes_
 
@@ -1158,13 +1156,11 @@ explainer = shap.TreeExplainer(forest)
 shap_values = explainer.shap_values(X_test)
 shap.summary_plot(shap_values, X_test, feature_names=vect.get_feature_names_out(), plot_type='bar', class_names=class_names)
 ```
-![image](https://github.com/user-attachments/assets/88425af9-d316-49a5-94d3-554b9e82ec09)
+![image](https://github.com/user-attachments/assets/6179e5e7-6646-48a9-b6d4-020a827493b2)
 ### Visualização de uma Árvore
 Como uma Random Forest é composta por dezenas ou até centenas de árvores de decisão — neste caso, 100 — não é viável exibir todas elas em uma única visualização, pois isso tornaria a análise extremamente complexa e pouco informativa. Para fins didáticos e de interpretação, optamos por exibir apenas a primeira árvore gerada pelo modelo. Essa abordagem permite visualizar de forma clara e simplificada como o algoritmo realiza as divisões de decisão, oferecendo uma amostra representativa da lógica usada pela floresta para realizar previsões, sem comprometer a legibilidade.
 
-Para isso, utilizamos a função `export_graphviz` da biblioteca `sklearn.tree`, que transforma a estrutura da árvore em um código no formato DOT — uma linguagem de descrição de grafos. Esse código é então processado pela biblioteca pydotplus, que converte o DOT em um gráfico visual. O resultado final é exibido como imagem por meio do `IPython.display.Image`, gerando uma representação clara da primeira árvore da floresta, com os atributos de decisão, valores de divisão, classes previstas e coloração de nós indicando a predominância das classes.
-
-Essa visualização torna mais compreensível o funcionamento interno do modelo e contribui para a interpretação dos critérios adotados nas decisões, mesmo que represente apenas uma fração do comportamento global da Random Forest.
+Para essa visualização, utilizamos o mesmo código aplicado anteriormente na exibição da árvore de decisão, realizando apenas uma pequena modificação: utilizamos forest.estimators_[0] para selecionar a primeira árvore da floresta do modelo Random Forest. Essa abordagem permite visualizar detalhadamente como uma das árvores individuais do conjunto realiza suas divisões, facilitando a compreensão do funcionamento interno do modelo.
 ```python
 import pydotplus
 from sklearn import tree
@@ -1175,7 +1171,7 @@ dot_data = tree.export_graphviz(forest.estimators_[0], out_file=None, feature_na
 graph = pydotplus.graph_from_dot_data(dot_data)
 Image(graph.create_png())
 ```
-![image](https://github.com/user-attachments/assets/f29958fc-345e-4870-8b44-0adc3ccf8962)
+![image](https://github.com/user-attachments/assets/b2bbafe8-94e8-429d-bd7d-303dc114aeda)
 ### Testando o modelo com SMOTE
 Com o objetivo de investigar como o modelo se comportaria em um cenário com dados mais balanceados, aplicamos a técnica SMOTE (Synthetic Minority Over-sampling Technique). Essa técnica é amplamente utilizada para lidar com desequilíbrios entre classes, criando novas amostras sintéticas para as classes minoritárias com base em seus vizinhos mais próximos, em vez de simplesmente replicar exemplos existentes.
 ```python
