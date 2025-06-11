@@ -990,69 +990,19 @@ plt.show()
 y_pred = treeForma.predict(X_test)
 print("Acurácia no teste:", accuracy_score(y_test, y_pred))
 ```
-print(classification_report(y_test, y_pred))
-cnf_matrix = confusion_matrix(y_test, y_pred)
-cnf_table = pd.DataFrame(cnf_matrix, index=[f"Real={c}" for c in le.classes_], columns=[f"Prev={c}" for c in le.classes_])
-print(cnf_table)
-
-display = ConfusionMatrixDisplay.from_estimator(treeForma, X_test, y_test, display_labels=le.classes_, cmap=plt.cm.Blues)
-
-plt.xticks(rotation=90)
-plt.show()
-
-```
-```
-Acurácia no treino: 0.7933820700269334
-Acurácia no teste: 0.7459605026929982
-              precision    recall  f1-score   support
-
-           0       0.14      0.05      0.08        19
-           1       0.74      0.77      0.75       524
-           2       0.76      0.75      0.76       571
-
-    accuracy                           0.75      1114
-   macro avg       0.55      0.52      0.53      1114
-weighted avg       0.74      0.75      0.74      1114
-
-                             Prev=Modelo 100% presencial  \
-Real=Modelo 100% presencial                            1   
-Real=Modelo 100% remoto                                4   
-Real=Modelo híbrido                                    2   
-
-                             Prev=Modelo 100% remoto  Prev=Modelo híbrido  
-Real=Modelo 100% presencial                        3                   15  
-Real=Modelo 100% remoto                          401                  119  
-Real=Modelo híbrido                              140                  429 
-```
-![image](https://github.com/user-attachments/assets/40653726-2954-4eae-9eb9-f171b6958a2e)
-### Exibição da Importância dos Atributos 
+### Exibição da Importância dos Atributos
+No código a seguir, utilizamos o atributo `feature_importances_` do modelo DecisionTreeClassifier para visualizar quais variáveis tiveram maior influência na previsão da variável alvo. Para isso, os valores de importância foram organizados em um objeto `pd.Series`, que é uma estrutura de dados unidimensional do pandas, semelhante a uma lista rotulada, onde cada valor está associado a um índice — neste caso, os nomes das variáveis do conjunto de dados. Em seguida, criamos um gráfico de barras utilizando a biblioteca matplotlib, com o objetivo de facilitar a interpretação visual das importâncias atribuídas a cada atributo pelo modelo.
 ```python
 # Exibir importâncias dos atributos
 importances = pd.Series(treeForma.feature_importances_, index=vect.feature_names_)
 importances = importances[importances > 0].sort_values(ascending=False).head(10)
-print("\nImportância dos atributos:")
-print(importances)
 
-# Visualizar graficamente
+# Gerando o gráfico
 importances.plot(kind='barh', figsize=(10, 6), title='Importância dos Atributos')
 plt.gca().invert_yaxis()
 plt.show()
 ```
-```
-Importância dos atributos:
-Decisão da empresa para modelo 100% presencial=Vou procurar outra oportunidade no modelo 100% remoto    0.542008
-Forma de trabalho atual=Modelo 100% remoto                                                              0.138466
-Idade                                                                                                   0.044985
-Tempo de experiência=de 7 a 10 anos                                                                     0.015375
-Estado onde mora=Rio Grande do Sul (RS)                                                                 0.014193
-Nível=Pleno                                                                                             0.011914
-Situação atual de trabalho=Empregado (CLT)                                                              0.011717
-Decisão da empresa para modelo 100% presencial=Vou aceitar e retornar ao modelo 100% presencial         0.010651
-Estado onde mora=Distrito Federal (DF)                                                                  0.010012
-Cargo atual=Analista de Negócios/Business Analyst                                                       0.009890
-dtype: float64
-```
-![image](https://github.com/user-attachments/assets/3a1a1457-6de5-44cc-bd80-16940ce4c4a0)
+![image](https://github.com/user-attachments/assets/079d0305-65c0-4295-b793-497df11f8c53)
 ### Exibição da Árvore de Decisão
 ```python
 import pydotplus
