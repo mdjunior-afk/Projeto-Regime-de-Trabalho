@@ -1029,63 +1029,57 @@ Image(graph.create_png())
 ```
 ![image](https://github.com/user-attachments/assets/66f9ee69-cf36-4b53-987d-da9514905be0)
 ### Modelo 2: Random Forest
-Optamos por utilizar o algoritmo Random Forest neste trabalho por se tratar de um modelo robusto, eficiente e amplamente utilizado em tarefas de classificação com variáveis categóricas e numéricas. Como nosso objetivo é identificar os fatores que influenciam a escolha do regime de trabalho (presencial, híbrido ou remoto), o Random Forest se mostrou adequado por sua capacidade de lidar com dados heterogêneos, evitar overfitting por meio da combinação de múltiplas árvores de decisão e oferecer métricas de importância das variáveis. Essa última característica é especialmente útil para nosso estudo, pois permite interpretar o peso de cada fator na decisão do regime de trabalho, contribuindo para uma análise mais transparente e fundamentada.
+Para o segundo modelo, optamos por utilizar o Random Forest, que, diferentemente do DecisionTreeClassifier, não se baseia em uma única árvore de decisão, mas sim em um conjunto (ou "floresta") de múltiplas árvores. Enquanto o DecisionTreeClassifier constrói uma única árvore que aprende diretamente com os dados e pode sofrer com overfitting, o Random Forest cria várias árvores de decisão independentes e combina os resultados de todas elas para tomar uma decisão final (geralmente por votação, no caso de classificação). Essa abordagem reduz a variância do modelo, melhora a capacidade de generalização e tende a oferecer resultados mais robustos, especialmente em conjuntos de dados mais complexos ou com ruído.
+
+Os códigos apresentados a seguir seguem a mesma lógica já aplicada ao modelo `DecisionTreeClassifier`. Por esse motivo, a explicação será mais concisa, uma vez que os procedimentos e conceitos envolvidos são semelhantes aos utilizados anteriormente, sendo adaptados apenas ao uso do modelo `RandomForestClassifier`.
 
 ### Gerando base de treinamento e teste
-Nesta etapa, devido à presença de muitas variáveis categóricas no dataset, foi necessário convertê-las para o formato numérico, tornando-as adequadas para o treinamento do modelo Random Forest. Algumas colunas foram removidas antes da transformação, pois serviram como base para a criação de uma nova variável. Especificamente, utilizamos a soma total de roubos registrados para gerar uma nova coluna chamada "Nível de Segurança", que classifica os dados em três categorias: baixo, moderado e alto. Essa classificação foi realizada com o auxílio da função `qcut` do pandas, que divide os valores em faixas com base em quantis.
-
-Além das colunas utilizadas na criação do "Nível de Segurança", também foi removida a coluna TARGET, que representa a variável "forma de trabalho ideal", por se tratar da variável a ser prevista.
-
-Após a exclusão dessas colunas, os dados categóricos restantes foram transformados em dados numéricos com o uso do `DictVectorizer`, ferramenta que converte dicionários de variáveis categóricas em arrays numéricos, mantendo a estrutura necessária para o modelo de machine learning.
+Nesta etapa, foram removidas as colunas que não são relevantes para o treinamento do modelo, incluindo o atributo alvo. Em seguida, utilizando o `DictVectorizer` foi feita a conversão dos dados categóricos restantes para valores numéricos, permitindo que fossem utilizados adequadamente no processo de modelagem.
 ```python
 X_dict = data.drop(columns=['Roubos de veículo', 'Roubos de carro', 'Roubos de moto', 'Roubos de bicicleta', 'Roubos fora do domicílio', 'Total de roubos', 'Forma de trabalho ideal'], axis=1).T.to_dict().values()
 vect = DictVectorizer(sparse=False)
 X = vect.fit_transform(X_dict)
 ```
-Após a transformação das variáveis categóricas, também foi realizada a codificação da variável alvo utilizando o `LabelEncoder`, que converte os rótulos em valores numéricos, tornando-os compatíveis com o modelo de machine learning.
+Nesta etapa, o atributo alvo foi convertido para valores numéricos utilizando o `LabelEncoder`, permitindo que o modelo de machine learning possa interpretá-lo corretamente durante o treinamento e a avaliação.
 ```python
 le = LabelEncoder()
 y = le.fit_transform(data.iloc[:, data.shape[1]-1])
 ```
-Em seguida, os dados foram divididos em conjuntos de treino e teste utilizando a função train_test_split, com **80% dos dados destinados ao treinamento** e **20% ao teste**. Essa proporção foi escolhida com base em experimentos realizados ao longo do desenvolvimento, nos quais essa configuração apresentou os melhores resultados em termos de acurácia.
-
-Além disso, manter essa divisão permite uma comparação justa e consistente com o primeiro modelo desenvolvido.
+Em seguida, os dados foram divididos em 80% para treinamento e 20% para teste, seguindo a mesma lógica adotada no primeiro modelo. Essa padronização na divisão permite uma comparação justa e consistente entre os resultados obtidos por ambos os algoritmos.
 ```python
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 ```
 ### Treinando o Random Forest
-Na etapa de treinamento, o primeiro passo foi a criação do modelo Random Forest com parâmetros definidos. Utilizamos o número padrão de 100 árvores (`n_estimators=100`) e adotamos o critério de entropia para a divisão dos nós. A entropia mede o grau de impureza das amostras em um nó, buscando maximizar o ganho de informação a cada divisão. Apesar de as classes no nosso conjunto de dados estarem desbalanceadas, optamos pela entropia por sua maior sensibilidade na separação de classes minoritárias, o que é relevante para nosso objetivo de compreender os fatores que influenciam todas as formas de trabalho — inclusive aquelas com menor representação.
-
-Além disso, definimos uma profundidade máxima de árvore (`max_depth=8`) para evitar overfitting. Testamos também os valores 5 a 10, mas observamos que profundidades maiores aumentaram a complexidade do modelo e reduziram o desempenho na base de teste. O valor 8 apresentou o melhor equilíbrio entre acurácia e generalização.
+Na etapa de treinamento, seguimos a mesma lógica aplicada ao primeiro modelo, realizando apenas ajustes nos parâmetros específicos do `RandomForestClassifier`. O parâmetro `n_estimators` (número de árvores) foi mantido em 100, valor padrão do algoritmo. Optamos novamente pelo critério de entropia, considerando que nossos dados estão desbalanceados, e buscamos manter a coerência com o modelo anterior. O parâmetro `max_depth` foi definido como `5`. Embora esse valor tenha apresentado um desempenho inferior ao `max_depth=8` em testes com a Random Forest, decidimos mantê-lo para garantir uma base de comparação justa entre os modelos e, assim, avaliar qual abordagem se mostrou mais eficaz para responder à nossa pergunta orientada a dados.
 ```python
-forest = RandomForestClassifier(n_estimators=100, random_state=42, criterion='entropy', max_depth=8)
+forest = RandomForestClassifier(n_estimators=100, random_state=42, criterion='entropy', max_depth=5)
 forest.fit(X_train, y_train)
 print(f'Acurácia do treinamento: {forest.score(X_train, y_train)}')
 ```
-Após o treinamento do modelo, realizamos a etapa de teste utilizando o método `predict` nos dados reservados para validação. O modelo obteve uma acurácia de **82% nos dados de treinamento** e **78% nos dados de teste**, indicando um bom desempenho geral e uma razoável capacidade de generalização. No entanto, embora esses resultados sejam promissores, a análise da matriz de confusão, que será detalhada mais adiante nesta documentação, revela limitações importantes relacionadas à forma como o modelo trata classes menos representadas. Ainda assim, os resultados oferecem uma base relevante e orientada por dados para responder à nossa pergunta de pesquisa, especialmente no que se refere às tendências predominantes.
+Após o treinamento do modelo, realizamos a etapa de predição utilizando os dados de teste. Diferentemente do `DecisionTreeClassifier`, o modelo de Random Forest apresentou um desempenho ligeiramente inferior nos dados de teste, alcançando **78% de acurácia no treinamento** e **76% nos dados de teste**. Apesar dessa leve queda, consideramos que o modelo ainda demonstra uma boa capacidade de aprendizado e generalização. Levando em conta suas limitações e a natureza dos dados, especialmente o desbalanceamento entre as classes, o Random Forest ainda se mostra capaz de oferecer respostas coerentes e relevantes dentro do escopo da nossa análise orientada a dados.
 ```python
 y_pred = forest.predict(X_test)
 print(f'Acurácia do teste: {accuracy_score(y_test, y_pred)}')
 ```
 ```
+Acurácia do treinamento: 0.7856391372961599
+Acurácia do teste: 0.7613038906414301
+```
+#### Outros valores testados
+*test_size=0.2, max_depth=8*
+```
 Acurácia do treinamento: 0.8264071541294056
 Acurácia do teste: 0.7844374342797056
 ```
-#### Outros valores testados
+*test_size=0.3, max_depth=5*
+```
+Acurácia do treinamento: 0.7956116621581004
+Acurácia do teste: 0.7636746143057503
+```
 *test_size=0.3, max_depth=8*
 ```
 Acurácia do treinamento: 0.8358881875563571
 Acurácia do teste: 0.7622720897615708
-```
-*test_size=0.3, max_depth=7*
-```
-Acurácia do treinamento: 0.8169522091974752
-Acurácia do teste: 0.7692847124824684
-```
-*test_size=0.2, max_depth=7*
-```
-Acurácia do treinamento: 0.8211467648605997
-Acurácia do teste: 0.7760252365930599
 ```
 ### Resultados com Classification Report
 Nesta etapa, foi incluída uma tabela com o `classification_report`, que fornece métricas detalhadas de desempenho para cada classe do atributo alvo. Esse relatório apresenta valores de **precisão (precision)**, **revocação (recall)**, **f1-score** e **suporte (support)**, permitindo uma análise mais aprofundada de como o modelo está se comportando individualmente em relação a cada classe — especialmente útil para avaliar o impacto do desbalanceamento entre elas.
