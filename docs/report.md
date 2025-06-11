@@ -877,7 +877,7 @@ A preparação dos dados consiste dos seguintes passos:
 Optamos por utilizar o algoritmo Decision Tree como parte da nossa análise por se tratar de um modelo intuitivo, interpretável e eficaz em tarefas de classificação, especialmente quando se lida com variáveis categóricas e numéricas. Como nosso objetivo é compreender os fatores que influenciam a escolha do regime de trabalho (presencial, híbrido ou remoto), a Decision Tree se mostrou uma escolha valiosa por sua capacidade de representar decisões de forma hierárquica, facilitando a visualização lógica do processo de classificação.
 
 Além disso, esse modelo permite observar quais atributos são priorizados nas decisões ao longo dos ramos da árvore, o que contribui diretamente para a interpretação dos resultados. Embora a Decision Tree possa estar mais sujeita a overfitting em comparação com algoritmos mais complexos, sua simplicidade e transparência tornam-na ideal para análises exploratórias e didáticas, especialmente quando se busca compreender a influência de variáveis específicas em uma decisão. Dessa forma, ela complementa o uso de modelos mais robustos, como o Random Forest, oferecendo uma visão clara e estruturada dos critérios adotados pelo algoritmo.
-### Transformando os dados
+#### Transformando os dados
 Nesta etapa, devido à presença de muitas variáveis categóricas no dataset, foi necessário convertê-las para o formato numérico, tornando-as adequadas para o treinamento do modelo de Árvore de decisão. Algumas colunas foram removidas antes da transformação, pois serviram como base para a criação de uma nova variável. Especificamente, utilizamos a soma total de roubos registrados para gerar uma nova coluna chamada "Nível de Segurança", que classifica os dados em três categorias: baixo, moderado e alto. Essa classificação foi realizada com o auxílio da função `qcut` do pandas, que divide os valores em faixas com base em quantis.
 
 Além das colunas utilizadas na criação do "Nível de Segurança", também foi removida a coluna TARGET, que representa a variável "forma de trabalho ideal", por se tratar da variável a ser prevista.
@@ -899,7 +899,7 @@ Em seguida, os dados foram divididos em conjuntos de treino e teste utilizando a
 # Dividir os dados corretamente
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 ```
-### Indução do Modelo
+#### Indução do Modelo
 Na etapa de treinamento, o primeiro passo foi a criação do modelo `DecisionTreeClassifier` com parâmetros definidos. Adotamos o critério de entropia para a divisão dos nós. A entropia mede o grau de impureza das amostras em um nó, buscando maximizar o ganho de informação a cada divisão. Apesar de as classes no nosso conjunto de dados estarem desbalanceadas, optamos pela entropia por sua maior sensibilidade na separação de classes minoritárias, o que é relevante para nosso objetivo de compreender os fatores que influenciam todas as formas de trabalho — inclusive aquelas com menor representação.
 
 Além disso, definimos uma profundidade máxima de árvore (`max_depth=5`) para evitar overfitting. Testamos também os valores maiores que 5, mas observamos que profundidades maiores aumentaram a complexidade do modelo e reduziram o desempenho na base de teste. O valor 5 apresentou o melhor equilíbrio entre acurácia e generalização.
@@ -919,7 +919,7 @@ print("Acurácia no teste:", accuracy_score(y_test, y_pred))
 Acurácia no treino: 0.7890583903208838
 Acurácia no teste: 0.7812828601472135
 ```
-#### Outros valores testados
+##### Outros valores testados
 *test_size=0.2 & max_depth=7*
 ```
 Acurácia no treino: 0.8037874802735402
@@ -940,7 +940,7 @@ Acurácia no teste: 0.7678821879382889
 Acurácia no treino: 0.7956116621581004
 Acurácia no teste: 0.7433380084151473
 ```
-### Resultados com Classification Report
+#### Resultados com Classification Report
 Nesta etapa, foi incluída uma tabela com o `classification_report`, que fornece métricas detalhadas de desempenho para cada classe do atributo alvo. Esse relatório apresenta valores de **precisão (precision)**, **revocação (recall)**, **f1-score** e **suporte (support)**, permitindo uma análise mais aprofundada de como o modelo está se comportando individualmente em relação a cada classe — especialmente útil para avaliar o impacto do desbalanceamento entre elas.
 ```python
 print(classification_report(y_test, y_pred))
@@ -956,7 +956,7 @@ print(classification_report(y_test, y_pred))
    macro avg       0.53      0.53      0.52       951
 weighted avg       0.77      0.78      0.77       951
 ```
-### Desenvolvimento da Matriz de confusão
+#### Desenvolvimento da Matriz de confusão
 No trecho de código abaixo, a matriz de confusão foi gerada com base nos dados de teste do modelo, utilizando três abordagens: primeiro, a matriz foi exibida em sua forma crua (valores numéricos); em seguida, foi formatada com os nomes das classes da variável alvo para facilitar a interpretação; por fim, utilizamos a função `ConfusionMatrixDisplay` para apresentar a matriz de forma visual, por meio de um gráfico que torna mais intuitiva a identificação dos acertos e erros do modelo.
 ```python
 cnf_matrix = confusion_matrix(y_test, y_pred)
@@ -984,7 +984,7 @@ plt.xticks(rotation=90)
 plt.show()
 ```
 ![image](https://github.com/user-attachments/assets/fdd226ca-ed07-43f1-9006-57fec69149e1)
-### Exibição da Importância dos Atributos
+#### Exibição da Importância dos Atributos
 No código a seguir, utilizamos o atributo `feature_importances_` do modelo `DecisionTreeClassifier` para visualizar quais variáveis tiveram maior influência na previsão da variável alvo. Para isso, os valores de importância foram organizados em um objeto `pd.Series`, que é uma estrutura de dados unidimensional do pandas, semelhante a uma lista rotulada, onde cada valor está associado a um índice — neste caso, os nomes das variáveis do conjunto de dados. Em seguida, criamos um gráfico de barras utilizando a biblioteca matplotlib, com o objetivo de facilitar a interpretação visual das importâncias atribuídas a cada atributo pelo modelo.
 ```python
 # Exibir importâncias dos atributos
@@ -997,7 +997,7 @@ plt.gca().invert_yaxis()
 plt.show()
 ```
 ![image](https://github.com/user-attachments/assets/079d0305-65c0-4295-b793-497df11f8c53)
-### Visualização com SHAP
+#### Visualização com SHAP
 No trecho de código a seguir, aplicamos a biblioteca SHAP para interpretar o modelo de Árvore de decisão e entender a influência de cada variável nas previsões de forma mais transparente. Primeiramente, utilizamos o `LabelEncoder` previamente ajustado para recuperar os nomes reais das classes da variável alvo, armazenando-os na variável `class_names`.
 
 Em seguida, criamos um objeto explainer a partir de `shap.TreeExplainer(treeForma)`, que é uma ferramenta otimizada para interpretar modelos baseados em árvores de decisão, como o `DecisionTreeClassifier`. Com o explainer, calculamos os valores de SHAP para os dados de teste (`X_test`) por meio da função `shap_values = explainer.shap_values(X_test)`. Esses valores representam, para cada amostra, quanto cada variável contribuiu positiva ou negativamente para a previsão de cada classe.
@@ -1011,7 +1011,7 @@ shap_values = explainer.shap_values(X_test)
 shap.summary_plot(shap_values, X_test, feature_names=vect.get_feature_names_out(), plot_type='bar', class_names=class_names)
 ```
 ![image](https://github.com/user-attachments/assets/1b0438bb-daca-4cd0-9566-666beb72fd6c)
-### Exibição da Árvore de Decisão
+#### Exibição da Árvore de Decisão
 Como o modelo utilizado nesta etapa é uma árvore de decisão única (por meio do `DecisionTreeClassifie`), é possível visualizar toda a sua estrutura de forma clara e completa. Essa visualização permite compreender exatamente como o modelo realiza as divisões nos dados, seguindo critérios baseados nos atributos mais relevantes para a tarefa de classificação.
 
 Para gerar essa representação gráfica, utilizamos a função `export_graphviz` da biblioteca `sklearn.tree`, que converte a estrutura da árvore em um código no formato DOT — uma linguagem voltada para a descrição de grafos. Esse código é processado pela biblioteca `pydotplus`, que o transforma em um gráfico visual. Por fim, a imagem é exibida com `IPython.display.Image`, mostrando os nós da árvore com os atributos de decisão, valores de corte, classes previstas e cores que indicam a predominância de cada classe em cada subdivisão.
