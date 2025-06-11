@@ -1076,13 +1076,13 @@ Real=Modelo 100% presencial                            9   			2		    10
 Real=Modelo 100% remoto                               16   		      309		    91
 Real=Modelo híbrido                                   61   		       95		   358
 ```
-![image](https://github.com/user-attachments/assets/fdc42bd2-b7eb-40b7-ab9b-42deefebf201)
+![image](https://github.com/user-attachments/assets/12151bbb-8c0c-4f2b-ae0c-5cc235757837)
 #### Importância dos atributos
-Diferentemente do modelo treinado sem o uso do SMOTE, a análise da importância dos atributos mostrou uma distribuição mais diversificada entre as variáveis, indicando que o modelo passou a considerar um conjunto mais amplo de fatores na previsão da variável alvo. No entanto, apesar dessa maior diversidade, o desempenho do modelo em relação à classe presencial continuou insatisfatório.
+Diferentemente do modelo treinado sem o uso do SMOTE, a análise da importância dos atributos mostrou uma distribuição mais diversificada entre as variáveis, indicando que o modelo passou a considerar um conjunto mais amplo de fatores na previsão da variável alvo.
 
 ![image](https://github.com/user-attachments/assets/6f3bb8eb-f14a-4962-99ff-2fccdfc7f4fc)
 #### SHAP e SMOTE
-No entanto, um aspecto importante a ser destacado foi a distribuição dos valores SHAP, que indicou que algumas variáveis realmente assumiram relevância específica na distinção da classe presencial. Isso demonstra que o modelo conseguiu identificar certos padrões associados a esse regime de trabalho. Contudo, essa relevância atribuída pelos valores SHAP não se traduziu em uma melhora significativa nos resultados práticos, como evidenciado pelo `classification_report` e pela matriz de confusão. Mesmo com o aumento da importância de determinados atributos, a performance da classe presencial permaneceu limitada, com acertos pontuais e uma forte confusão com o modelo híbrido. Isso sugere que, embora o modelo perceba diferenças sutis, essas distinções não são robustas o suficiente para garantir previsões confiáveis para essa classe minoritária.
+Outro aspecto importante a ser destacado foi a distribuição dos valores SHAP, que indicou que algumas variáveis realmente assumiram relevância específica na distinção da classe presencial. Isso demonstra que o modelo conseguiu identificar certos padrões associados a esse regime de trabalho. Contudo, essa relevância atribuída pelos valores SHAP não se traduziu em uma melhora significativa nos resultados práticos, como evidenciado pelo `classification_report` e pela matriz de confusão. Mesmo com o aumento da importância de determinados atributos, a performance da classe presencial permaneceu limitada, com acertos pontuais e uma forte confusão com o modelo híbrido. Isso sugere que, embora o modelo perceba diferenças sutis, essas distinções não são robustas o suficiente para garantir previsões confiáveis para essa classe minoritária.
 
 ![image](https://github.com/user-attachments/assets/7e861286-be5d-4112-b7ac-0c57232685b4)
 ### Modelo 2: Random Forest
@@ -1090,7 +1090,7 @@ Para o segundo modelo, optamos por utilizar o Random Forest, que, diferentemente
 
 Os códigos apresentados a seguir seguem a mesma lógica já aplicada ao modelo `DecisionTreeClassifier`. Por esse motivo, a explicação será mais concisa, uma vez que os procedimentos e conceitos envolvidos são semelhantes aos utilizados anteriormente, sendo adaptados apenas ao uso do modelo `RandomForestClassifier`.
 
-### Gerando base de treinamento e teste
+#### Gerando base de treinamento e teste
 Nesta etapa, foram removidas as colunas que não são relevantes para o treinamento do modelo, incluindo o atributo alvo. Em seguida, utilizando o `DictVectorizer` foi feita a conversão dos dados categóricos restantes para valores numéricos, permitindo que fossem utilizados adequadamente no processo de modelagem.
 ```python
 X_dict = data.drop(columns=['Roubos de veículo', 'Roubos de carro', 'Roubos de moto', 'Roubos de bicicleta', 'Roubos fora do domicílio', 'Total de roubos', 'Forma de trabalho ideal'], axis=1).T.to_dict().values()
@@ -1106,7 +1106,7 @@ Em seguida, os dados foram divididos em 80% para treinamento e 20% para teste, s
 ```python
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 ```
-### Treinando o Random Forest
+#### Treinando o Random Forest
 Na etapa de treinamento, seguimos a mesma lógica aplicada ao primeiro modelo, realizando apenas ajustes nos parâmetros específicos do `RandomForestClassifier`. O parâmetro `n_estimators` (número de árvores) foi mantido em 100, valor padrão do algoritmo. Optamos novamente pelo critério de entropia, considerando que nossos dados estão desbalanceados, e buscamos manter a coerência com o modelo anterior. O parâmetro `max_depth` foi definido como `5`. Embora esse valor tenha apresentado um desempenho inferior ao `max_depth=8` em testes com a Random Forest, decidimos mantê-lo para garantir uma base de comparação justa entre os modelos e, assim, avaliar qual abordagem se mostrou mais eficaz para responder à nossa pergunta orientada a dados.
 ```python
 forest = RandomForestClassifier(n_estimators=100, random_state=42, criterion='entropy', max_depth=5)
@@ -1122,7 +1122,7 @@ print(f'Acurácia do teste: {accuracy_score(y_test, y_pred)}')
 Acurácia do treinamento: 0.7856391372961599
 Acurácia do teste: 0.7613038906414301
 ```
-#### Outros valores testados
+##### Outros valores testados
 *test_size=0.2, max_depth=8*
 ```
 Acurácia do treinamento: 0.8264071541294056
@@ -1138,7 +1138,7 @@ Acurácia do teste: 0.7636746143057503
 Acurácia do treinamento: 0.8358881875563571
 Acurácia do teste: 0.7622720897615708
 ```
-### Resultados com Classification Report
+#### Resultados com Classification Report
 Assim como no primeiro modelo, foi aplicado novamente o classification_report com o objetivo de avaliar o desempenho do classificador em relação a cada uma das classes do atributo-alvo, fornecendo métricas como precisão, recall e F1-score.
 ```python
 # Visualização do classification_report
@@ -1155,7 +1155,7 @@ print(classification_report(y_test, y_pred))
    macro avg       0.51      0.51      0.51       951
 weighted avg       0.75      0.76      0.75       951
 ```
-### Desenvolvimento da Matriz de Confusão
+#### Desenvolvimento da Matriz de Confusão
 Além disso, a matriz de confusão foi gerada em três formatos distintos:
 - Como matriz numérica bruta
 - Formatada em um `DataFrame` com os nomes das classes para melhor compreensão,
@@ -1190,7 +1190,7 @@ plt.xticks(rotation=90)
 plt.show()
 ```
 ![image](https://github.com/user-attachments/assets/a7dca242-a007-4b18-be91-63d3b6d0be27)
-### Importância das variáveis
+#### Importância dos atributos
 Também foi exibida a importância das variáveis por meio do atributo `feature_importances_` do Random Forest. Para isso, utilizamos a função pd.Series para organizar as importâncias de forma ordenada e clara, seguida da plotagem de um gráfico de barras, permitindo visualizar quais atributos mais contribuíram para as decisões do modelo.
 ```python
 importances = forest.feature_importances_
@@ -1204,7 +1204,7 @@ plt.title('Importância das variáveis')
 plt.gca().invert_yaxis()
 ```
 ![image](https://github.com/user-attachments/assets/cf7921a7-dede-45f4-a410-2150fdb5426f)
-### Visualização com SHAP
+#### Visualização com SHAP
 Por fim, foi utilizado o SHAP (SHapley Additive exPlanations) para gerar uma visualização que destaca a relevância de cada atributo na tomada de decisão do modelo para cada classe. Essa análise fornece uma camada adicional de interpretabilidade, essencial para compreender o impacto de cada variável no comportamento do modelo.
 ```python
 class_names = le.classes_
@@ -1214,7 +1214,7 @@ shap_values = explainer.shap_values(X_test)
 shap.summary_plot(shap_values, X_test, feature_names=vect.get_feature_names_out(), plot_type='bar', class_names=class_names)
 ```
 ![image](https://github.com/user-attachments/assets/6179e5e7-6646-48a9-b6d4-020a827493b2)
-### Visualização de uma Árvore
+#### Visualização de uma Árvore
 Como uma Random Forest é composta por dezenas ou até centenas de árvores de decisão — neste caso, 100 — não é viável exibir todas elas em uma única visualização, pois isso tornaria a análise extremamente complexa e pouco informativa. Para fins didáticos e de interpretação, optamos por exibir apenas a primeira árvore gerada pelo modelo. Essa abordagem permite visualizar de forma clara e simplificada como o algoritmo realiza as divisões de decisão, oferecendo uma amostra representativa da lógica usada pela floresta para realizar previsões, sem comprometer a legibilidade.
 
 Para essa visualização, utilizamos o mesmo código aplicado anteriormente na exibição da árvore de decisão, realizando apenas uma pequena modificação: utilizamos forest.estimators_[0] para selecionar a primeira árvore da floresta do modelo Random Forest. Essa abordagem permite visualizar detalhadamente como uma das árvores individuais do conjunto realiza suas divisões, facilitando a compreensão do funcionamento interno do modelo.
@@ -1229,62 +1229,62 @@ graph = pydotplus.graph_from_dot_data(dot_data)
 Image(graph.create_png())
 ```
 ![image](https://github.com/user-attachments/assets/b2bbafe8-94e8-429d-bd7d-303dc114aeda)
-### Testando o modelo com SMOTE
-Com o objetivo de investigar como o modelo se comportaria em um cenário com dados mais balanceados, aplicamos a técnica SMOTE (Synthetic Minority Over-sampling Technique). Essa técnica é amplamente utilizada para lidar com desequilíbrios entre classes, criando novas amostras sintéticas para as classes minoritárias com base em seus vizinhos mais próximos, em vez de simplesmente replicar exemplos existentes.
+#### Testando o modelo com SMOTE
+Aplicamos a mesma sequência de códigos utilizada no primeiro modelo para avaliar o desempenho do modelo após o uso do SMOTE, com o objetivo de verificar se houve alguma melhora na identificação da classe minoritária. Essa abordagem permitiu uma comparação direta dos resultados, mantendo a consistência metodológica ao longo da análise.
 ```python
 print("Antes do SMOTE:", Counter(y_train))
 smt = SMOTE(sampling_strategy='not majority', random_state=42)
 X_train, y_train = smt.fit_resample(X_train, y_train)
 print("Depois do SMOTE:", Counter(y_train))
 ```
-No nosso caso, a classe correspondente ao modelo de trabalho presencial era expressivamente minoritária em comparação às demais. Antes da aplicação do SMOTE, a distribuição era:
 ```
 Antes do SMOTE: Counter({np.int64(2): 2019, np.int64(1): 1708, np.int64(0): 75})
 ```
-Utilizando o parâmetro sampling_strategy='not majority', o SMOTE gerou novas amostras para as classes menos representadas (presencial e remoto), igualando ela ao número de amostras da classe majoritária (modelo híbrido). O resultado foi:
 ```
 Depois do SMOTE: Counter({np.int64(2): 2019, np.int64(1): 2019, np.int64(0): 2019})
 ```
 Esse balanceamento foi aplicado apenas sobre o conjunto de treino, mantendo o conjunto de teste original para garantir uma avaliação realista da capacidade de generalização do modelo.
 
-Após o reequilíbrio, o modelo foi treinado novamente seguindo a mesma configuração anterior. Observamos que a acurácia no **conjunto de treino subiu para 87%**, o que representa um ganho significativo. No entanto, a acurácia no **conjunto de teste caiu para 73%**, indicando uma possível perda de generalização, possivelmente causada pelo aumento de ruído introduzido pelas amostras sintéticas.
+No caso do Random Forest, após a aplicação do SMOTE, observamos um comportamento divergente entre os conjuntos de treino e teste. Embora a acurácia no treinamento tenha aumentado para 81%, indicando que o modelo conseguiu aprender melhor os padrões com os dados balanceados, a acurácia nos dados de teste caiu para 69%. Esse resultado sugere um possível overfitting, no qual o modelo se ajusta excessivamente aos dados de treino, mas perde capacidade de generalização ao lidar com novos dados.
 ```
-Acurácia do treinamento: 0.8705629849760608
-Acurácia do teste: 0.732912723449001
+Acurácia do treinamento: 0.8131087997358428
+Acurácia do teste: 0.6971608832807571
 ```
 #### Classification Report e SMOTE
 A análise do `classification_report` revelou que, apesar da tentativa de balanceamento, a classe minoritária (presencial) ainda apresentou desempenho insatisfatório. Embora tenha havido alguns acertos, os resultados continuam demonstrando forte confusão com a classe híbrida, dificultando a distinção entre esses dois regimes de trabalho.
 ```
-          precision    recall  f1-score   support
+              precision    recall  f1-score   support
 
-           0       0.11      0.19      0.14        21
-           1       0.73      0.77      0.75       416
-           2       0.78      0.73      0.75       514
+           0       0.11      0.43      0.17        21
+           1       0.71      0.79      0.75       416
+           2       0.80      0.63      0.71       514
 
-    accuracy                           0.73       951
-   macro avg       0.54      0.56      0.55       951
-weighted avg       0.75      0.73      0.74       951
+    accuracy                           0.70       951
+   macro avg       0.54      0.62      0.54       951
+weighted avg       0.75      0.70      0.71       951
 ```
 #### Matriz de confusão e SMOTE
 Além disso, a matriz de confusão reforça esse comportamento, evidenciando que a redistribuição dos dados com SMOTE não foi suficiente para corrigir completamente o viés do modelo, embora tenha contribuído levemente para melhorar o reconhecimento da classe minoritária.
 ```
 Matriz de confusão: 
-[[  4   4  13]
- [  7 319  90]
- [ 27 113 374]]
+[[  9   4   8]
+ [ 14 330  72]
+ [ 59 131 324]]
 Matriz de confusão formatada: 
                         Modelo 100% presencial  Modelo 100% remoto  Modelo híbrido
-Modelo 100% presencial                       4                   4              13
-Modelo 100% remoto                           7                 319   		90
-Modelo híbrido                              27                 113   	       374
+Modelo 100% presencial                       9                   4   		 8
+Modelo 100% remoto                          14                 330   		72
+Modelo híbrido                              59                 131   	       324
 ```
-![image](https://github.com/user-attachments/assets/8ea8539d-5ac6-4093-b35a-6f38c7ef5e40)
+![image](https://github.com/user-attachments/assets/3df14cc7-096b-4e03-b6db-89ca9b23e967)
+#### Importância dos atributos
+Assim como no primeiro modelo, a aplicação do SMOTE no Random Forest resultou em uma redistribuição da importância dos atributos, conferindo maior diversidade às variáveis consideradas relevantes pelo modelo. No entanto, essa mudança não foi tão expressiva quanto a observada anteriormente.
 
+![image](https://github.com/user-attachments/assets/526d81bc-0dfc-4b17-a404-4de34a7ec471)
 #### SHAP e SMOTE
-No entanto, um aspecto importante a ser destacado foi a distribuição dos valores SHAP, que indicou que algumas variáveis realmente assumiram relevância específica na distinção da classe presencial. Isso demonstra que o modelo conseguiu identificar certos padrões associados a esse regime de trabalho. Contudo, essa relevância atribuída pelos valores SHAP não se traduziu em uma melhora significativa nos resultados práticos, como evidenciado pelo `classification_report` e pela matriz de confusão. Mesmo com o aumento da importância de determinados atributos, a performance da classe presencial permaneceu limitada, com acertos pontuais e uma forte confusão com o modelo híbrido. Isso sugere que, embora o modelo perceba diferenças sutis, essas distinções não são robustas o suficiente para garantir previsões confiáveis para essa classe minoritária.
+Da mesma forma, a visualização com SHAP indicou que o modelo passou a atribuir maior importância a variáveis associadas à classe minoritária. No entanto, esse comportamento não se traduziu em uma melhoria concreta na performance, já que a matriz de confusão continuou apresentando dificuldades na correta classificação dos casos presenciais, demonstrando que o problema de confusão entre as classes persiste.
 
-![image](https://github.com/user-attachments/assets/64c3345e-68d6-485c-af4e-896a7b4a1634)
-
+![image](https://github.com/user-attachments/assets/ca1562b0-f1e0-4f53-9142-318193141ad0)
 ## Resultados
 
 ### Resultados obtidos com o modelo 1.
