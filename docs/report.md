@@ -1173,9 +1173,11 @@ Em seguida, criamos um objeto explainer a partir de `shap.TreeExplainer(forest)`
 
 Por fim, o gráfico gerado com `shap.summary_plot()` apresenta uma visualização em barras `(plot_type='bar')` das variáveis mais importantes para o modelo. O parâmetro `feature_names` insere os nomes originais das variáveis, obtidos do `DictVectorizer`, e o argumento `class_names=class_names` substitui os rótulos genéricos como “Class 0” por nomes reais, tornando a visualização mais legível e interpretável no contexto da pesquisa.
 ```python
+class_names = le.classes_
+
 explainer = shap.TreeExplainer(forest)
-shap_values = explainer.shap_values(X_test) # Pass the numpy array to shap_values
-shap.summary_plot(shap_values, X_test, feature_names=vect.get_feature_names_out(), plot_type='bar')
+shap_values = explainer.shap_values(X_test)
+shap.summary_plot(shap_values, X_test, feature_names=vect.get_feature_names_out(), plot_type='bar', class_names=class_names)
 ```
 ![image](https://github.com/user-attachments/assets/88425af9-d316-49a5-94d3-554b9e82ec09)
 ### Visualização de uma Árvore
