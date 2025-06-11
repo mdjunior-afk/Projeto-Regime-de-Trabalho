@@ -873,102 +873,105 @@ A preparação dos dados consiste dos seguintes passos:
 
 ## Indução de modelos
 
-### Modelo 1: árvore de decisão
+### Modelo 1: Árvore de decisão
+Optamos por utilizar o algoritmo Decision Tree como parte da nossa análise por se tratar de um modelo intuitivo, interpretável e eficaz em tarefas de classificação, especialmente quando se lida com variáveis categóricas e numéricas. Como nosso objetivo é compreender os fatores que influenciam a escolha do regime de trabalho (presencial, híbrido ou remoto), a Decision Tree se mostrou uma escolha valiosa por sua capacidade de representar decisões de forma hierárquica, facilitando a visualização lógica do processo de classificação.
 
-### Importção de Bibliotecas
-```python
-import pandas as pd
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
-from sklearn.feature_extraction import DictVectorizer
-from sklearn.preprocessing import LabelEncoder
-from sklearn.model_selection import train_test_split
-import matplotlib.pyplot as plt
-```
-### Importação do dataset
-```python
-df = pd.read_csv("dataset_tratado.csv")
-
-print("\nDimensões:", df.shape)
-print("\nCampos:", df.columns)
-print(df.describe())
-```
-```
-Dimensões: (3713, 24)
-
-Campos: Index(['Idade', 'Gênero', 'Cor/Raça', 'Horas com trabalho doméstico e cuidado',
-       'PCD', 'Estado onde mora', 'Região onde mora', 'Roubos de veículo',
-       'Roubos de carro', 'Roubos de moto', 'Roubos de bicicleta',
-       'Roubos fora do domicílio', 'Total de roubos', 'Nivel de segurança',
-       'Nível de ensino', 'Área de formação', 'Situação atual de trabalho',
-       'Cargo atual', 'Nível', 'Faixa salarial', 'Tempo de experiência',
-       'Forma de trabalho atual',
-       'Decisão da empresa para modelo 100% presencial',
-       'Forma de trabalho ideal'],
-      dtype='object')
-             Idade  Horas com trabalho doméstico e cuidado  Roubos de veículo  \
-count  3713.000000                             3713.000000        3713.000000   
-mean     30.887692                               16.787988          68.710477   
-std       6.843938                                0.394420          34.970815   
-min      18.000000                               16.500000          12.000000   
-25%      26.000000                               16.500000          12.000000   
-50%      29.000000                               16.500000          92.000000   
-75%      34.000000                               17.400000          92.000000   
-max      70.000000                               17.400000          92.000000   
-
-       Roubos de carro  Roubos de moto  Roubos de bicicleta  \
-count      3713.000000     3713.000000          3713.000000   
-mean         45.747374       22.914894            16.683275   
-std          26.831917       15.235800             8.925420   
-min           8.000000        3.000000             2.000000   
-25%          10.000000        4.000000             3.000000   
-50%          67.000000       25.000000            23.000000   
-75%          67.000000       25.000000            23.000000   
-max          67.000000       57.000000            23.000000   
-
-       Roubos fora do domicílio  Total de roubos  
-count               3713.000000      3713.000000  
-mean                 422.008080       559.380824  
-std                  212.668114       282.446508  
-min                   74.000000        98.000000  
-25%                   82.000000       107.000000  
-50%                  565.000000       749.000000  
-75%                  565.000000       749.000000  
-max                  565.000000       749.000000 
-```
+Além disso, esse modelo permite observar quais atributos são priorizados nas decisões ao longo dos ramos da árvore, o que contribui diretamente para a interpretação dos resultados. Embora a Decision Tree possa estar mais sujeita a overfitting em comparação com algoritmos mais complexos, sua simplicidade e transparência tornam-na ideal para análises exploratórias e didáticas, especialmente quando se busca compreender a influência de variáveis específicas em uma decisão. Dessa forma, ela complementa o uso de modelos mais robustos, como o Random Forest, oferecendo uma visão clara e estruturada dos critérios adotados pelo algoritmo.
 ### Transformando os dados
+Nesta etapa, devido à presença de muitas variáveis categóricas no dataset, foi necessário convertê-las para o formato numérico, tornando-as adequadas para o treinamento do modelo de Árvore de decisão. Algumas colunas foram removidas antes da transformação, pois serviram como base para a criação de uma nova variável. Especificamente, utilizamos a soma total de roubos registrados para gerar uma nova coluna chamada "Nível de Segurança", que classifica os dados em três categorias: baixo, moderado e alto. Essa classificação foi realizada com o auxílio da função `qcut` do pandas, que divide os valores em faixas com base em quantis.
+
+Além das colunas utilizadas na criação do "Nível de Segurança", também foi removida a coluna TARGET, que representa a variável "forma de trabalho ideal", por se tratar da variável a ser prevista.
+
+Após a exclusão dessas colunas, os dados categóricos restantes foram transformados em dados numéricos com o uso do `DictVectorizer`, ferramenta que converte dicionários de variáveis categóricas em arrays numéricos, mantendo a estrutura necessária para o modelo de machine learning.
 ```python
 # Separar variáveis independentes e alvo
 X_dict = df.drop(columns=['Roubos de veículo', 'Roubos de carro', 'Roubos de moto', 'Roubos de bicicleta', 'Roubos fora do domicílio', 'Total de roubos', 'Forma de trabalho ideal']).to_dict(orient='records')
 vect = DictVectorizer(sparse=False)
 X = vect.fit_transform(X_dict)
-
+```
+Após a transformação das variáveis categóricas, também foi realizada a codificação da variável alvo utilizando o `LabelEncoder`, que converte os rótulos em valores numéricos, tornando-os compatíveis com o modelo de machine learning.
+```python
 le = LabelEncoder()
 y = le.fit_transform(df['Forma de trabalho ideal'])
-
+```
+Em seguida, os dados foram divididos em conjuntos de treino e teste utilizando a função train_test_split, com **80% dos dados destinados ao treinamento** e **20% ao teste**. Essa proporção foi escolhida com base em experimentos realizados ao longo do desenvolvimento, nos quais essa configuração apresentou os melhores resultados em termos de acurácia.
+```python
 # Dividir os dados corretamente
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-
-print("Shape dos dados de treino:", X_train.shape)
-print("Shape dos dados de teste:", X_test.shape)
-```
-```
-Shape dos dados de treino: (2599, 117)
-Shape dos dados de teste: (1114, 117)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 ```
 ### Indução do Modelo
-```python
-from sklearn.metrics import ConfusionMatrixDisplay
-from matplotlib import pyplot as plt
+Na etapa de treinamento, o primeiro passo foi a criação do modelo Random Forest com parâmetros definidos. Adotamos o critério de entropia para a divisão dos nós. A entropia mede o grau de impureza das amostras em um nó, buscando maximizar o ganho de informação a cada divisão. Apesar de as classes no nosso conjunto de dados estarem desbalanceadas, optamos pela entropia por sua maior sensibilidade na separação de classes minoritárias, o que é relevante para nosso objetivo de compreender os fatores que influenciam todas as formas de trabalho — inclusive aquelas com menor representação.
 
+Além disso, definimos uma profundidade máxima de árvore (`max_depth=5`) para evitar overfitting. Testamos também os valores maiores que 5, mas observamos que profundidades maiores aumentaram a complexidade do modelo e reduziram o desempenho na base de teste. O valor 5 apresentou o melhor equilíbrio entre acurácia e generalização.
+```python
 # Definir modelo com limitação de profundidade e folhas mínimas
-treeForma = DecisionTreeClassifier(random_state=42, criterion='entropy', max_depth=7)
+treeForma = DecisionTreeClassifier(random_state=42, criterion='entropy', max_depth=5)
 treeForma.fit(X_train, y_train)
 print("Acurácia no treino:", treeForma.score(X_train, y_train))
-
+```
+Após o treinamento do modelo, realizamos a etapa de teste utilizando o método `predict` nos dados reservados para validação. O modelo obteve uma acurácia de **78% em ambos os casos, com pequenas diferenças, indicando um bom desempenho geral e uma razoável capacidade de generalização. No entanto, embora esses resultados sejam promissores, a análise da matriz de confusão, que será detalhada mais adiante nesta documentação, revela limitações importantes relacionadas à forma como o modelo trata classes menos representadas. Ainda assim, os resultados oferecem uma base relevante e orientada por dados para responder à nossa pergunta de pesquisa, especialmente no que se refere às tendências predominantes.
+```python
 # Avaliação no conjunto de teste
 y_pred = treeForma.predict(X_test)
 print("Acurácia no teste:", accuracy_score(y_test, y_pred))
+```
+```
+Acurácia no treino: 0.7890583903208838
+Acurácia no teste: 0.7812828601472135
+```
+**Outros valores testados**
+*test_size=0.2 & max_depth=7*
+```
+Acurácia no treino: 0.8037874802735402
+Acurácia no teste: 0.7539432176656151
+```
+*test_size=0.2 & max_depth=9*
+```
+Acurácia no treino: 0.8271962125197264
+Acurácia no teste: 0.7371188222923238
+```
+*test_size=0.3 & max_depth=5*
+```
+Acurácia no treino: 0.7868951006913135
+Acurácia no teste: 0.7678821879382889
+```
+*test_size=0.3 & max_depth=7*
+```
+Acurácia no treino: 0.7956116621581004
+Acurácia no teste: 0.7433380084151473
+```
+### Resultados com Classification Report
+Nesta etapa, foi incluída uma tabela com o `classification_report`, que fornece métricas detalhadas de desempenho para cada classe do atributo alvo. Esse relatório apresenta valores de **precisão (precision)**, **revocação (recall)**, **f1-score** e **suporte (support)**, permitindo uma análise mais aprofundada de como o modelo está se comportando individualmente em relação a cada classe — especialmente útil para avaliar o impacto do desbalanceamento entre elas.
+```python
+print(classification_report(y_test, y_pred))
+```
+```
+              precision    recall  f1-score   support
+
+           0       0.00      0.00      0.00        21
+           1       0.82      0.70      0.75       416
+           2       0.76      0.88      0.81       514
+
+    accuracy                           0.78       951
+   macro avg       0.53      0.53      0.52       951
+weighted avg       0.77      0.78      0.77       951
+```
+```python
+cnf_matrix = confusion_matrix(y_test, y_pred)
+cnf_table = pd.DataFrame(cnf_matrix, index=[f"Real={c}" for c in le.classes_], columns=[f"Prev={c}" for c in le.classes_])
+print(cnf_table)
+```
+display = ConfusionMatrixDisplay.from_estimator(treeForma, X_test, y_test, display_labels=le.classes_, cmap=plt.cm.Blues)
+
+plt.xticks(rotation=90)
+plt.show()
+
+```
+```python
+# Avaliação no conjunto de teste
+y_pred = treeForma.predict(X_test)
+print("Acurácia no teste:", accuracy_score(y_test, y_pred))
+```
 print(classification_report(y_test, y_pred))
 cnf_matrix = confusion_matrix(y_test, y_pred)
 cnf_table = pd.DataFrame(cnf_matrix, index=[f"Real={c}" for c in le.classes_], columns=[f"Prev={c}" for c in le.classes_])
@@ -978,6 +981,7 @@ display = ConfusionMatrixDisplay.from_estimator(treeForma, X_test, y_test, displ
 
 plt.xticks(rotation=90)
 plt.show()
+
 ```
 ```
 Acurácia no treino: 0.7933820700269334
@@ -1064,14 +1068,14 @@ y = le.fit_transform(data.iloc[:, data.shape[1]-1])
 ```
 Em seguida, os dados foram divididos em conjuntos de treino e teste utilizando a função train_test_split, com **80% dos dados destinados ao treinamento** e **20% ao teste**. Essa proporção foi escolhida com base em experimentos realizados ao longo do desenvolvimento, nos quais essa configuração apresentou os melhores resultados em termos de acurácia.
 
-Além disso, manter essa divisão permite uma comparação justa e consistente com o primeiro modelo desenvolvido. A seguir, são apresentados alguns exemplos de outras proporções testadas durante o processo:
+Além disso, manter essa divisão permite uma comparação justa e consistente com o primeiro modelo desenvolvido.
 ```python
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 ```
 ### Treinando o Random Forest
 Na etapa de treinamento, o primeiro passo foi a criação do modelo Random Forest com parâmetros definidos. Utilizamos o número padrão de 100 árvores (`n_estimators=100`) e adotamos o critério de entropia para a divisão dos nós. A entropia mede o grau de impureza das amostras em um nó, buscando maximizar o ganho de informação a cada divisão. Apesar de as classes no nosso conjunto de dados estarem desbalanceadas, optamos pela entropia por sua maior sensibilidade na separação de classes minoritárias, o que é relevante para nosso objetivo de compreender os fatores que influenciam todas as formas de trabalho — inclusive aquelas com menor representação.
 
-Além disso, definimos uma profundidade máxima de árvore (`max_depth=7`) para evitar overfitting. Testamos também os valores 5 a 10, mas observamos que profundidades maiores aumentaram a complexidade do modelo e reduziram o desempenho na base de teste. O valor 8 apresentou o melhor equilíbrio entre acurácia e generalização.
+Além disso, definimos uma profundidade máxima de árvore (`max_depth=8`) para evitar overfitting. Testamos também os valores 5 a 10, mas observamos que profundidades maiores aumentaram a complexidade do modelo e reduziram o desempenho na base de teste. O valor 8 apresentou o melhor equilíbrio entre acurácia e generalização.
 ```python
 forest = RandomForestClassifier(n_estimators=100, random_state=42, criterion='entropy', max_depth=8)
 forest.fit(X_train, y_train)
