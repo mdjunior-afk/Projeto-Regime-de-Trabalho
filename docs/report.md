@@ -1097,7 +1097,6 @@ plt.show()
 ```
 ![image](https://github.com/user-attachments/assets/079d0305-65c0-4295-b793-497df11f8c53)
 
-#### Análise
 O gráfico de importância dos atributos mostra que o modelo de Decision Tree baseava suas decisões fortemente em uma única variável: **“Decisão da empresa para modelo 100% presencial = Vou procurar outra oportunidade no modelo 100% remoto”**, que sozinha responde por mais de 65% da importância atribuída às variáveis do modelo. Isso indica um viés muito forte do modelo em relação a essa informação específica.
 
 A segunda variável mais relevante foi **“Forma de trabalho atual = Modelo 100% remoto”**, mas com uma importância significativamente menor (por volta de 20%). As demais variáveis — como idade, situação contratual, cargo atual, condição de PCD e estado de residência — praticamente não tiveram impacto na construção da árvore, com valores de importância muito baixos.
@@ -1158,7 +1157,11 @@ A análise do `classification_report` revelou que, apesar da tentativa de balanc
 weighted avg       0.76      0.71      0.73       951
 ```
 
-**<Análise>**
+Observa-se que houve uma melhora na capacidade do modelo em considerar as classes minoritárias, embora ainda existam limitações. A classe 0, que representa a menor quantidade de exemplos originalmente, apresentou um recall de 0.43, o que indica que 43% das amostras reais dessa classe foram corretamente identificadas pelo modelo. No entanto, sua precision permaneceu baixa (0.10), o que sugere que, embora mais instâncias dessa classe estejam sendo reconhecidas, muitas previsões feitas como sendo da classe 0 estão incorretas. Isso impacta diretamente o seu f1-score, que ficou em 0.17. 
+
+Por outro lado, as classes 1 e 2 tiveram bons desempenhos, com precision, recall e f1-score em torno de 0.74 a 0.78, refletindo a maior quantidade de dados disponíveis e um impacto positivo do balanceamento em manter a estabilidade dessas previsões. A acurácia geral do modelo foi de 71%, mas a média macro dos escores (macro avg), que trata todas as classes com o mesmo peso, mostra um valor inferior (0.55), revelando que ainda há um desequilíbrio no tratamento das diferentes classes. Já a média ponderada (weighted avg), que leva em conta o número de amostras por classe, ficou próxima da acurácia total, em 0.73, o que reforça que o desempenho do modelo é majoritariamente sustentado pelas classes com maior representatividade. 
+
+Em resumo, o uso do SMOTE trouxe ganhos ao permitir que o modelo reconhecesse melhor a classe 0, mas ainda é evidente que o desempenho para essa classe está aquém do ideal, exigindo possíveis ajustes no modelo ou na abordagem de balanceamento.
 
 #### Matriz de confusão e SMOTE
 Além disso, a matriz de confusão reforça esse comportamento, evidenciando que a redistribuição dos dados com SMOTE não foi suficiente para corrigir completamente o viés do modelo, embora tenha contribuído levemente para melhorar o reconhecimento da classe minoritária.
@@ -1181,14 +1184,20 @@ Diferentemente do modelo treinado sem o uso do SMOTE, a análise da importância
 
 ![image](https://github.com/user-attachments/assets/6f3bb8eb-f14a-4962-99ff-2fccdfc7f4fc)
 
-**<Análise>**
+A análise da importância dos atributos no modelo Decision Tree revela que a variável mais relevante para a previsão da forma de trabalho ideal é a forma de trabalho atual, especialmente quando se trata do modelo 100% remoto, que apresenta o maior peso entre todos os atributos. Em seguida, a forma de trabalho atual como modelo híbrido e a intenção de procurar outra oportunidade caso a empresa adote o modelo 100% presencial (especificamente migrando para o trabalho remoto) também exercem forte influência na classificação. A forma de trabalho atual 100% presencial aparece em quarto lugar em importância, ainda que com impacto bem menor. A variável cor/raça (no caso, branca) e a área de formação na computação ou tecnologia também aparecem como influenciadoras, embora com peso mais discreto. Outras variáveis, como a decisão de mudar de empresa se a forma de trabalho for presencial, o tipo de cargo atual e a faixa salarial mais elevada, apresentam importâncias relativamente baixas, indicando menor contribuição para a decisão do modelo. Esses resultados reforçam a ideia de que as experiências e preferências atuais dos profissionais com relação ao modelo de trabalho exercem papel central na definição do que consideram ideal, enquanto características sociodemográficas ou ocupacionais específicas têm influência mais limitada.
 
 #### SHAP e SMOTE
 Outro aspecto importante a ser destacado foi a distribuição dos valores SHAP, que indicou que algumas variáveis realmente assumiram relevância específica na distinção da classe presencial. Isso demonstra que o modelo conseguiu identificar certos padrões associados a esse regime de trabalho. Contudo, essa relevância atribuída pelos valores SHAP não se traduziu em uma melhora significativa nos resultados práticos, como evidenciado pelo `classification_report` e pela matriz de confusão. Mesmo com o aumento da importância de determinados atributos, a performance da classe presencial permaneceu limitada, com acertos pontuais e uma forte confusão com o modelo híbrido. Isso sugere que, embora o modelo perceba diferenças sutis, essas distinções não são robustas o suficiente para garantir previsões confiáveis para essa classe minoritária.
 
 ![image](https://github.com/user-attachments/assets/7e861286-be5d-4112-b7ac-0c57232685b4)
 
-**<Análise>**
+O gráfico mostra o impacto médio de cada variável nas três classes previstas pelo modelo: “modelo 100% presencial”, “modelo 100% remoto” e “modelo híbrido”. Os resultados indicam que as experiências profissionais anteriores e as decisões relacionadas ao modelo de trabalho adotado pela empresa são os principais determinantes das preferências individuais.
+
+Para os respondentes classificados como preferindo o modelo 100% presencial, o fator que mais influenciou negativamente foi o fato de já trabalharem no modelo 100% remoto. Isso sugere que quem já atua remotamente tem menor propensão a considerar o modelo presencial como ideal, o que é coerente com a hipótese de que a vivência em um modelo influencia a preferência futura. Além disso, a declaração de que buscariam outra oportunidade caso a empresa adotasse o modelo 100% presencial também teve um peso considerável, reforçando a ideia de rejeição ao formato exclusivamente presencial.
+
+No caso daqueles classificados como preferindo o modelo 100% remoto, os atributos mais influentes foram o fato de já estarem inseridos em modelos de trabalho remoto ou híbrido, bem como a disposição de procurar outra vaga caso fossem obrigados a trabalhar presencialmente. A experiência prévia com modelos flexíveis de trabalho parece, portanto, reforçar o desejo de mantê-los. Já para os que preferem o modelo híbrido, o padrão se repete: a principal variável foi o fato de já trabalharem em um formato híbrido, seguido da resistência ao retorno completo ao presencial. Isso reforça a noção de que o histórico profissional recente molda diretamente as expectativas e preferências dos profissionais.
+
+Em contraste, características demográficas e socioeconômicas como raça, gênero, faixa salarial, tempo de experiência, idade, e até mesmo o tempo dedicado a cuidados domésticos, tiveram influência bastante reduzida no modelo. Isso sugere que a preferência pela forma de trabalho ideal é explicada muito mais pelas vivências profissionais atuais e pelas percepções sobre decisões das empresas, do que por fatores estruturais como renda, cor ou gênero.
 
 ### Interpretação do Modelo 1
 
