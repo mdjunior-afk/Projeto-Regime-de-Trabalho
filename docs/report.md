@@ -1062,7 +1062,7 @@ Após a transformação das variáveis categóricas, também foi realizada a cod
 le = LabelEncoder()
 y = le.fit_transform(data.iloc[:, data.shape[1]-1])
 ```
-Em seguida, os dados foram divididos em conjuntos de treino e teste utilizando a função train_test_split, com 80% dos dados destinados ao treinamento e 20% ao teste. Essa proporção foi escolhida com base em experimentos realizados ao longo do desenvolvimento, nos quais essa configuração apresentou os melhores resultados em termos de acurácia.
+Em seguida, os dados foram divididos em conjuntos de treino e teste utilizando a função train_test_split, com **80% dos dados destinados ao treinamento** e **20% ao teste**. Essa proporção foi escolhida com base em experimentos realizados ao longo do desenvolvimento, nos quais essa configuração apresentou os melhores resultados em termos de acurácia.
 
 Além disso, manter essa divisão permite uma comparação justa e consistente com o primeiro modelo desenvolvido. A seguir, são apresentados alguns exemplos de outras proporções testadas durante o processo:
 ```python
@@ -1071,7 +1071,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 ### Treinando o Random Forest
 Na etapa de treinamento, o primeiro passo foi a criação do modelo Random Forest com parâmetros definidos. Utilizamos o número padrão de 100 árvores (`n_estimators=100`) e adotamos o critério de entropia para a divisão dos nós. A entropia mede o grau de impureza das amostras em um nó, buscando maximizar o ganho de informação a cada divisão. Apesar de as classes no nosso conjunto de dados estarem desbalanceadas, optamos pela entropia por sua maior sensibilidade na separação de classes minoritárias, o que é relevante para nosso objetivo de compreender os fatores que influenciam todas as formas de trabalho — inclusive aquelas com menor representação.
 
-Além disso, definimos uma profundidade máxima de árvore (`max_depth=7`) para evitar overfitting. Testamos também os valores 5 a 10, mas observamos que profundidades maiores aumentaram a complexidade do modelo e reduziram o desempenho na base de teste. O valor 7 apresentou o melhor equilíbrio entre acurácia e generalização.
+Além disso, definimos uma profundidade máxima de árvore (`max_depth=7`) para evitar overfitting. Testamos também os valores 5 a 10, mas observamos que profundidades maiores aumentaram a complexidade do modelo e reduziram o desempenho na base de teste. O valor 8 apresentou o melhor equilíbrio entre acurácia e generalização.
 ```python
 forest = RandomForestClassifier(n_estimators=100, random_state=42, criterion='entropy', max_depth=8)
 forest.fit(X_train, y_train)
@@ -1195,6 +1195,61 @@ graph = pydotplus.graph_from_dot_data(dot_data)
 Image(graph.create_png())
 ```
 ![image](https://github.com/user-attachments/assets/f29958fc-345e-4870-8b44-0adc3ccf8962)
+### Testando o modelo com SMOTE
+Com o objetivo de investigar como o modelo se comportaria em um cenário com dados mais balanceados, aplicamos a técnica SMOTE (Synthetic Minority Over-sampling Technique). Essa técnica é amplamente utilizada para lidar com desequilíbrios entre classes, criando novas amostras sintéticas para as classes minoritárias com base em seus vizinhos mais próximos, em vez de simplesmente replicar exemplos existentes.
+```python
+print("Antes do SMOTE:", Counter(y_train))
+smt = SMOTE(sampling_strategy='not majority', random_state=42)
+X_train, y_train = smt.fit_resample(X_train, y_train)
+print("Depois do SMOTE:", Counter(y_train))
+```
+No nosso caso, a classe correspondente ao modelo de trabalho presencial era expressivamente minoritária em comparação às demais. Antes da aplicação do SMOTE, a distribuição era:
+```
+Antes do SMOTE: Counter({np.int64(2): 2019, np.int64(1): 1708, np.int64(0): 75})
+```
+Utilizando o parâmetro sampling_strategy='not majority', o SMOTE gerou novas amostras para as classes menos representadas (presencial e remoto), igualando ela ao número de amostras da classe majoritária (modelo híbrido). O resultado foi:
+```
+Depois do SMOTE: Counter({np.int64(2): 2019, np.int64(1): 2019, np.int64(0): 2019})
+```
+Esse balanceamento foi aplicado apenas sobre o conjunto de treino, mantendo o conjunto de teste original para garantir uma avaliação realista da capacidade de generalização do modelo.
+
+Após o reequilíbrio, o modelo foi treinado novamente seguindo a mesma configuração anterior. Observamos que a acurácia no **conjunto de treino subiu para 87%**, o que representa um ganho significativo. No entanto, a acurácia no **conjunto de teste caiu para 73%**, indicando uma possível perda de generalização, possivelmente causada pelo aumento de ruído introduzido pelas amostras sintéticas.
+```
+Acurácia do treinamento: 0.8705629849760608
+Acurácia do teste: 0.732912723449001
+```
+#### Classification Report e SMOTE
+A análise do `classification_report` revelou que, apesar da tentativa de balanceamento, a classe minoritária (presencial) ainda apresentou desempenho insatisfatório. Embora tenha havido alguns acertos, os resultados continuam demonstrando forte confusão com a classe híbrida, dificultando a distinção entre esses dois regimes de trabalho.
+```
+          precision    recall  f1-score   support
+
+           0       0.11      0.19      0.14        21
+           1       0.73      0.77      0.75       416
+           2       0.78      0.73      0.75       514
+
+    accuracy                           0.73       951
+   macro avg       0.54      0.56      0.55       951
+weighted avg       0.75      0.73      0.74       951
+```
+#### Matriz de confusão e SMOTE
+Além disso, a matriz de confusão reforça esse comportamento, evidenciando que a redistribuição dos dados com SMOTE não foi suficiente para corrigir completamente o viés do modelo, embora tenha contribuído levemente para melhorar o reconhecimento da classe minoritária.
+```
+Matriz de confusão: 
+[[  4   4  13]
+ [  7 319  90]
+ [ 27 113 374]]
+Matriz de confusão formatada: 
+                        Modelo 100% presencial  Modelo 100% remoto  Modelo híbrido
+Modelo 100% presencial                       4                   4              13
+Modelo 100% remoto                           7                 319   		90
+Modelo híbrido                              27                 113   	       374
+```
+![image](https://github.com/user-attachments/assets/8ea8539d-5ac6-4093-b35a-6f38c7ef5e40)
+
+#### SHAP e SMOTE
+No entanto, um aspecto importante a ser destacado foi a distribuição dos valores SHAP, que indicou que algumas variáveis realmente assumiram relevância específica na distinção da classe presencial. Isso demonstra que o modelo conseguiu identificar certos padrões associados a esse regime de trabalho. Contudo, essa relevância atribuída pelos valores SHAP não se traduziu em uma melhora significativa nos resultados práticos, como evidenciado pelo `classification_report` e pela matriz de confusão. Mesmo com o aumento da importância de determinados atributos, a performance da classe presencial permaneceu limitada, com acertos pontuais e uma forte confusão com o modelo híbrido. Isso sugere que, embora o modelo perceba diferenças sutis, essas distinções não são robustas o suficiente para garantir previsões confiáveis para essa classe minoritária.
+
+![image](https://github.com/user-attachments/assets/64c3345e-68d6-485c-af4e-896a7b4a1634)
 
 ## Resultados
 
