@@ -1045,6 +1045,9 @@ print(classification_report(y_test, y_pred))
    macro avg       0.53      0.53      0.52       951
 weighted avg       0.77      0.78      0.77       951
 ```
+
+**<Análise>**
+
 #### Desenvolvimento da Matriz de confusão
 No trecho de código abaixo, a matriz de confusão foi gerada com base nos dados de teste do modelo, utilizando três abordagens: primeiro, a matriz foi exibida em sua forma crua (valores numéricos); em seguida, foi formatada com os nomes das classes da variável alvo para facilitar a interpretação; por fim, utilizamos a função `ConfusionMatrixDisplay` para apresentar a matriz de forma visual, por meio de um gráfico que torna mais intuitiva a identificação dos acertos e erros do modelo.
 ```python
@@ -1073,6 +1076,9 @@ plt.xticks(rotation=90)
 plt.show()
 ```
 ![image](https://github.com/user-attachments/assets/fdd226ca-ed07-43f1-9006-57fec69149e1)
+
+**<Análise>**
+
 #### Exibição da Importância dos Atributos
 No código a seguir, utilizamos o atributo `feature_importances_` do modelo `DecisionTreeClassifier` para visualizar quais variáveis tiveram maior influência na previsão da variável alvo. Para isso, os valores de importância foram organizados em um objeto `pd.Series`, que é uma estrutura de dados unidimensional do pandas, semelhante a uma lista rotulada, onde cada valor está associado a um índice — neste caso, os nomes das variáveis do conjunto de dados. Em seguida, criamos um gráfico de barras utilizando a biblioteca matplotlib, com o objetivo de facilitar a interpretação visual das importâncias atribuídas a cada atributo pelo modelo.
 ```python
@@ -1086,6 +1092,9 @@ plt.gca().invert_yaxis()
 plt.show()
 ```
 ![image](https://github.com/user-attachments/assets/079d0305-65c0-4295-b793-497df11f8c53)
+
+**<Análise>**
+
 #### Visualização com SHAP
 No trecho de código a seguir, aplicamos a biblioteca SHAP para interpretar o modelo de Árvore de decisão e entender a influência de cada variável nas previsões de forma mais transparente. Primeiramente, utilizamos o `LabelEncoder` previamente ajustado para recuperar os nomes reais das classes da variável alvo, armazenando-os na variável `class_names`.
 
@@ -1100,6 +1109,8 @@ shap_values = explainer.shap_values(X_test)
 shap.summary_plot(shap_values, X_test, feature_names=vect.get_feature_names_out(), plot_type='bar', class_names=class_names)
 ```
 ![image](https://github.com/user-attachments/assets/1b0438bb-daca-4cd0-9566-666beb72fd6c)
+
+**<Análise>**
 
 ### Testando o modelo com SMOTE
 Com o objetivo de investigar como o modelo se comportaria em um cenário com dados mais balanceados, aplicamos a técnica SMOTE (Synthetic Minority Over-sampling Technique). Essa técnica é amplamente utilizada para lidar com desequilíbrios entre classes, criando novas amostras sintéticas para as classes minoritárias com base em seus vizinhos mais próximos, em vez de simplesmente replicar exemplos existentes.
@@ -1137,6 +1148,9 @@ A análise do `classification_report` revelou que, apesar da tentativa de balanc
    macro avg       0.55      0.62      0.55       951
 weighted avg       0.76      0.71      0.73       951
 ```
+
+**<Análise>**
+
 #### Matriz de confusão e SMOTE
 Além disso, a matriz de confusão reforça esse comportamento, evidenciando que a redistribuição dos dados com SMOTE não foi suficiente para corrigir completamente o viés do modelo, embora tenha contribuído levemente para melhorar o reconhecimento da classe minoritária.
 ```
@@ -1150,14 +1164,22 @@ Real=Modelo 100% remoto                               16   		      309		    91
 Real=Modelo híbrido                                   61   		       95		   358
 ```
 ![image](https://github.com/user-attachments/assets/12151bbb-8c0c-4f2b-ae0c-5cc235757837)
+
+**<Análise>**
+
 #### Importância dos atributos
 Diferentemente do modelo treinado sem o uso do SMOTE, a análise da importância dos atributos mostrou uma distribuição mais diversificada entre as variáveis, indicando que o modelo passou a considerar um conjunto mais amplo de fatores na previsão da variável alvo.
 
 ![image](https://github.com/user-attachments/assets/6f3bb8eb-f14a-4962-99ff-2fccdfc7f4fc)
+
+**<Análise>**
+
 #### SHAP e SMOTE
 Outro aspecto importante a ser destacado foi a distribuição dos valores SHAP, que indicou que algumas variáveis realmente assumiram relevância específica na distinção da classe presencial. Isso demonstra que o modelo conseguiu identificar certos padrões associados a esse regime de trabalho. Contudo, essa relevância atribuída pelos valores SHAP não se traduziu em uma melhora significativa nos resultados práticos, como evidenciado pelo `classification_report` e pela matriz de confusão. Mesmo com o aumento da importância de determinados atributos, a performance da classe presencial permaneceu limitada, com acertos pontuais e uma forte confusão com o modelo híbrido. Isso sugere que, embora o modelo perceba diferenças sutis, essas distinções não são robustas o suficiente para garantir previsões confiáveis para essa classe minoritária.
 
 ![image](https://github.com/user-attachments/assets/7e861286-be5d-4112-b7ac-0c57232685b4)
+
+**<Análise>**
 
 ### Interpretação do Modelo 1
 
@@ -1198,6 +1220,9 @@ print(classification_report(y_test, y_pred))
    macro avg       0.51      0.51      0.51       951
 weighted avg       0.75      0.76      0.75       951
 ```
+
+**<Análise do Classification Report>**
+
 #### Desenvolvimento da Matriz de Confusão
 Além disso, a matriz de confusão foi gerada em três formatos distintos:
 - Como matriz numérica bruta
@@ -1233,6 +1258,9 @@ plt.xticks(rotation=90)
 plt.show()
 ```
 ![image](https://github.com/user-attachments/assets/a7dca242-a007-4b18-be91-63d3b6d0be27)
+
+**<Análise da Matriz de confusão>**
+
 #### Importância dos atributos
 Também foi exibida a importância das variáveis por meio do atributo `feature_importances_` do Random Forest. Para isso, utilizamos a função pd.Series para organizar as importâncias de forma ordenada e clara, seguida da plotagem de um gráfico de barras, permitindo visualizar quais atributos mais contribuíram para as decisões do modelo.
 ```python
@@ -1247,6 +1275,9 @@ plt.title('Importância das variáveis')
 plt.gca().invert_yaxis()
 ```
 ![image](https://github.com/user-attachments/assets/cf7921a7-dede-45f4-a410-2150fdb5426f)
+
+**<Análise da Importância dos atributos>**
+
 #### Visualização com SHAP
 Por fim, foi utilizado o SHAP (SHapley Additive exPlanations) para gerar uma visualização que destaca a relevância de cada atributo na tomada de decisão do modelo para cada classe. Essa análise fornece uma camada adicional de interpretabilidade, essencial para compreender o impacto de cada variável no comportamento do modelo.
 ```python
@@ -1257,6 +1288,9 @@ shap_values = explainer.shap_values(X_test)
 shap.summary_plot(shap_values, X_test, feature_names=vect.get_feature_names_out(), plot_type='bar', class_names=class_names)
 ```
 ![image](https://github.com/user-attachments/assets/6179e5e7-6646-48a9-b6d4-020a827493b2)
+
+**<Análise do SHAP>**
+
 #### Testando o modelo com SMOTE
 Aplicamos a mesma sequência de códigos utilizada no primeiro modelo para avaliar o desempenho do modelo após o uso do SMOTE, com o objetivo de verificar se houve alguma melhora na identificação da classe minoritária. Essa abordagem permitiu uma comparação direta dos resultados, mantendo a consistência metodológica ao longo da análise.
 ```python
@@ -1291,6 +1325,8 @@ A análise do `classification_report` revelou que, apesar da tentativa de balanc
    macro avg       0.54      0.62      0.54       951
 weighted avg       0.75      0.70      0.71       951
 ```
+**<Análise do Classification Report e SMOTE>**
+
 #### Matriz de confusão e SMOTE
 Além disso, a matriz de confusão reforça esse comportamento, evidenciando que a redistribuição dos dados com SMOTE não foi suficiente para corrigir completamente o viés do modelo, embora tenha contribuído levemente para melhorar o reconhecimento da classe minoritária.
 ```
@@ -1305,14 +1341,22 @@ Modelo 100% remoto                          14                 330   		72
 Modelo híbrido                              59                 131   	       324
 ```
 ![image](https://github.com/user-attachments/assets/3df14cc7-096b-4e03-b6db-89ca9b23e967)
-#### Importância dos atributos
+
+**<Análise da Matriz de Confusão e SMOTE>**
+
+#### Importância dos atributos e SMOTE
 Assim como no primeiro modelo, a aplicação do SMOTE no Random Forest resultou em uma redistribuição da importância dos atributos, conferindo maior diversidade às variáveis consideradas relevantes pelo modelo. No entanto, essa mudança não foi tão expressiva quanto a observada anteriormente.
 
 ![image](https://github.com/user-attachments/assets/526d81bc-0dfc-4b17-a404-4de34a7ec471)
+
+**<Análise da Importância dos atributos e SMOTE>**
+
 #### SHAP e SMOTE
 Da mesma forma, a visualização com SHAP indicou que o modelo passou a atribuir maior importância a variáveis associadas à classe minoritária. No entanto, esse comportamento não se traduziu em uma melhoria concreta na performance, já que a matriz de confusão continuou apresentando dificuldades na correta classificação dos casos presenciais, demonstrando que o problema de confusão entre as classes persiste.
 
 ![image](https://github.com/user-attachments/assets/ca1562b0-f1e0-4f53-9142-318193141ad0)
+
+**<Análise do SHAPE e SMOTE>**
 
 ### Interpretação do modelo 2
 
