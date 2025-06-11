@@ -940,6 +940,95 @@ Acurácia no teste: 0.7678821879382889
 Acurácia no treino: 0.7956116621581004
 Acurácia no teste: 0.7433380084151473
 ```
+#### Exibição da Árvore de Decisão
+Como o modelo utilizado nesta etapa é uma árvore de decisão única (por meio do `DecisionTreeClassifie`), é possível visualizar toda a sua estrutura de forma clara e completa. Essa visualização permite compreender exatamente como o modelo realiza as divisões nos dados, seguindo critérios baseados nos atributos mais relevantes para a tarefa de classificação.
+
+Para gerar essa representação gráfica, utilizamos a função `export_graphviz` da biblioteca `sklearn.tree`, que converte a estrutura da árvore em um código no formato DOT — uma linguagem voltada para a descrição de grafos. Esse código é processado pela biblioteca `pydotplus`, que o transforma em um gráfico visual. Por fim, a imagem é exibida com `IPython.display.Image`, mostrando os nós da árvore com os atributos de decisão, valores de corte, classes previstas e cores que indicam a predominância de cada classe em cada subdivisão.
+
+Essa abordagem facilita a interpretação dos critérios adotados pelo modelo e oferece uma visão transparente e intuitiva sobre o processo de classificação, tornando o funcionamento interno do algoritmo mais acessível e compreensível mesmo para públicos não técnicos.
+```python
+import pydotplus
+from sklearn import tree
+from IPython.display import Image
+
+dot_data = tree.export_graphviz(treeForma, out_file=None, feature_names=vect.get_feature_names_out(), class_names=le.classes_, filled=True, rounded=True, special_characters=True)
+
+graph = pydotplus.graph_from_dot_data(dot_data)
+Image(graph.create_png())
+```
+![image](https://github.com/user-attachments/assets/66f9ee69-cf36-4b53-987d-da9514905be0)
+### Modelo 2: Random Forest
+Para o segundo modelo, optamos por utilizar o Random Forest, que, diferentemente do DecisionTreeClassifier, não se baseia em uma única árvore de decisão, mas sim em um conjunto (ou "floresta") de múltiplas árvores. Enquanto o DecisionTreeClassifier constrói uma única árvore que aprende diretamente com os dados e pode sofrer com overfitting, o Random Forest cria várias árvores de decisão independentes e combina os resultados de todas elas para tomar uma decisão final (geralmente por votação, no caso de classificação). Essa abordagem reduz a variância do modelo, melhora a capacidade de generalização e tende a oferecer resultados mais robustos, especialmente em conjuntos de dados mais complexos ou com ruído.
+
+Os códigos apresentados a seguir seguem a mesma lógica já aplicada ao modelo `DecisionTreeClassifier`. Por esse motivo, a explicação será mais concisa, uma vez que os procedimentos e conceitos envolvidos são semelhantes aos utilizados anteriormente, sendo adaptados apenas ao uso do modelo `RandomForestClassifier`.
+
+#### Gerando base de treinamento e teste
+Nesta etapa, foram removidas as colunas que não são relevantes para o treinamento do modelo, incluindo o atributo alvo. Em seguida, utilizando o `DictVectorizer` foi feita a conversão dos dados categóricos restantes para valores numéricos, permitindo que fossem utilizados adequadamente no processo de modelagem.
+```python
+X_dict = data.drop(columns=['Roubos de veículo', 'Roubos de carro', 'Roubos de moto', 'Roubos de bicicleta', 'Roubos fora do domicílio', 'Total de roubos', 'Forma de trabalho ideal'], axis=1).T.to_dict().values()
+vect = DictVectorizer(sparse=False)
+X = vect.fit_transform(X_dict)
+```
+Nesta etapa, o atributo alvo foi convertido para valores numéricos utilizando o `LabelEncoder`, permitindo que o modelo de machine learning possa interpretá-lo corretamente durante o treinamento e a avaliação.
+```python
+le = LabelEncoder()
+y = le.fit_transform(data.iloc[:, data.shape[1]-1])
+```
+Em seguida, os dados foram divididos em 80% para treinamento e 20% para teste, seguindo a mesma lógica adotada no primeiro modelo. Essa padronização na divisão permite uma comparação justa e consistente entre os resultados obtidos por ambos os algoritmos.
+```python
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+```
+#### Treinando o Random Forest
+Na etapa de treinamento, seguimos a mesma lógica aplicada ao primeiro modelo, realizando apenas ajustes nos parâmetros específicos do `RandomForestClassifier`. O parâmetro `n_estimators` (número de árvores) foi mantido em 100, valor padrão do algoritmo. Optamos novamente pelo critério de entropia, considerando que nossos dados estão desbalanceados, e buscamos manter a coerência com o modelo anterior. O parâmetro `max_depth` foi definido como `5`. Embora esse valor tenha apresentado um desempenho inferior ao `max_depth=8` em testes com a Random Forest, decidimos mantê-lo para garantir uma base de comparação justa entre os modelos e, assim, avaliar qual abordagem se mostrou mais eficaz para responder à nossa pergunta orientada a dados.
+```python
+forest = RandomForestClassifier(n_estimators=100, random_state=42, criterion='entropy', max_depth=5)
+forest.fit(X_train, y_train)
+print(f'Acurácia do treinamento: {forest.score(X_train, y_train)}')
+```
+Após o treinamento do modelo, realizamos a etapa de predição utilizando os dados de teste. Diferentemente do `DecisionTreeClassifier`, o modelo de Random Forest apresentou um desempenho ligeiramente inferior nos dados de teste, alcançando **78% de acurácia no treinamento** e **76% nos dados de teste**. Apesar dessa leve queda, consideramos que o modelo ainda demonstra uma boa capacidade de aprendizado e generalização. Levando em conta suas limitações e a natureza dos dados, especialmente o desbalanceamento entre as classes, o Random Forest ainda se mostra capaz de oferecer respostas coerentes e relevantes dentro do escopo da nossa análise orientada a dados.
+```python
+y_pred = forest.predict(X_test)
+print(f'Acurácia do teste: {accuracy_score(y_test, y_pred)}')
+```
+```
+Acurácia do treinamento: 0.7856391372961599
+Acurácia do teste: 0.7613038906414301
+```
+##### Outros valores testados
+*test_size=0.2, max_depth=8*
+```
+Acurácia do treinamento: 0.8264071541294056
+Acurácia do teste: 0.7844374342797056
+```
+*test_size=0.3, max_depth=5*
+```
+Acurácia do treinamento: 0.7956116621581004
+Acurácia do teste: 0.7636746143057503
+```
+*test_size=0.3, max_depth=8*
+```
+Acurácia do treinamento: 0.8358881875563571
+Acurácia do teste: 0.7622720897615708
+```
+#### Visualização de uma Árvore
+Como uma Random Forest é composta por dezenas ou até centenas de árvores de decisão — neste caso, 100 — não é viável exibir todas elas em uma única visualização, pois isso tornaria a análise extremamente complexa e pouco informativa. Para fins didáticos e de interpretação, optamos por exibir apenas a primeira árvore gerada pelo modelo. Essa abordagem permite visualizar de forma clara e simplificada como o algoritmo realiza as divisões de decisão, oferecendo uma amostra representativa da lógica usada pela floresta para realizar previsões, sem comprometer a legibilidade.
+
+Para essa visualização, utilizamos o mesmo código aplicado anteriormente na exibição da árvore de decisão, realizando apenas uma pequena modificação: utilizamos forest.estimators_[0] para selecionar a primeira árvore da floresta do modelo Random Forest. Essa abordagem permite visualizar detalhadamente como uma das árvores individuais do conjunto realiza suas divisões, facilitando a compreensão do funcionamento interno do modelo.
+```python
+import pydotplus
+from sklearn import tree
+from IPython.display import Image
+
+dot_data = tree.export_graphviz(forest.estimators_[0], out_file=None, feature_names=vect.get_feature_names_out(), class_names=le.classes_, filled=True, rounded=True, special_characters=True)
+
+graph = pydotplus.graph_from_dot_data(dot_data)
+Image(graph.create_png())
+```
+![image](https://github.com/user-attachments/assets/b2bbafe8-94e8-429d-bd7d-303dc114aeda)
+## Resultados
+
+### Resultados obtidos com o modelo 1.
+
 #### Resultados com Classification Report
 Nesta etapa, foi incluída uma tabela com o `classification_report`, que fornece métricas detalhadas de desempenho para cada classe do atributo alvo. Esse relatório apresenta valores de **precisão (precision)**, **revocação (recall)**, **f1-score** e **suporte (support)**, permitindo uma análise mais aprofundada de como o modelo está se comportando individualmente em relação a cada classe — especialmente útil para avaliar o impacto do desbalanceamento entre elas.
 ```python
@@ -1011,23 +1100,7 @@ shap_values = explainer.shap_values(X_test)
 shap.summary_plot(shap_values, X_test, feature_names=vect.get_feature_names_out(), plot_type='bar', class_names=class_names)
 ```
 ![image](https://github.com/user-attachments/assets/1b0438bb-daca-4cd0-9566-666beb72fd6c)
-#### Exibição da Árvore de Decisão
-Como o modelo utilizado nesta etapa é uma árvore de decisão única (por meio do `DecisionTreeClassifie`), é possível visualizar toda a sua estrutura de forma clara e completa. Essa visualização permite compreender exatamente como o modelo realiza as divisões nos dados, seguindo critérios baseados nos atributos mais relevantes para a tarefa de classificação.
 
-Para gerar essa representação gráfica, utilizamos a função `export_graphviz` da biblioteca `sklearn.tree`, que converte a estrutura da árvore em um código no formato DOT — uma linguagem voltada para a descrição de grafos. Esse código é processado pela biblioteca `pydotplus`, que o transforma em um gráfico visual. Por fim, a imagem é exibida com `IPython.display.Image`, mostrando os nós da árvore com os atributos de decisão, valores de corte, classes previstas e cores que indicam a predominância de cada classe em cada subdivisão.
-
-Essa abordagem facilita a interpretação dos critérios adotados pelo modelo e oferece uma visão transparente e intuitiva sobre o processo de classificação, tornando o funcionamento interno do algoritmo mais acessível e compreensível mesmo para públicos não técnicos.
-```python
-import pydotplus
-from sklearn import tree
-from IPython.display import Image
-
-dot_data = tree.export_graphviz(treeForma, out_file=None, feature_names=vect.get_feature_names_out(), class_names=le.classes_, filled=True, rounded=True, special_characters=True)
-
-graph = pydotplus.graph_from_dot_data(dot_data)
-Image(graph.create_png())
-```
-![image](https://github.com/user-attachments/assets/66f9ee69-cf36-4b53-987d-da9514905be0)
 ### Testando o modelo com SMOTE
 Com o objetivo de investigar como o modelo se comportaria em um cenário com dados mais balanceados, aplicamos a técnica SMOTE (Synthetic Minority Over-sampling Technique). Essa técnica é amplamente utilizada para lidar com desequilíbrios entre classes, criando novas amostras sintéticas para as classes minoritárias com base em seus vizinhos mais próximos, em vez de simplesmente replicar exemplos existentes.
 ```python
@@ -1085,59 +1158,29 @@ Diferentemente do modelo treinado sem o uso do SMOTE, a análise da importância
 Outro aspecto importante a ser destacado foi a distribuição dos valores SHAP, que indicou que algumas variáveis realmente assumiram relevância específica na distinção da classe presencial. Isso demonstra que o modelo conseguiu identificar certos padrões associados a esse regime de trabalho. Contudo, essa relevância atribuída pelos valores SHAP não se traduziu em uma melhora significativa nos resultados práticos, como evidenciado pelo `classification_report` e pela matriz de confusão. Mesmo com o aumento da importância de determinados atributos, a performance da classe presencial permaneceu limitada, com acertos pontuais e uma forte confusão com o modelo híbrido. Isso sugere que, embora o modelo perceba diferenças sutis, essas distinções não são robustas o suficiente para garantir previsões confiáveis para essa classe minoritária.
 
 ![image](https://github.com/user-attachments/assets/7e861286-be5d-4112-b7ac-0c57232685b4)
-### Modelo 2: Random Forest
-Para o segundo modelo, optamos por utilizar o Random Forest, que, diferentemente do DecisionTreeClassifier, não se baseia em uma única árvore de decisão, mas sim em um conjunto (ou "floresta") de múltiplas árvores. Enquanto o DecisionTreeClassifier constrói uma única árvore que aprende diretamente com os dados e pode sofrer com overfitting, o Random Forest cria várias árvores de decisão independentes e combina os resultados de todas elas para tomar uma decisão final (geralmente por votação, no caso de classificação). Essa abordagem reduz a variância do modelo, melhora a capacidade de generalização e tende a oferecer resultados mais robustos, especialmente em conjuntos de dados mais complexos ou com ruído.
 
-Os códigos apresentados a seguir seguem a mesma lógica já aplicada ao modelo `DecisionTreeClassifier`. Por esse motivo, a explicação será mais concisa, uma vez que os procedimentos e conceitos envolvidos são semelhantes aos utilizados anteriormente, sendo adaptados apenas ao uso do modelo `RandomForestClassifier`.
+### Interpretação do Modelo 1
 
-#### Gerando base de treinamento e teste
-Nesta etapa, foram removidas as colunas que não são relevantes para o treinamento do modelo, incluindo o atributo alvo. Em seguida, utilizando o `DictVectorizer` foi feita a conversão dos dados categóricos restantes para valores numéricos, permitindo que fossem utilizados adequadamente no processo de modelagem.
-```python
-X_dict = data.drop(columns=['Roubos de veículo', 'Roubos de carro', 'Roubos de moto', 'Roubos de bicicleta', 'Roubos fora do domicílio', 'Total de roubos', 'Forma de trabalho ideal'], axis=1).T.to_dict().values()
-vect = DictVectorizer(sparse=False)
-X = vect.fit_transform(X_dict)
-```
-Nesta etapa, o atributo alvo foi convertido para valores numéricos utilizando o `LabelEncoder`, permitindo que o modelo de machine learning possa interpretá-lo corretamente durante o treinamento e a avaliação.
-```python
-le = LabelEncoder()
-y = le.fit_transform(data.iloc[:, data.shape[1]-1])
-```
-Em seguida, os dados foram divididos em 80% para treinamento e 20% para teste, seguindo a mesma lógica adotada no primeiro modelo. Essa padronização na divisão permite uma comparação justa e consistente entre os resultados obtidos por ambos os algoritmos.
-```python
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-```
-#### Treinando o Random Forest
-Na etapa de treinamento, seguimos a mesma lógica aplicada ao primeiro modelo, realizando apenas ajustes nos parâmetros específicos do `RandomForestClassifier`. O parâmetro `n_estimators` (número de árvores) foi mantido em 100, valor padrão do algoritmo. Optamos novamente pelo critério de entropia, considerando que nossos dados estão desbalanceados, e buscamos manter a coerência com o modelo anterior. O parâmetro `max_depth` foi definido como `5`. Embora esse valor tenha apresentado um desempenho inferior ao `max_depth=8` em testes com a Random Forest, decidimos mantê-lo para garantir uma base de comparação justa entre os modelos e, assim, avaliar qual abordagem se mostrou mais eficaz para responder à nossa pergunta orientada a dados.
-```python
-forest = RandomForestClassifier(n_estimators=100, random_state=42, criterion='entropy', max_depth=5)
-forest.fit(X_train, y_train)
-print(f'Acurácia do treinamento: {forest.score(X_train, y_train)}')
-```
-Após o treinamento do modelo, realizamos a etapa de predição utilizando os dados de teste. Diferentemente do `DecisionTreeClassifier`, o modelo de Random Forest apresentou um desempenho ligeiramente inferior nos dados de teste, alcançando **78% de acurácia no treinamento** e **76% nos dados de teste**. Apesar dessa leve queda, consideramos que o modelo ainda demonstra uma boa capacidade de aprendizado e generalização. Levando em conta suas limitações e a natureza dos dados, especialmente o desbalanceamento entre as classes, o Random Forest ainda se mostra capaz de oferecer respostas coerentes e relevantes dentro do escopo da nossa análise orientada a dados.
-```python
-y_pred = forest.predict(X_test)
-print(f'Acurácia do teste: {accuracy_score(y_test, y_pred)}')
-```
-```
-Acurácia do treinamento: 0.7856391372961599
-Acurácia do teste: 0.7613038906414301
-```
-##### Outros valores testados
-*test_size=0.2, max_depth=8*
-```
-Acurácia do treinamento: 0.8264071541294056
-Acurácia do teste: 0.7844374342797056
-```
-*test_size=0.3, max_depth=5*
-```
-Acurácia do treinamento: 0.7956116621581004
-Acurácia do teste: 0.7636746143057503
-```
-*test_size=0.3, max_depth=8*
-```
-Acurácia do treinamento: 0.8358881875563571
-Acurácia do teste: 0.7622720897615708
-```
+O Modelo 1 foi treinado para prever a forma de trabalho ideal entre três categorias: **modelo 100% presencial**, **modelo 100% remoto** e **modelo híbrido**. O algoritmo apresenta **acurácia de 74,6% no conjunto de teste** e **79,3% no treino**, o que sugere bom desempenho geral, mas com possíveis indícios de overfitting leve.
+
+#### Métricas Gerais por Classe
+- **"Modelo 100% remoto"**: melhor desempenho entre as classes (Precision: 0.74, Recall: 0.77, F1-Score: 0.75)
+- **"Modelo híbrido"**: desempenho consistente (F1-Score: 0.76), com leve confusão com "remoto"
+- **"Modelo 100% presencial"**: desempenho extremamente baixo (F1-Score: 0.08), com apenas 1 acerto em 19 exemplos
+
+#### Padrões Observados
+- A maior parte dos **erros ocorre entre as classes "remoto" e "híbrido"**, com 140 exemplos originalmente híbridos sendo classificados como remoto, e 119 exemplos remotos sendo classificados como híbrido.
+- A classe **"100% presencial"** é praticamente ignorada pelo modelo, sendo confundida principalmente com o modelo híbrido (15 de 19 casos).
+- O modelo apresenta **bom equilíbrio entre precisão e recall** nas classes mais numerosas (remoto e híbrido), mas falha com a classe minoritária (presencial).
+
+#### Limitações Identificadas
+- **Desbalanceamento de classes**: a baixa representatividade da classe "100% presencial" prejudica a capacidade do modelo de reconhecê-la.
+- **Semelhança entre categorias híbrido e remoto**: os dados disponíveis não parecem capturar bem as diferenças conceituais entre essas duas formas de trabalho.
+- A **macro média** das métricas (Precision: 0.55, Recall: 0.52, F1: 0.53) está abaixo do ideal, reforçando o impacto negativo da classe minoritária.
+
+
+### Resultados obtidos com o modelo 2.
+
 #### Resultados com Classification Report
 Assim como no primeiro modelo, foi aplicado novamente o classification_report com o objetivo de avaliar o desempenho do classificador em relação a cada uma das classes do atributo-alvo, fornecendo métricas como precisão, recall e F1-score.
 ```python
@@ -1214,21 +1257,6 @@ shap_values = explainer.shap_values(X_test)
 shap.summary_plot(shap_values, X_test, feature_names=vect.get_feature_names_out(), plot_type='bar', class_names=class_names)
 ```
 ![image](https://github.com/user-attachments/assets/6179e5e7-6646-48a9-b6d4-020a827493b2)
-#### Visualização de uma Árvore
-Como uma Random Forest é composta por dezenas ou até centenas de árvores de decisão — neste caso, 100 — não é viável exibir todas elas em uma única visualização, pois isso tornaria a análise extremamente complexa e pouco informativa. Para fins didáticos e de interpretação, optamos por exibir apenas a primeira árvore gerada pelo modelo. Essa abordagem permite visualizar de forma clara e simplificada como o algoritmo realiza as divisões de decisão, oferecendo uma amostra representativa da lógica usada pela floresta para realizar previsões, sem comprometer a legibilidade.
-
-Para essa visualização, utilizamos o mesmo código aplicado anteriormente na exibição da árvore de decisão, realizando apenas uma pequena modificação: utilizamos forest.estimators_[0] para selecionar a primeira árvore da floresta do modelo Random Forest. Essa abordagem permite visualizar detalhadamente como uma das árvores individuais do conjunto realiza suas divisões, facilitando a compreensão do funcionamento interno do modelo.
-```python
-import pydotplus
-from sklearn import tree
-from IPython.display import Image
-
-dot_data = tree.export_graphviz(forest.estimators_[0], out_file=None, feature_names=vect.get_feature_names_out(), class_names=le.classes_, filled=True, rounded=True, special_characters=True)
-
-graph = pydotplus.graph_from_dot_data(dot_data)
-Image(graph.create_png())
-```
-![image](https://github.com/user-attachments/assets/b2bbafe8-94e8-429d-bd7d-303dc114aeda)
 #### Testando o modelo com SMOTE
 Aplicamos a mesma sequência de códigos utilizada no primeiro modelo para avaliar o desempenho do modelo após o uso do SMOTE, com o objetivo de verificar se houve alguma melhora na identificação da classe minoritária. Essa abordagem permitiu uma comparação direta dos resultados, mantendo a consistência metodológica ao longo da análise.
 ```python
@@ -1285,128 +1313,6 @@ Assim como no primeiro modelo, a aplicação do SMOTE no Random Forest resultou 
 Da mesma forma, a visualização com SHAP indicou que o modelo passou a atribuir maior importância a variáveis associadas à classe minoritária. No entanto, esse comportamento não se traduziu em uma melhoria concreta na performance, já que a matriz de confusão continuou apresentando dificuldades na correta classificação dos casos presenciais, demonstrando que o problema de confusão entre as classes persiste.
 
 ![image](https://github.com/user-attachments/assets/ca1562b0-f1e0-4f53-9142-318193141ad0)
-## Resultados
-
-### Resultados obtidos com o modelo 1.
-
-Análise da Matriz de Confusão
-Resumo das Classes:
-
-## Código das Classes
-
-| Código | Classe                 |
-|--------|------------------------|
-| 0      | Modelo 100% presencial |
-| 1      | Modelo 100% remoto     |
-| 2      | Modelo híbrido         |
-
-## Acurácia Geral
-
-**Acurácia geral:** 74,6%  
-O modelo acerta aproximadamente três quartos das classificações.
-
-## Relatório de Classificação
-
-| Classe | Precision | Recall | F1-Score | Suporte |
-|--------|-----------|--------|----------|---------|
-| 0      | 0.14      | 0.05   | 0.08     | 19      |
-| 1      | 0.74      | 0.77   | 0.75     | 524     |
-| 2      | 0.76      | 0.75   | 0.76     | 571     |
-
-Análise da Matriz de Confusão:
-Modelo 100% presencial (classe 0): Apenas 1 dos 19 exemplos foi corretamente classificado. A maioria foi confundida com o modelo híbrido (15 casos) e alguns com o modelo 100% remoto (3 casos). O desempenho é extremamente baixo devido ao severo desbalanceamento de classes.
-Modelo 100% remoto (classe 1): 401 de 524 exemplos foram classificados corretamente. Houve 119 confusões com o híbrido, 4 com o presencial e nenhuma classificação incorreta significativa adicional. Apresenta desempenho satisfatório.
-Modelo híbrido (classe 2): 429 de 571 exemplos foram classificados corretamente. Houve 140 confusões com o remoto, 2 com o presencial. Demonstra o melhor desempenho entre as três classes.
-
-Matriz em forma de tabela:
-
-| Classe Real \ Prevista | Modelo 100% presencial | Modelo 100% remoto | Modelo híbrido |
-|------------------------|------------------------|--------------------|----------------|
-| Modelo 100% presencial | 1                      | 3                  | 15             |
-| Modelo 100% remoto     | 4                      | 401                | 119            |
-| Modelo híbrido         | 2                      | 140                | 429            |
-
-![image](https://github.com/user-attachments/assets/40653726-2954-4eae-9eb9-f171b6958a2e)
-
-### Interpretação do Modelo 1
-
-O Modelo 1 foi treinado para prever a forma de trabalho ideal entre três categorias: **modelo 100% presencial**, **modelo 100% remoto** e **modelo híbrido**. O algoritmo apresenta **acurácia de 74,6% no conjunto de teste** e **79,3% no treino**, o que sugere bom desempenho geral, mas com possíveis indícios de overfitting leve.
-
-#### Métricas Gerais por Classe
-- **"Modelo 100% remoto"**: melhor desempenho entre as classes (Precision: 0.74, Recall: 0.77, F1-Score: 0.75)
-- **"Modelo híbrido"**: desempenho consistente (F1-Score: 0.76), com leve confusão com "remoto"
-- **"Modelo 100% presencial"**: desempenho extremamente baixo (F1-Score: 0.08), com apenas 1 acerto em 19 exemplos
-
-#### Padrões Observados
-- A maior parte dos **erros ocorre entre as classes "remoto" e "híbrido"**, com 140 exemplos originalmente híbridos sendo classificados como remoto, e 119 exemplos remotos sendo classificados como híbrido.
-- A classe **"100% presencial"** é praticamente ignorada pelo modelo, sendo confundida principalmente com o modelo híbrido (15 de 19 casos).
-- O modelo apresenta **bom equilíbrio entre precisão e recall** nas classes mais numerosas (remoto e híbrido), mas falha com a classe minoritária (presencial).
-
-#### Limitações Identificadas
-- **Desbalanceamento de classes**: a baixa representatividade da classe "100% presencial" prejudica a capacidade do modelo de reconhecê-la.
-- **Semelhança entre categorias híbrido e remoto**: os dados disponíveis não parecem capturar bem as diferenças conceituais entre essas duas formas de trabalho.
-- A **macro média** das métricas (Precision: 0.55, Recall: 0.52, F1: 0.53) está abaixo do ideal, reforçando o impacto negativo da classe minoritária.
-
-
-### Resultados obtidos com o modelo 2.
-
-#### Análise da Matriz de Confusão do modelo 2
-
-Melhor árvore
-
-| Classe Real / Prevista | Modelo 100% presencial | Modelo 100% remoto | Modelo híbrido |
-| ---------------------- | ---------------------- | ------------------ | -------------- |
-| Modelo 100% presencial | 0                      | 1                  | 18             |
-| Modelo 100% remoto     | 2                      | 356                | 166            |
-| Modelo híbrido         | 1                      | 76                 | 494            |
-
-![image](https://github.com/user-attachments/assets/7a692d74-e83f-41c1-87fd-4353d81c79f6)
-
-Pior árvore
-
-| Classe Real / Prevista | Modelo 100% presencial | Modelo 100% remoto | Modelo híbrido |
-| ---------------------- | ---------------------- | ------------------ | -------------- |
-| Modelo 100% presencial | 0                      | 1                  | 18             |
-| Modelo 100% remoto     | 1                      | 290                | 233            |
-| Modelo híbrido         | 4                      | 198                | 369            |
-
-![image](https://github.com/user-attachments/assets/e6bd93ce-b71d-4b2b-a944-9ae2a6525fc6)
-
-#### Análise Detalhada das Métricas por Classe
-
-**Classe "Modelo híbrido"**
-
-Melhor árvore:
-Desempenho razoável com 59.6% de acertos (324/544). Os principais erros concentram-se em 36.7% dos casos classificados incorretamente como "Modelo 100% remoto" (200/544). A precisão é de 64.8% (324/500), indicando que, entre as previsões como "híbrido", a maioria estava correta.
-
-Pior árvore:
-Queda expressiva no desempenho, com recall de apenas 35.5% (193/544). A confusão com a classe "remoto" aumenta significativamente, com 60.8% dos casos (331/544) sendo erroneamente classificados como "Modelo 100% remoto". Isso evidencia alta sensibilidade do modelo a variações nos dados.
-
-**Classe "Modelo 100% presencial"**
-
-Melhor árvore:
-Falha completa na identificação da classe, com 0% de acertos. A maioria dos casos (94.7% – 18/19) foi classificada incorretamente como "Modelo híbrido", e 5.3% como "Modelo 100% remoto".
-
-Pior árvore:
-Resultado ainda mais crítico: 100% dos casos (19/19) classificados como "Modelo híbrido". Isso reforça a completa negligência da classe minoritária, independentemente da configuração do modelo.
-
-**Classe "Modelo 100% remoto"**
-
-Melhor árvore:
-Bom desempenho com 69.0% de acertos (394/571). Os principais erros se dão pela confusão com o "Modelo híbrido", responsável por 31.0% dos erros (177/571).
-
-Pior árvore:
-Queda relevante para 53.6% de acertos (306/571). A taxa de confusão com "Modelo híbrido" aumenta para 46.4% (265/571), demonstrando instabilidade no reconhecimento da classe.
-
-#### Padrões Críticos Identificados
-**Colapso da classe minoritária:**
-A classe "Modelo 100% presencial" é completamente ignorada pelo modelo em ambas as árvores, sugerindo priorização excessiva das classes majoritárias em detrimento de representações críticas.
-
-**Sobreposição entre Híbrido e Remoto:**
-Confusões significativas entre "Modelo híbrido" e "Modelo 100% remoto" ocorrem em ambas as direções: 36.7% dos híbridos são confundidos com remoto, e 31.0% dos remotos com híbrido. Isso indica que as variáveis disponíveis não capturam adequadamente as distinções práticas entre os dois modelos.
-
-**Instabilidade extrema:**
-A variação de 24.1 pontos percentuais no recall da classe "Modelo híbrido" (de 59.6% para 35.5%) entre árvores sugere que o modelo é altamente sensível a pequenas variações nos dados de treinamento.
 
 ### Interpretação do modelo 2
 
