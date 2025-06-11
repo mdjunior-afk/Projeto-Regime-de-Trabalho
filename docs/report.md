@@ -984,14 +984,8 @@ plt.xticks(rotation=90)
 plt.show()
 ```
 ![image](https://github.com/user-attachments/assets/fdd226ca-ed07-43f1-9006-57fec69149e1)
-```
-```python
-# Avaliação no conjunto de teste
-y_pred = treeForma.predict(X_test)
-print("Acurácia no teste:", accuracy_score(y_test, y_pred))
-```
 ### Exibição da Importância dos Atributos
-No código a seguir, utilizamos o atributo `feature_importances_` do modelo DecisionTreeClassifier para visualizar quais variáveis tiveram maior influência na previsão da variável alvo. Para isso, os valores de importância foram organizados em um objeto `pd.Series`, que é uma estrutura de dados unidimensional do pandas, semelhante a uma lista rotulada, onde cada valor está associado a um índice — neste caso, os nomes das variáveis do conjunto de dados. Em seguida, criamos um gráfico de barras utilizando a biblioteca matplotlib, com o objetivo de facilitar a interpretação visual das importâncias atribuídas a cada atributo pelo modelo.
+No código a seguir, utilizamos o atributo `feature_importances_` do modelo `DecisionTreeClassifier` para visualizar quais variáveis tiveram maior influência na previsão da variável alvo. Para isso, os valores de importância foram organizados em um objeto `pd.Series`, que é uma estrutura de dados unidimensional do pandas, semelhante a uma lista rotulada, onde cada valor está associado a um índice — neste caso, os nomes das variáveis do conjunto de dados. Em seguida, criamos um gráfico de barras utilizando a biblioteca matplotlib, com o objetivo de facilitar a interpretação visual das importâncias atribuídas a cada atributo pelo modelo.
 ```python
 # Exibir importâncias dos atributos
 importances = pd.Series(treeForma.feature_importances_, index=vect.feature_names_)
@@ -1003,6 +997,20 @@ plt.gca().invert_yaxis()
 plt.show()
 ```
 ![image](https://github.com/user-attachments/assets/079d0305-65c0-4295-b793-497df11f8c53)
+### Visualização com SHAP
+No trecho de código a seguir, aplicamos a biblioteca SHAP para interpretar o modelo de Árvore de decisão e entender a influência de cada variável nas previsões de forma mais transparente. Primeiramente, utilizamos o `LabelEncoder` previamente ajustado para recuperar os nomes reais das classes da variável alvo, armazenando-os na variável `class_names`.
+
+Em seguida, criamos um objeto explainer a partir de `shap.TreeExplainer(treeForma)`, que é uma ferramenta otimizada para interpretar modelos baseados em árvores de decisão, como o `DecisionTreeClassifier`. Com o explainer, calculamos os valores de SHAP para os dados de teste (`X_test`) por meio da função `shap_values = explainer.shap_values(X_test)`. Esses valores representam, para cada amostra, quanto cada variável contribuiu positiva ou negativamente para a previsão de cada classe.
+
+Por fim, o gráfico gerado com `shap.summary_plot()` apresenta uma visualização em barras `(plot_type='bar')` das variáveis mais importantes para o modelo. O parâmetro `feature_names` insere os nomes originais das variáveis, obtidos do `DictVectorizer`, e o argumento `class_names=class_names` substitui os rótulos genéricos como “Class 0” por nomes reais, tornando a visualização mais legível e interpretável no contexto da pesquisa.
+```python
+class_names = le.classes_
+
+explainer = shap.TreeExplainer(treeForma)
+shap_values = explainer.shap_values(X_test)
+shap.summary_plot(shap_values, X_test, feature_names=vect.get_feature_names_out(), plot_type='bar', class_names=class_names)
+```
+![image](https://github.com/user-attachments/assets/1b0438bb-daca-4cd0-9566-666beb72fd6c)
 ### Exibição da Árvore de Decisão
 ```python
 import pydotplus
