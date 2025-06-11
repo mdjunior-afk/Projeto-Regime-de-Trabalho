@@ -1012,6 +1012,11 @@ shap.summary_plot(shap_values, X_test, feature_names=vect.get_feature_names_out(
 ```
 ![image](https://github.com/user-attachments/assets/1b0438bb-daca-4cd0-9566-666beb72fd6c)
 ### Exibição da Árvore de Decisão
+Como o modelo utilizado nesta etapa é uma árvore de decisão única (por meio do `DecisionTreeClassifie`), é possível visualizar toda a sua estrutura de forma clara e completa. Essa visualização permite compreender exatamente como o modelo realiza as divisões nos dados, seguindo critérios baseados nos atributos mais relevantes para a tarefa de classificação.
+
+Para gerar essa representação gráfica, utilizamos a função `export_graphviz` da biblioteca `sklearn.tree`, que converte a estrutura da árvore em um código no formato DOT — uma linguagem voltada para a descrição de grafos. Esse código é processado pela biblioteca `pydotplus`, que o transforma em um gráfico visual. Por fim, a imagem é exibida com `IPython.display.Image`, mostrando os nós da árvore com os atributos de decisão, valores de corte, classes previstas e cores que indicam a predominância de cada classe em cada subdivisão.
+
+Essa abordagem facilita a interpretação dos critérios adotados pelo modelo e oferece uma visão transparente e intuitiva sobre o processo de classificação, tornando o funcionamento interno do algoritmo mais acessível e compreensível mesmo para públicos não técnicos.
 ```python
 import pydotplus
 from sklearn import tree
@@ -1022,7 +1027,7 @@ dot_data = tree.export_graphviz(treeForma, out_file=None, feature_names=vect.get
 graph = pydotplus.graph_from_dot_data(dot_data)
 Image(graph.create_png())
 ```
-![image](https://github.com/user-attachments/assets/2c49d63e-32e1-451b-80ce-e9e0275cb7cb)
+![image](https://github.com/user-attachments/assets/66f9ee69-cf36-4b53-987d-da9514905be0)
 ### Modelo 2: Random Forest
 Optamos por utilizar o algoritmo Random Forest neste trabalho por se tratar de um modelo robusto, eficiente e amplamente utilizado em tarefas de classificação com variáveis categóricas e numéricas. Como nosso objetivo é identificar os fatores que influenciam a escolha do regime de trabalho (presencial, híbrido ou remoto), o Random Forest se mostrou adequado por sua capacidade de lidar com dados heterogêneos, evitar overfitting por meio da combinação de múltiplas árvores de decisão e oferecer métricas de importância das variáveis. Essa última característica é especialmente útil para nosso estudo, pois permite interpretar o peso de cada fator na decisão do regime de trabalho, contribuindo para uma análise mais transparente e fundamentada.
 
