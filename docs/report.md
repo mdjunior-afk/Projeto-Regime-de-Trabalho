@@ -1455,33 +1455,17 @@ A análise geral indica que a preferência pela forma ideal de trabalho está fo
 
 ### Interpretação do modelo 2
 
-O Modelo 2 utilizou random forest para prever a forma de trabalho ideal entre três categorias: **modelo 100% presencial**, **modelo 100% remoto** e **modelo híbrido**. A performance foi avaliada considerando a **melhor** e a **pior árvore** resultantes da Random Forest, a fim de identificar estabilidade e padrões de erro.
+Assim como ocorreu com o Modelo 1, o Modelo 2 — baseado em Random Forest — seguiu uma lógica semelhante em relação à classificação dos regimes de trabalho. Ele teve bom desempenho na previsão das classes híbrido e remoto, mas falhou ao identificar corretamente a classe presencial, que foi praticamente ignorada. Esse comportamento é compreensível, considerando que os modelos híbrido e remoto compartilham características semelhantes, o que pode confundir o modelo. Além disso, o Random Forest é uma evolução do modelo de árvore de decisão, o que naturalmente leva a resultados parecidos em termos de padrões capturados.
 
-#### Métricas por Classe
+Uma diferença importante em relação ao Modelo 1 foi a distribuição da importância das variáveis. Enquanto o primeiro modelo demonstrou viés ao considerar quase exclusivamente uma única variável, o Random Forest (sem SMOTE) foi capaz de atribuir importância a um conjunto mais diverso de variáveis. As mais relevantes foram o modelo de trabalho atual da pessoa e o que ela faria caso a empresa adotasse o regime 100% presencial. Por outro lado, variáveis socioeconômicas como gênero, cor e salário novamente tiveram pouca relevância.
 
-- **"Modelo 100% remoto"**
-  - Melhor árvore: 69,0% de acertos (Recall)
-  - Pior árvore: Queda para 53,6%, com aumento da confusão para "modelo híbrido"
-- **"Modelo híbrido"**
-  - Melhor árvore: 59,6% de acertos; Precision: 64,8%
-  - Pior árvore: Forte queda para 35,5% de acertos
-- **"Modelo 100% presencial"**
-  - Ambas as árvores: 0% de acerto; totalmente confundida com a classe "modelo híbrido"
+A análise com SHAP reforçou esse cenário: as variáveis relacionadas ao contexto de trabalho foram muito influentes na classificação das categorias híbrido e remoto, mas tiveram pouca influência na classe presencial.
 
-#### Padrões Observados
+É importante destacar que, neste experimento, mantivemos os mesmos parâmetros utilizados no Modelo 1, com o objetivo de permitir uma comparação direta entre os modelos. No entanto, isso pode ter limitado o desempenho da Random Forest, que poderia ter se beneficiado de uma melhor calibragem dos hiperparâmetros. Com o uso do SMOTE, o desempenho do modelo na identificação da classe presencial melhorou ligeiramente, mas ainda ficou abaixo do esperado. Acreditamos que, com ajustes mais adequados nos parâmetros ou melhorias na base de dados, o modelo poderia apresentar resultados significativamente melhores.
 
-- O modelo mostra **razoável capacidade de previsão** para as classes "remoto" e "híbrido", mas apresenta **forte instabilidade** entre execuções.
-- A classe **"100% presencial"** é completamente ignorada pelo modelo, sendo sempre classificada como "híbrido". Isso evidencia um **colapso da classe minoritária**.
-- Existe **sobreposição significativa** entre as classes "remoto" e "híbrido", com erros em ambas as direções:
-  - 36,7% dos híbridos foram classificados como remoto
-  - 31,0% dos remotos foram classificados como híbrido
-- A variação no desempenho da classe híbrida entre melhor e pior árvore (**24,1 pontos percentuais de diferença no recall**) demonstra **alta sensibilidade do modelo aos dados de treino**.
+Após o balanceamento com SMOTE, o SHAP indicou uma maior diversidade nas variáveis consideradas importantes, incluindo algumas socioeconômicas. Ainda assim, as variáveis relacionadas diretamente ao contexto de trabalho continuaram sendo as mais influentes. Além disso, observamos que algumas variáveis específicas passaram a ter um papel relevante na previsão da classe presencial, o que pode ser um bom sinal para futuros ajustes no modelo, mesmo que ainda ocorra uma margem de erro considerável.
 
-#### Limitações Identificadas
-
-- **Desbalanceamento de classes**: a classe "100% presencial" representa apenas 19 instâncias, o que contribui para sua não identificação.
-- **Falta de variáveis discriminantes** entre híbrido e remoto: as features utilizadas parecem não capturar bem as diferenças conceituais entre os dois.
-- **Instabilidade estrutural**: a Random Forest sofre variações expressivas entre árvores individuais, o que pode afetar a confiabilidade geral do modelo.
+Em resumo, o Random Forest apresentou potencial para obter resultados mais robustos, especialmente se ajustado adequadamente. Sua natureza mais robusta contra overfitting, combinada com sua capacidade de considerar múltiplas variáveis, sugere que ele pode, com melhorias, capturar de forma mais precisa as preferências dos profissionais em relação ao regime de trabalho, mesmo diante de confusões entre as classes.
 
 ### Análise Comparativa dos Modelos
 
