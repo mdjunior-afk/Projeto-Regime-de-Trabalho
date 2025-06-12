@@ -1221,22 +1221,17 @@ Em contraste, características demográficas e socioeconômicas como raça, gên
 
 ### Interpretação do Modelo 1
 
-O Modelo 1 foi treinado para prever a forma de trabalho ideal entre três categorias: **modelo 100% presencial**, **modelo 100% remoto** e **modelo híbrido**. O algoritmo apresenta **acurácia de 74,6% no conjunto de teste** e **79,3% no treino**, o que sugere bom desempenho geral, mas com possíveis indícios de overfitting leve.
+No primeiro teste, sem o uso do SMOTE, o modelo apresentou um desempenho razoável. Ele conseguiu identificar, com certa confusão, a maioria dos casos relacionados aos regimes híbrido e remoto. Essa confusão pode ser compreensível, já que, na prática, esses dois modelos de trabalho possuem características semelhantes, o que pode levar a uma sobreposição nos dados do conjunto de treino.
 
-#### Métricas Gerais por Classe
-- **"Modelo 100% remoto"**: melhor desempenho entre as classes (Precision: 0.74, Recall: 0.77, F1-Score: 0.75)
-- **"Modelo híbrido"**: desempenho consistente (F1-Score: 0.76), com leve confusão com "remoto"
-- **"Modelo 100% presencial"**: desempenho extremamente baixo (F1-Score: 0.08), com apenas 1 acerto em 19 exemplos
+Já o regime presencial foi praticamente ignorado pelo modelo, o que pode ser explicado pela quantidade significativamente menor de exemplos dessa classe no conjunto de dados — apenas 96, contra cerca de 2.000 exemplos das classes remoto e híbrido.
 
-#### Padrões Observados
-- A maior parte dos **erros ocorre entre as classes "remoto" e "híbrido"**, com 140 exemplos originalmente híbridos sendo classificados como remoto, e 119 exemplos remotos sendo classificados como híbrido.
-- A classe **"100% presencial"** é praticamente ignorada pelo modelo, sendo confundida principalmente com o modelo híbrido (15 de 19 casos).
-- O modelo apresenta **bom equilíbrio entre precisão e recall** nas classes mais numerosas (remoto e híbrido), mas falha com a classe minoritária (presencial).
+Outro ponto relevante diz respeito à importância das variáveis. No teste sem balanceamento, o modelo baseou suas previsões quase exclusivamente em uma única variável, o que demonstra um certo viés. No entanto, após o uso do SMOTE para balancear as classes, o modelo passou a considerar mais variáveis e conseguiu prever uma quantidade razoável de exemplos da classe presencial, ainda que com desempenho modesto.
 
-#### Limitações Identificadas
-- **Desbalanceamento de classes**: a baixa representatividade da classe "100% presencial" prejudica a capacidade do modelo de reconhecê-la.
-- **Semelhança entre categorias híbrido e remoto**: os dados disponíveis não parecem capturar bem as diferenças conceituais entre essas duas formas de trabalho.
-- A **macro média** das métricas (Precision: 0.55, Recall: 0.52, F1: 0.53) está abaixo do ideal, reforçando o impacto negativo da classe minoritária.
+Mesmo assim, houve uma maior confusão entre híbrido, remoto e presencial — o que faz sentido, já que o modelo híbrido, por definição, é uma combinação dos outros dois, e isso pode dificultar a distinção entre as categorias com base apenas em variáveis preditoras.
+
+Também é importante destacar que as variáveis mais relevantes para o modelo, tanto com quanto sem SMOTE, foram "como a pessoa trabalha atualmente" e "o que ela faria em caso de decisões da empresa". Já variáveis mais relacionadas ao perfil socioeconômico, como gênero, cor e salário, tiveram baixa importância nas previsões.
+
+Em resumo, o modelo mostrou bom desempenho na identificação de padrões entre os regimes remoto e híbrido, mas teve dificuldade com a classe presencial, especialmente devido ao desbalanceamento dos dados. No entanto, isso não chega a ser um grande problema, pois, na prática, é comum que profissionais da área de dados tenham uma preferência maior pelo regime remoto, devido à flexibilidade que ele proporciona.
 
 
 ### Resultados obtidos com o modelo 2.
