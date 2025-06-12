@@ -1081,7 +1081,17 @@ plt.show()
 ```
 ![image](https://github.com/user-attachments/assets/fdd226ca-ed07-43f1-9006-57fec69149e1)
 
-**<Análise>**
+**Análise da Matriz de Confusão**
+
+A análise da matriz de confusão revela um padrão claro de desempenho desigual do modelo em relação às diferentes classes do atributo alvo — particularmente no que diz respeito à classe “Modelo 100% presencial”. Conforme os dados apresentados, o modelo não foi capaz de classificar corretamente nenhum exemplo dessa categoria: dos 21 exemplos reais, 3 foram classificados como “Modelo 100% remoto” e 18 como “Modelo híbrido”, resultando em um total de 0 previsões corretas para essa classe. Isso se reflete diretamente nas métricas do classification report, com precisão, revocação e f1-score todos igual a 0.00 para a classe 0, um forte indicativo de que o modelo falha completamente ao lidar com essa categoria minoritária.
+
+Já a classe “Modelo 100% remoto” (classe 1) apresenta um desempenho moderado: dos 416 exemplos reais, 292 foram corretamente classificados, mas ainda assim 124 foram erroneamente atribuídos como “Modelo híbrido”. O modelo demonstra boa precisão (82%) para essa classe, ou seja, quando ele prevê “remoto”, geralmente está correto. Contudo, o recall de 70% mostra que há uma taxa considerável de perda de exemplos reais dessa classe, o que compromete a cobertura.
+
+A classe “Modelo híbrido” (classe 2) é a que o modelo lida melhor. Dos 514 exemplos reais, 451 foram corretamente classificados, resultando em uma taxa de recall alta (88%). Apesar de 63 exemplos terem sido classificados incorretamente como “remoto”, a precisão ainda se mantém em um nível razoável (76%). Esses números sugerem que o modelo está tendendo a classificar dados como “híbrido” com frequência, o que pode indicar um viés favorecendo a classe mais numerosa, comum em situações de desbalanceamento.
+
+A acurácia geral do modelo, de 78%, pode inicialmente parecer satisfatória. No entanto, a análise da matriz de confusão em conjunto com as métricas do classification report revela que essa acurácia está inflada pelo bom desempenho nas classes com maior número de amostras (remoto e híbrido), mascarando a ineficácia completa na detecção da classe “presencial”. As médias macro (simples) — com valores por volta de 0.53 para precisão, recall e f1-score — apontam para uma performance fraca quando todas as classes são consideradas igualmente. Já as médias ponderadas (weighted avg) são mais altas, refletindo o domínio das classes majoritárias.
+
+Conclui-se, portanto, que o modelo atual não é adequado para tarefas em que a correta identificação da classe “Modelo 100% presencial” seja crítica. A ausência total de previsões corretas para essa classe indica que o modelo precisa ser ajustado — seja por meio de técnicas de balanceamento de classes, ajuste de pesos ou melhoria da representação dos dados — para garantir um desempenho mais justo e confiável entre todas as categorias.
 
 #### Exibição da Importância dos Atributos
 No código a seguir, utilizamos o atributo `feature_importances_` do modelo `DecisionTreeClassifier` para visualizar quais variáveis tiveram maior influência na previsão da variável alvo. Para isso, os valores de importância foram organizados em um objeto `pd.Series`, que é uma estrutura de dados unidimensional do pandas, semelhante a uma lista rotulada, onde cada valor está associado a um índice — neste caso, os nomes das variáveis do conjunto de dados. Em seguida, criamos um gráfico de barras utilizando a biblioteca matplotlib, com o objetivo de facilitar a interpretação visual das importâncias atribuídas a cada atributo pelo modelo.
@@ -1177,7 +1187,17 @@ Real=Modelo híbrido                                   61   		       95		   358
 ```
 ![image](https://github.com/user-attachments/assets/12151bbb-8c0c-4f2b-ae0c-5cc235757837)
 
-**<Análise>**
+**Análise da Matriz de Confusão e SMOTE**
+
+Após a aplicação da técnica SMOTE, foi possível observar uma leve melhora na capacidade do modelo de reconhecer a classe minoritária — o modelo de trabalho 100% presencial —, mas os resultados ainda demonstram limitações significativas. Antes do balanceamento, o modelo praticamente ignorava essa classe, apresentando recall igual a zero. Após o SMOTE, no entanto, o modelo passou a acertar 9 das 21 amostras dessa categoria, elevando o recall para 43%. Isso indica que, embora ainda longe do ideal, ao menos parte das instâncias presenciais passou a ser corretamente identificada.
+
+Apesar desse avanço, a precisão da classe presencial permaneceu extremamente baixa, em torno de 10%. Ou seja, das vezes em que o modelo previu que determinada amostra era da classe 0 (presencial), apenas uma pequena fração estava realmente correta. Isso revela que o modelo ainda confunde frequentemente essa classe com as demais, especialmente com o modelo híbrido. Essa confusão impacta diretamente o f1-score da classe, que ficou em apenas 0.17 — um valor bastante inferior ao necessário para uma classificação confiável.
+
+No conjunto como um todo, o SMOTE parece ter ajudado o modelo a manter um desempenho razoável para as classes mais representativas (remoto e híbrido), com valores de precisão, recall e f1-score acima de 70%. A acurácia geral no conjunto de teste, após o rebalanceamento, foi de 71%, o que representa uma leve queda em comparação ao modelo treinado com dados desequilibrados. Essa redução sugere uma possível perda de generalização, provavelmente causada pelo ruído introduzido pelas amostras sintéticas criadas artificialmente.
+
+A matriz de confusão confirma essa análise. A maior parte dos erros cometidos pelo modelo ocorre entre as classes híbrida e remota, mas há também um volume expressivo de exemplos da classe presencial sendo classificados erroneamente como híbridos. Isso mostra que, mesmo com o SMOTE, o modelo ainda tem dificuldade em diferenciar com clareza o regime 100% presencial do híbrido — talvez por semelhanças nos padrões de dados ou pela escassez original de exemplos reais da classe presencial no conjunto de treino.
+
+Em resumo, a aplicação do SMOTE foi eficaz para iniciar uma correção no viés do modelo contra a classe minoritária, permitindo que o modelo ao menos começasse a identificá-la. No entanto, a melhoria foi parcial e limitada, exigindo, para avanços mais expressivos, outros ajustes complementares, como testes com algoritmos diferentes, uso de outras técnicas de balanceamento, refinamento de features ou até um novo processo de coleta de dados mais equilibrado.
 
 #### Importância dos atributos
 Diferentemente do modelo treinado sem o uso do SMOTE, a análise da importância dos atributos mostrou uma distribuição mais diversificada entre as variáveis, indicando que o modelo passou a considerar um conjunto mais amplo de fatores na previsão da variável alvo.
@@ -1281,7 +1301,19 @@ plt.show()
 ```
 ![image](https://github.com/user-attachments/assets/a7dca242-a007-4b18-be91-63d3b6d0be27)
 
-**<Análise da Matriz de confusão>**
+**Análise da Matriz de confusão**
+
+Com base nos resultados do segundo modelo treinado, mesmo sem a aplicação de técnicas de balanceamento como o SMOTE, observamos uma repetição clara do padrão de desempenho desigual entre as classes. A métrica de acurácia geral foi de 76%, um valor aparentemente satisfatório à primeira vista. No entanto, ao analisarmos o desempenho específico por classe, torna-se evidente que esse número mascara problemas significativos relacionados ao desbalanceamento da base de dados.
+
+A classe 0 — correspondente ao modelo 100% presencial — continua sendo completamente ignorada pela Random Forest. O classification report revela que, para essa classe, tanto a precisão quanto o recall e o f1-score foram igual a zero. Isso significa que o modelo não conseguiu prever corretamente nenhuma das 21 amostras dessa classe, classificando-as erroneamente como pertencentes ao modelo remoto (classe 1) ou ao híbrido (classe 2). Essa falha é refletida também na matriz de confusão, onde se vê que 2 dessas amostras foram classificadas como remotas e 19 como híbridas.
+
+Em contraste, as classes 1 (modelo remoto) e 2 (modelo híbrido) tiveram desempenho significativamente melhor. A classe remota apresentou precisão de 78%, recall de 69% e f1-score de 73%, enquanto a classe híbrida se destacou com recall de 85% e f1-score de 79%. A matriz de confusão confirma essa performance ao mostrar que o modelo acertou corretamente 288 amostras da classe remota e 436 da classe híbrida.
+
+Apesar disso, a média macro — que calcula o desempenho médio entre todas as classes, tratando-as de forma igual — foi de apenas 0.51, refletindo o impacto negativo da ausência de acertos na classe minoritária. O modelo, portanto, tende a favorecer as classes mais representadas, o que é um comportamento comum quando o desequilíbrio entre as categorias não é tratado.
+
+A visualização da matriz de confusão como imagem reforça essa leitura, deixando claro que o modelo ignora por completo a primeira classe. Esse tipo de viés pode ser particularmente problemático em aplicações reais, onde é fundamental que todas as categorias sejam reconhecidas, especialmente se a classe minoritária representa uma situação crítica ou específica que não pode ser negligenciada.
+
+Em resumo, os resultados do segundo modelo confirmam a limitação estrutural da Random Forest ao lidar com dados desbalanceados. A acurácia geral alta é ilusória, e as métricas mais justas, como macro average e a própria matriz de confusão, revelam que o modelo falha completamente em reconhecer o regime de trabalho presencial. Isso evidencia a necessidade de aplicar técnicas de balanceamento, ajustes no modelo ou reestruturação da base para garantir uma classificação mais equitativa entre todas as categorias.
 
 #### Importância dos atributos
 Também foi exibida a importância das variáveis por meio do atributo `feature_importances_` do Random Forest. Para isso, utilizamos a função pd.Series para organizar as importâncias de forma ordenada e clara, seguida da plotagem de um gráfico de barras, permitindo visualizar quais atributos mais contribuíram para as decisões do modelo.
@@ -1380,7 +1412,19 @@ Modelo híbrido                              59                 131   	       32
 ```
 ![image](https://github.com/user-attachments/assets/3df14cc7-096b-4e03-b6db-89ca9b23e967)
 
-**<Análise da Matriz de Confusão e SMOTE>**
+**Análise da Matriz de Confusão e SMOTE**
+
+Com a aplicação da técnica de balanceamento SMOTE (Synthetic Minority Over-sampling Technique), o modelo Random Forest demonstrou avanços significativos na identificação da classe minoritária (modelo 100% presencial), embora ainda apresente limitações importantes.
+
+A matriz de confusão obtida após a aplicação do SMOTE, juntamente com os dados do classification report, evidenciam esse progresso. Anteriormente ignorada pelo modelo, a classe 0 agora passa a ser reconhecida com mais frequência: dos 21 exemplos dessa classe, 9 foram corretamente classificados como "presencial", resultando em um recall de 0.43 — um aumento considerável em relação ao recall nulo nos modelos anteriores. No entanto, a precision permanece extremamente baixa (0.11), o que significa que o modelo frequentemente classifica instâncias de outras categorias como sendo da classe presencial, gerando falsos positivos. Isso reflete na persistente dificuldade do modelo em delimitar claramente os contornos entre os perfis "presencial" e "híbrido", como revelado na matriz de confusão: ainda há significativa confusão entre essas duas classes.
+
+A performance das classes majoritárias sofreu uma leve queda, como era esperado. O modelo 100% remoto (classe 1) manteve bons níveis de desempenho, com precisão de 0.71 e recall de 0.79, enquanto a classe híbrida (classe 2) apresentou precisão de 0.80 e recall de 0.63. Essa redistribuição do foco do modelo, mais equitativa entre as três classes, causou uma leve diminuição no accuracy geral, que caiu de 76% para 70%. No entanto, essa queda é compensada pelo ganho de justiça no reconhecimento das diferentes classes.
+
+A média macro das métricas (0.54 para precision e f1-score) reflete essa melhora no equilíbrio entre as categorias, indicando que o modelo agora leva mais em consideração a classe minoritária na hora de aprender e fazer previsões. Ainda assim, é importante notar que a classe 0 continua sendo a mais desafiadora para o modelo, tanto em termos de precisão quanto de f1-score (apenas 0.17), apontando que, embora o SMOTE tenha reduzido o viés, ele não resolveu completamente a dificuldade de classificação.
+
+A matriz de confusão final ilustra bem esse comportamento: os erros do modelo estão mais distribuídos e não concentrados exclusivamente na classe minoritária, como antes. O número de classificações corretas aumentou para a classe presencial, e as demais classes seguem com bons níveis de acerto, apesar de um leve aumento nos erros de confusão.
+
+Em resumo, a aplicação do SMOTE trouxe um avanço concreto no reconhecimento da classe presencial, demonstrando ser uma estratégia eficaz para mitigar os efeitos do desbalanceamento de dados. Ainda há espaço para melhorias — principalmente no refinamento da precisão da classe minoritária —, mas o modelo se torna mais justo e equilibrado ao considerar de forma mais apropriada todas as categorias do atributo-alvo.
 
 #### Importância dos atributos e SMOTE
 Assim como no primeiro modelo, a aplicação do SMOTE no Random Forest resultou em uma redistribuição da importância dos atributos, conferindo maior diversidade às variáveis consideradas relevantes pelo modelo. No entanto, essa mudança não foi tão expressiva quanto a observada anteriormente.
