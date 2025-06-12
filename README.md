@@ -1,6 +1,6 @@
 # Regime de Trabalho na Área de Dados: Preferências Entre Remoto, Híbrido e Presencial
 
-O sistema inteligente será capaz de identificar padrões de comportamento na escolha do regime de trabalho (remoto, híbrido ou presencial) em diferentes áreas profissionais. Para isso, analisará fatores como produtividade e cargo, gerando insights valiosos sobre as preferências dos trabalhadores de ciências de dados e os impactos dessas escolhas no ambiente corporativo.
+Este sistema inteligente tem como objetivo prever a forma de trabalho ideal preferida por profissionais da área de dados — entre os regimes remoto, híbrido e presencial — com base em informações socioeconômicas e relacionadas ao ambiente de trabalho. A partir de técnicas de aprendizado de máquina, o sistema analisa padrões presentes nos dados e identifica os principais fatores que influenciam essa escolha, oferecendo uma visão preditiva que pode auxiliar empresas a compreender melhor o perfil e as preferências dos profissionais.
 
 ## Integrantes
 
@@ -14,16 +14,14 @@ O sistema inteligente será capaz de identificar padrões de comportamento na es
 * Prof. Hugo Bastos de Paula
 * Prof. Hayala Nepomuceno Curto
 
-## Instruções de utilização
-
-Assim que a primeira versão do sistema estiver disponível, deverá complementar com as instruções de utilização. Descreva como instalar eventuais dependências e como executar a aplicação.
-
 ## Histórico de versões
 
+* 1.0.0
+    * CHANGE: Atualização final das documentacoes.
+
+* 0.1.2
+    * Indução do segundo modelo do agente inteligente.
+
 * 0.1.1
-    * CHANGE: Atualização das documentacoes. Código permaneceu inalterado.
-* 0.1.0
     * Indução do primeiro modelo do agente inteligente.
-* 0.0.1
-    * Trabalhando na preparação dos dados.
 
