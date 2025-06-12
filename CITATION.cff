@@ -1,11 +1,11 @@
 cff-version: 1.0.1
-message: Por favor, cite o repositório utilizando estes metadados.
-title: Repositório modelo para a disciplina de Projeto em Ciência de Dados I - Sistemas Inteligentes.
+message: Este repositório contém os modelos e os resultados obtidos na pesquisa sobre os diferentes regimes de trabalho
+title: Fatores que influenciam a escolha de profissionais de dados na escolha do regime de trabalho
 authors:
-   - name-suffix: Professor
+   - name-suffix: Estudantes
     affiliation: PUC Minas
-    family-names: de Paula
-    given-names: Hugo
+    family-names: Cassemiro, Cavalcante, Lima, Horta
+    given-names: Márcio, Luiz Felipe, João, Gustavo
 keywords:
   - Ciência de Dados
   - Jupyter Notebooks
@@ -13,4 +13,4 @@ keywords:
 repository-code:
 license: CC-BY-4.0
 version: 1.0.0
-date-released: 2023-06-30
+date-released: 2025-06-12
