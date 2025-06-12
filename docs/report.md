@@ -1469,51 +1469,13 @@ Em resumo, o Random Forest apresentou potencial para obter resultados mais robus
 
 ### Análise Comparativa dos Modelos
 
-#### Modelo 1 — Árvore de Decisão Única
-- **Acurácia no teste:** 74,6%
-- **Pontos fortes:**
-  - Simples de interpretar.
-  - Desempenho sólido para as classes **remoto** e **híbrido**, com F1-scores em torno de 0.75 e 0.76.
-- **Pontos fracos:**
-  - Desempenho extremamente baixo para a classe **100% presencial** (F1-score: 0.08), com apenas 1 acerto em 19.
-  - Confusões recorrentes entre **remoto** e **híbrido**, refletindo sobreposição entre as duas categorias.
+Concluindo a análise comparativa entre os dois modelos — Decision Tree e Random Forest — podemos observar que ambos apresentaram desempenho semelhante no que diz respeito à classificação das categorias híbrido e remoto, mas enfrentaram dificuldades significativas para prever corretamente a classe presencial, especialmente quando os dados estavam desbalanceados. Essa limitação é explicável, considerando que o número de exemplos presenciais no conjunto de dados era bastante inferior em relação às outras duas classes, além do fato de que os regimes híbrido e remoto compartilham características semelhantes, o que naturalmente gera confusão nos padrões identificados pelos modelos.
 
-#### Modelo 2 — Random Forest
-- **Acurácia geral da melhor árvore:** não especificada, mas análise detalhada por classe disponível.
-- **Pontos fortes:**
-  - Melhor capacidade de generalização e robustez a ruído por ser um ensemble de árvores.
-  - Desempenho semelhante ao Modelo 1 nas classes **remoto** e **híbrido**.
-- **Pontos fracos:**
-  - A classe **100% presencial** continuou com 0% de acerto em todas as árvores.
-  - Alta **instabilidade** nas previsões da classe híbrida: o recall caiu de 59,6% para 35,5% entre a melhor e pior árvore.
-  - Confusão significativa entre **remoto** e **híbrido** persistiu, com até 60,8% dos híbridos sendo classificados como remotos.
+A Decision Tree, sem o uso do SMOTE, mostrou-se mais enviesada, baseando suas previsões quase exclusivamente em uma única variável, o que limita sua capacidade de generalização. Já o Random Forest, mesmo com os mesmos parâmetros do modelo anterior, conseguiu distribuir melhor a importância entre diferentes variáveis, o que o torna um modelo mais robusto e interpretável. A aplicação do SMOTE trouxe melhorias para ambos os modelos, especialmente na capacidade de identificar a classe presencial, ainda que de forma modesta. Contudo, o Random Forest demonstrou um aproveitamento mais consistente desse balanceamento, aumentando a diversidade das variáveis relevantes — incluindo, ainda que em menor grau, variáveis socioeconômicas — enquanto manteve como principais fatores os relacionados diretamente ao contexto de trabalho da pessoa.
 
-#### Comparação Direta
+A análise com SHAP reforçou essas observações: embora os dois modelos tenham apresentado maior influência de variáveis na previsão das categorias híbrido e remoto, ambos também conseguiram atribuir alguma importância à classe presencial. No entanto, essa importância observada nas explicações dos modelos não se refletiu de maneira satisfatória na matriz de confusão, o que indica que, embora os modelos estivessem captando alguns sinais relevantes, eles ainda não foram suficientes para uma previsão precisa dessa classe. Isso sugere que há potencial para melhoria, especialmente se forem inseridas variáveis mais discriminativas ou adotadas estratégias de ajuste mais refinadas.
 
-| Critério                        | Modelo 1 (Árvore Única) | Modelo 2 (Random Forest) |
-|--------------------------------|--------------------------|---------------------------|
-| Facilidade de interpretação    | Alta                     | Baixa/moderada            |
-| Robustez e estabilidade        | Baixa                    | Moderada (mas instável)   |
-| Desempenho geral               | Bom                      | Bom (mas com variação)    |
-| Classe "Remoto"                | Ótimo                    | Ótimo a razoável          |
-| Classe "Híbrido"               | Ótimo                    | Variável (dependendo da árvore) |
-| Classe "Presencial"           | Ruim (quase ignorada)    | Ruim (completamente ignorada) |
-
-#### Quando um modelo se sairia melhor?
-
-- **Modelo 1 (Árvore Única)** é mais adequado quando:
-  - A interpretação do processo de decisão é importante (por exemplo, explicar previsões a gestores).
-  - O contexto exige um modelo leve, rápido de treinar e aplicar.
-
-- **Modelo 2 (Random Forest)** se sairia melhor quando:
-  - O objetivo é maior **robustez geral**, mesmo com alguma perda de interpretabilidade.
-  - Há necessidade de lidar com variações nos dados de entrada.
-  - Deseja-se mitigar o risco de overfitting de uma única árvore, apesar da instabilidade observada.
-
-**Conclusão**
-
-Ambos os modelos apresentaram bom desempenho na previsão das classes "modelo 100% remoto" e "modelo híbrido", ainda que com confusões recorrentes entre essas duas categorias, possivelmente pela proximidade conceitual. A Árvore de Decisão (Modelo 1) se destaca pela simplicidade e facilidade de interpretação, enquanto a Random Forest (Modelo 2) oferece maior robustez, mas com variações mais sensíveis entre execuções.
-A escolha entre os modelos depende do objetivo: o Modelo 1 é preferível quando a transparência do processo decisório é essencial, enquanto o Modelo 2 pode ser mais indicado quando se busca maior capacidade de generalização, desde que se tome cuidado com a instabilidade observada.
+Em conclusão, o modelo Random Forest demonstrou maior potencial para capturar padrões diversos e apresentar resultados mais equilibrados, sendo mais indicado para tarefas preditivas que exigem robustez e menor risco de overfitting. A Decision Tree, apesar de sua simplicidade e maior interpretabilidade, mostrou-se mais limitada diante da complexidade dos dados analisados. Ainda assim, ambos os modelos poderiam apresentar resultados melhores com ajustes nos hiperparâmetros, ampliação da base de dados (especialmente para a classe presencial) e refinamento na seleção ou criação de variáveis mais representativas. Essas melhorias permitiriam uma previsão mais precisa e equilibrada entre as diferentes categorias de regime de trabalho.
 
 ## 8. Conclusão
 
