@@ -1511,6 +1511,15 @@ Durante a análise dos resultados, observamos que ambos os modelos apresentaram 
 
 Concluo que, se tivesse a oportunidade de refazer o projeto, escolheria com mais cuidado a pergunta orientada a dados, levando em consideração a disponibilidade, qualidade e compatibilidade das bases de dados desde o início. Isso permitiria estruturar uma solução mais consistente e representativa, com melhores condições para interpretar os resultados obtidos.
 
+**João Vitor de Lima**
+
+Desde o início, este projeto apresentou desafios, especialmente na formulação de uma pergunta orientada a dados viável e na escolha de variáveis compatíveis com a base principal, a “State of Data”. A proposta inicial era prever quatro categorias de regime de trabalho — híbrido fixo, híbrido flexível, remoto e presencial — mas, para melhorar a performance dos modelos, optamos por unificar os dois tipos de híbrido, reduzindo as classes para: híbrido, remoto e presencial.
+
+Foram então desenvolvidos dois modelos preditivos: uma Árvore de Decisão e uma Random Forest. Ambos apresentaram desempenho razoável, com cerca de 70% de acurácia. No entanto, a classe “presencial” teve baixa taxa de acerto, reflexo direto de sua sub-representação na base. A matriz de confusão se mostrou crucial para essa análise: inicialmente difícil de interpretar, acabou sendo fundamental para identificar os padrões de erro, especialmente na confusão recorrente entre as classes híbrido e remoto.
+
+Também testamos bases complementares, mas sua contribuição foi limitada. Faltaram variáveis mais contextuais — como tempo de deslocamento ou rotina familiar — que poderiam ter aumentado a precisão dos modelos. Entendemos que esses dados são mais sensíveis, mas sua ausência compromete parte da análise.
+
+Apesar das limitações, o processo foi valioso. Fomos ajustando rotas ao longo do caminho, aprofundando a compreensão dos modelos e aprendendo com os erros. Se fosse possível refazer o estudo, começaríamos com uma seleção mais criteriosa das variáveis e bases, além de buscar um maior equilíbrio entre as classes, especialmente o regime presencial.
 ...
 
 # REFERÊNCIAS
