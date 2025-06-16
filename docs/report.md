@@ -1477,6 +1477,23 @@ A análise com SHAP reforçou essas observações: embora os dois modelos tenham
 
 Em conclusão, o modelo Random Forest demonstrou maior potencial para capturar padrões diversos e apresentar resultados mais equilibrados, sendo mais indicado para tarefas preditivas que exigem robustez e menor risco de overfitting. A Decision Tree, apesar de sua simplicidade e maior interpretabilidade, mostrou-se mais limitada diante da complexidade dos dados analisados. Ainda assim, ambos os modelos poderiam apresentar resultados melhores com ajustes nos hiperparâmetros, ampliação da base de dados (especialmente para a classe presencial) e refinamento na seleção ou criação de variáveis mais representativas. Essas melhorias permitiriam uma previsão mais precisa e equilibrada entre as diferentes categorias de regime de trabalho.
 
+### Distribuição do modelo
+Para distribuir o modelo, utilizamos o Flask para criar um servidor que executa os dois modelos treinados com SMOTE, selecionados por apresentarem os melhores desempenhos.
+Todos os arquivos necessários para o funcionamento do servidor estão localizados na pasta: `assets/models/distrib_model`
+
+#### Como executar o servidor
+1. Instale as dependências listadas no arquivo requirements.txt utilizando o comando:
+```
+pip install -r requirements.txt
+```
+2. Inicie o servidor Flask executando o seguinte comando no terminal:
+```
+python app.py
+```
+![image](https://github.com/user-attachments/assets/08fd7d4f-2cb9-4161-93d2-0ce5b3886e8d)
+
+A porta será definida automaticamente. Após iniciar o servidor, será exibido um endereço IP no terminal. Você pode acessá-lo diretamente no navegador, digitando o IP ou clicando com Ctrl + clique no link.
+
 ## 8. Conclusão
 
 O trabalho buscou identificar quais fatores mais influenciam na escolha do modelo de trabalho entre profissionais da área de Dados.
