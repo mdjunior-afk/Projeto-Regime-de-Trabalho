@@ -1,0 +1,7 @@
+{
+  "build": {
+    "env": "python",
+    "command": "cd assets/models/distrib_model && pip install -r requirements.txt"
+  },
+  "start": "cd assets/models/distrib_model && python app.py"
+}
