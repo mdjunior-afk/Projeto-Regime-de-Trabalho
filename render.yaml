@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: meu-app
+    env: python
+    plan: free
+    buildCommand: pip install -r assets/models/distrib_model/requirements.txt
+    startCommand: python assets/models/distrib_model/app.py
+    buildFilter:
+      paths:
+        - assets/models/distrib_model/**
+    runtime: python
